@@ -1,0 +1,13 @@
+metadata_version: 1
+name: "\U0001F9E9Allen Challenge Template - Claude Code Ready"
+description: Clean template capsule for Allen Institute Hackathon challenges. Pre-configured
+  with Claude Code for AI-assisted development. Ready to duplicate and customize for
+  any challenge track. Minimal setup - just add your code, data, and challenge-specific
+  dependencies.
+tags:
+- template
+- allen-institute
+- hackathon
+- claude-code
+- starter
+- AI-assistant
