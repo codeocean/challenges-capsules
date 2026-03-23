@@ -1,13 +1,11 @@
 metadata_version: 1
-name: "\U0001F9E9Allen Challenge Template - Claude Code Ready"
-description: Clean template capsule for Allen Institute Hackathon challenges. Pre-configured
-  with Claude Code for AI-assisted development. Ready to duplicate and customize for
-  any challenge track. Minimal setup - just add your code, data, and challenge-specific
-  dependencies.
+name: Claude Code + Bedrock Template
+description: Claude Code template using AWS Bedrock backend. No API keys needed -
+  uses Code Ocean managed IAM credentials. Perfect for hackathons and AI-assisted
+  development.
 tags:
 - template
-- allen-institute
-- hackathon
 - claude-code
-- starter
+- aws-bedrock
 - AI-assistant
+- hackathon

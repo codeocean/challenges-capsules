@@ -2,165 +2,29 @@
 set -euo pipefail
 
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-# AI Agent Tools Installation Check
+# Claude Code + AWS Bedrock Task Executor
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
-# Verifies Claude Code, rtk-ai, and agent-browser are properly installed
-# and ready for Allen Institute Hackathon challenges.
+# Usage: ./run "your task description"
 # ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━
 
-# Ensure PATH includes all tool locations
 export PATH="/usr/local/bin:/root/.local/bin:${PATH}"
+mkdir -p /results /scratch
 
-REPORT="/results/ai_tools_check.txt"
-mkdir -p /results
+# Parse task
+TASK="${1:?Error: No task provided. Usage: $0 \"your task description\"}"
 
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee "${REPORT}"
-echo "AI Agent Tools Installation Verification" | tee -a "${REPORT}"
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a "${REPORT}"
-echo "" | tee -a "${REPORT}"
+# Log
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "Claude Code + AWS Bedrock"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "Task: ${TASK}"
+echo ""
 
-PASSED=0
-FAILED=0
+# Execute with Claude Code CLI (using Bedrock backend via CLAUDE_CODE_USE_BEDROCK=1)
+claude -p "${TASK}" --output-format text 2>&1 | tee /results/claude_output.txt
 
-check_command() {
-  local cmd="$1"
-  local label="$2"
-  
-  if command -v "${cmd}" >/dev/null 2>&1; then
-    echo "✓ ${label} found" | tee -a "${REPORT}"
-    PASSED=$((PASSED + 1))
-    return 0
-  else
-    echo "✗ ${label} NOT FOUND" | tee -a "${REPORT}"
-    FAILED=$((FAILED + 1))
-    return 1
-  fi
-}
+echo ""
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
+echo "✓ Output saved to /results/claude_output.txt"
+echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 
-check_version() {
-  local cmd="$1"
-  local label="$2"
-  
-  if command -v "${cmd}" >/dev/null 2>&1; then
-    local version
-    version=$("${cmd}" --version 2>&1 | head -1 || echo "version check completed")
-    echo "  └─ Version: ${version}" | tee -a "${REPORT}"
-    return 0
-  fi
-  return 1
-}
-
-check_user() {
-  local user="$1"
-  
-  if id "${user}" &>/dev/null; then
-    echo "✓ User '${user}' exists" | tee -a "${REPORT}"
-    local uid
-    uid=$(id -u "${user}")
-    echo "  └─ UID: ${uid}" | tee -a "${REPORT}"
-    PASSED=$((PASSED + 1))
-    return 0
-  else
-    echo "✗ User '${user}' NOT FOUND" | tee -a "${REPORT}"
-    FAILED=$((FAILED + 1))
-    return 1
-  fi
-}
-
-test_tool_as_appuser() {
-  local tool="$1"
-  local label="$2"
-  
-  if id appuser &>/dev/null; then
-    if runuser -u appuser -- bash -lc "export PATH=\"/usr/local/bin:/root/.local/bin:\${PATH}\"; ${tool} --version >/dev/null 2>&1"; then
-      echo "✓ appuser can execute ${label}" | tee -a "${REPORT}"
-      local version
-      version=$(runuser -u appuser -- bash -lc "export PATH=\"/usr/local/bin:/root/.local/bin:\${PATH}\"; ${tool} --version 2>&1" | head -1 || echo "check completed")
-      echo "  └─ ${version}" | tee -a "${REPORT}"
-      PASSED=$((PASSED + 1))
-      return 0
-    else
-      echo "✗ appuser CANNOT execute ${label}" | tee -a "${REPORT}"
-      FAILED=$((FAILED + 1))
-      return 1
-    fi
-  else
-    echo "⊘ Skipping appuser ${label} test (user does not exist)" | tee -a "${REPORT}"
-    return 1
-  fi
-}
-
-echo "1. System Prerequisites" | tee -a "${REPORT}"
-echo "───────────────────────" | tee -a "${REPORT}"
-check_command "curl" "curl"
-check_command "gpg" "gpg"
-check_command "runuser" "runuser"
-echo "" | tee -a "${REPORT}"
-
-echo "2. Node.js Installation" | tee -a "${REPORT}"
-echo "───────────────────────" | tee -a "${REPORT}"
-if check_command "node" "Node.js"; then
-  check_version "node" "Node.js"
-fi
-if check_command "npm" "npm"; then
-  check_version "npm" "npm"
-fi
-echo "" | tee -a "${REPORT}"
-
-echo "3. Claude Code CLI" | tee -a "${REPORT}"
-echo "──────────────────" | tee -a "${REPORT}"
-if check_command "claude" "Claude Code CLI"; then
-  check_version "claude" "Claude Code"
-fi
-echo "" | tee -a "${REPORT}"
-
-echo "4. rtk-ai Toolkit" | tee -a "${REPORT}"
-echo "─────────────────" | tee -a "${REPORT}"
-if check_command "rtk" "rtk-ai CLI"; then
-  check_version "rtk" "rtk-ai"
-fi
-echo "" | tee -a "${REPORT}"
-
-echo "5. Vercel agent-browser" | tee -a "${REPORT}"
-echo "───────────────────────" | tee -a "${REPORT}"
-if check_command "agent-browser" "agent-browser CLI"; then
-  check_version "agent-browser" "agent-browser"
-fi
-echo "" | tee -a "${REPORT}"
-
-echo "6. appuser Setup & Tool Access" | tee -a "${REPORT}"
-echo "───────────────────────────────" | tee -a "${REPORT}"
-check_user "appuser"
-test_tool_as_appuser "claude" "Claude Code"
-test_tool_as_appuser "rtk" "rtk-ai"
-test_tool_as_appuser "agent-browser" "agent-browser"
-echo "" | tee -a "${REPORT}"
-
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a "${REPORT}"
-echo "Summary" | tee -a "${REPORT}"
-echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━" | tee -a "${REPORT}"
-echo "Checks Passed: ${PASSED}" | tee -a "${REPORT}"
-echo "Checks Failed: ${FAILED}" | tee -a "${REPORT}"
-echo "" | tee -a "${REPORT}"
-
-if [[ ${FAILED} -eq 0 ]]; then
-  echo "✓ All AI agent tools are properly installed and ready!" | tee -a "${REPORT}"
-  echo "" | tee -a "${REPORT}"
-  echo "Installed tools:" | tee -a "${REPORT}"
-  echo "  • Claude Code 2.1.81 - AI coding assistant" | tee -a "${REPORT}"
-  echo "  • rtk-ai 0.31.0 - AI toolkit and framework" | tee -a "${REPORT}"
-  echo "  • agent-browser 0.21.4 - Browser automation agent" | tee -a "${REPORT}"
-  echo "" | tee -a "${REPORT}"
-  echo "Next steps:" | tee -a "${REPORT}"
-  echo "  1. Duplicate this capsule for your challenge" | tee -a "${REPORT}"
-  echo "  2. Add challenge-specific data assets" | tee -a "${REPORT}"
-  echo "  3. Use 'claude -p \"your prompt\"' to start AI-assisted coding" | tee -a "${REPORT}"
-  echo "  4. Use 'rtk' for AI toolkit functionality" | tee -a "${REPORT}"
-  echo "  5. Use 'agent-browser' for browser automation tasks" | tee -a "${REPORT}"
-  exit 0
-else
-  echo "✗ Installation incomplete. ${FAILED} check(s) failed." | tee -a "${REPORT}"
-  echo "" | tee -a "${REPORT}"
-  echo "Review the postInstall script in /environment/postInstall" | tee -a "${REPORT}"
-  exit 1
-fi
