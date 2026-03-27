@@ -1,11 +1,14 @@
 metadata_version: 1
-name: Claude Code + Bedrock Template
-description: Claude Code template using AWS Bedrock backend. No API keys needed -
-  uses Code Ocean managed IAM credentials. Perfect for hackathons and AI-assisted
-  development.
+name: "\U0001F3AF Challenge 9: BindCrafting"
+description: Design protein binders using BindCraft and AlphaFold2 for target proteins,
+  generating fluorescent-compatible affinity reagents with computational design, structural
+  validation, and ranked diverse candidates for experimental testing as antibody alternatives.
 tags:
-- template
-- claude-code
-- aws-bedrock
-- AI-assistant
-- hackathon
+- hackathon-challenge
+- protein-design
+- BindCraft
+- AlphaFold2
+- binder-design
+- structural-biology
+- computational-biology
+- neural-dynamics
