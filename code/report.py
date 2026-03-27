@@ -1,15 +1,11 @@
 #!/usr/bin/env python3
-"""report.py — Publication-quality figures, FASTA output, and statistics
-for the Enhancer Designer challenge.
-
-Generates a four-panel figure (score distributions, GA trajectory,
-score-vs-GC scatter, pairwise diversity heatmap) plus annotated FASTA
-and comprehensive stats JSON.
+"""report.py — Publication-quality 6-panel figure, annotated FASTA, stats
+JSON, and YAML run manifest for the K562 Enhancer Designer.
 """
 from __future__ import annotations
 
 import json
-from collections import Counter
+import time
 from pathlib import Path
 
 import matplotlib
@@ -19,242 +15,285 @@ import matplotlib.gridspec as gridspec
 import numpy as np
 from scipy.stats import mannwhitneyu
 
-from score import K562_MOTIFS, gc_content, scan_motif, one_hot, GOOD_HIT_THRESH
+from score import K562_MOTIFS, GOOD_HIT_THRESH, gc_content, one_hot, scan_motif
 
 # ── Colour palette (colour-blind safe) ────────────────────────────────────
-
-C_EVOLVED = "#2ca02c"
-C_SEED    = "#1f77b4"
-C_SHUFFLED = "#ff7f0e"
-C_RANDOM  = "#7f7f7f"
+C = {"evolved": "#2ca02c", "seed": "#1f77b4",
+     "shuffled": "#ff7f0e", "random": "#7f7f7f"}
 
 
-# ── FASTA output ──────────────────────────────────────────────────────────
+# ── FASTA output with rich annotations ────────────────────────────────────
 
-def write_fasta(
-    seqs: list[str],
-    scores: np.ndarray,
-    path: Path,
-) -> None:
-    """Write annotated FASTA with per-sequence GC, motif hits, and mfg status."""
-    from generate import check_manufacturability
-
+def write_fasta(seqs: list[str], scores: np.ndarray, path: Path) -> None:
+    from generate import check_manufacturability, check_motif_explosion
     with open(path, "w") as f:
         for i, (seq, sc) in enumerate(zip(seqs, scores)):
             gc = gc_content(seq)
             oh = one_hot(seq)
-            motif_parts = []
-            for name in K562_MOTIFS:
-                q, _, ng = scan_motif(oh, name)
-                if q >= GOOD_HIT_THRESH:
-                    motif_parts.append(f"{name}({ng})")
-            motifs_str = ",".join(motif_parts) if motif_parts else "none"
-            mfg_ok, issues = check_manufacturability(seq)
-            mfg_str = "PASS" if mfg_ok else "FAIL:" + ";".join(issues)
-            hdr = (
-                f">evolved_{i+1:03d} "
-                f"score={sc:.4f} GC={gc:.3f} len={len(seq)} "
-                f"motifs=[{motifs_str}] mfg={mfg_str}"
-            )
+            parts = []
+            for nm in K562_MOTIFS:
+                r = scan_motif(oh, nm)
+                if r["n_good"] > 0:
+                    parts.append(f"{nm}({r['n_good']})")
+            mfg_ok, mfg_iss = check_manufacturability(seq)
+            exp_ok, exp_iss = check_motif_explosion(seq)
+            flags = []
+            if not mfg_ok:
+                flags.append("MFG:" + ";".join(mfg_iss))
+            if not exp_ok:
+                flags.append("EXP:" + exp_iss)
+            status = "PASS" if (mfg_ok and exp_ok) else "|".join(flags)
+            hdr = (f">evolved_{i+1:03d} score={sc:.4f} GC={gc:.3f} "
+                   f"len={len(seq)} motifs=[{','.join(parts) or 'none'}] "
+                   f"filter={status}")
             f.write(f"{hdr}\n{seq}\n")
     print(f"  → {path.name}: {len(seqs)} sequences")
+
+
+# ── Motif landscape helpers ───────────────────────────────────────────────
+
+def _motif_matrix(seqs: list[str]) -> np.ndarray:
+    """(n_seqs × n_motifs) matrix of best-hit quality for each motif."""
+    names = list(K562_MOTIFS.keys())
+    mat = np.zeros((len(seqs), len(names)))
+    for i, seq in enumerate(seqs):
+        oh = one_hot(seq)
+        for j, nm in enumerate(names):
+            mat[i, j] = scan_motif(oh, nm)["quality"]
+    return mat
+
+
+def _mean_good_hits(seqs: list[str]) -> np.ndarray:
+    """Mean number of good hits per motif across a set of sequences."""
+    names = list(K562_MOTIFS.keys())
+    counts = np.zeros(len(names))
+    for seq in seqs:
+        oh = one_hot(seq)
+        for j, nm in enumerate(names):
+            counts[j] += scan_motif(oh, nm)["n_good"]
+    return counts / max(len(seqs), 1)
 
 
 # ── Statistics ────────────────────────────────────────────────────────────
 
 def compute_stats(
-    evolved: np.ndarray,
-    seed_sc: np.ndarray,
-    random_sc: np.ndarray,
-    shuffled_sc: np.ndarray,
-    trajectory: list[dict],
-    n_filtered: int,
-    n_total: int,
+    evolved: np.ndarray, seed_sc: np.ndarray,
+    random_sc: np.ndarray, shuffled_sc: np.ndarray,
+    traj: list[dict], filt_stats: dict, diversity_info: dict,
 ) -> dict:
-    """Compute Mann-Whitney tests, effect sizes, and summary metrics."""
     def _mw(a, b):
         u, p = mannwhitneyu(a, b, alternative="greater")
         return float(u), float(p)
-
-    def _cohend(a, b):
+    def _d(a, b):
         ps = np.sqrt((np.var(a) + np.var(b)) / 2)
-        return float((np.mean(a) - np.mean(b)) / ps) if ps > 0 else 0.0
+        return round(float((np.mean(a) - np.mean(b)) / ps), 4) if ps > 0 else 0.0
 
-    u_r, p_r = _mw(evolved, random_sc)
-    u_s, p_s = _mw(evolved, shuffled_sc)
-    u_seed, p_seed = _mw(evolved, seed_sc)
+    ur, pr = _mw(evolved, random_sc)
+    us, ps = _mw(evolved, shuffled_sc)
+    usd, psd = _mw(evolved, seed_sc)
 
     return {
-        "mann_whitney_p_vs_random":   p_r,
-        "mann_whitney_p_vs_shuffled": p_s,
-        "mann_whitney_p_vs_seeds":    p_seed,
-        "mann_whitney_U_vs_random":   u_r,
-        "effect_size_vs_random":   round(_cohend(evolved, random_sc), 4),
-        "effect_size_vs_shuffled": round(_cohend(evolved, shuffled_sc), 4),
-        "effect_size_vs_seeds":    round(_cohend(evolved, seed_sc), 4),
-        "mean_evolved":  round(float(evolved.mean()), 4),
-        "std_evolved":   round(float(evolved.std()), 4),
-        "mean_seeds":    round(float(seed_sc.mean()), 4),
-        "mean_random":   round(float(random_sc.mean()), 4),
-        "mean_shuffled": round(float(shuffled_sc.mean()), 4),
-        "n_evolved": len(evolved),
-        "n_seeds":   len(seed_sc),
-        "n_random":  len(random_sc),
-        "n_shuffled": len(shuffled_sc),
-        "n_filtered_out": n_filtered,
-        "n_population": n_total,
-        "generations": trajectory[-1]["gen"] if trajectory else 0,
-        "best_score_gen1":  trajectory[0]["best"]  if trajectory else 0,
-        "best_score_final": trajectory[-1]["best"] if trajectory else 0,
-        "scoring_method": "PWM log-quality + cooperativity + GC + complexity (proxy)",
-        "target_cell_type": "K562",
-        "pass_criterion": "Mann-Whitney p < 0.05 (one-sided greater)",
+        "evaluation": {
+            "p_vs_random": pr, "p_vs_shuffled": ps, "p_vs_seeds": psd,
+            "U_vs_random": ur,
+            "d_vs_random": _d(evolved, random_sc),
+            "d_vs_shuffled": _d(evolved, shuffled_sc),
+            "d_vs_seeds": _d(evolved, seed_sc),
+            "pass_vs_random": pr < 0.05, "pass_vs_shuffled": ps < 0.05,
+        },
+        "scores": {
+            "mean_evolved": round(float(evolved.mean()), 4),
+            "std_evolved":  round(float(evolved.std()), 4),
+            "mean_seeds":   round(float(seed_sc.mean()), 4),
+            "mean_random":  round(float(random_sc.mean()), 4),
+            "mean_shuffled": round(float(shuffled_sc.mean()), 4),
+        },
+        "counts": {
+            "n_evolved": len(evolved), "n_seeds": len(seed_sc),
+            "n_random": len(random_sc), "n_shuffled": len(shuffled_sc),
+        },
+        "filtering": filt_stats,
+        "diversity": diversity_info,
+        "trajectory": {
+            "generations": traj[-1]["gen"] if traj else 0,
+            "score_gen1": round(traj[0]["best"], 4) if traj else 0,
+            "score_final": round(traj[-1]["best"], 4) if traj else 0,
+            "improvement": round(traj[-1]["best"] - traj[0]["best"], 4) if traj else 0,
+        },
+        "method": {
+            "scoring": "PWM quality^4 + Gaussian cooperativity + GC + trinuc entropy",
+            "target": "K562",
+            "criterion": "Mann-Whitney p < 0.05 (one-sided greater)",
+        },
     }
 
 
 def write_stats(stats: dict, path: Path) -> None:
     with open(path, "w") as f:
         json.dump(stats, f, indent=2)
+    e = stats["evaluation"]
+    s = stats["scores"]
+    tag = lambda p: "PASS ✓" if p else "FAIL ✗"
+    print(f"\n{'═'*62}")
+    print(f"  EVALUATION RESULTS")
+    print(f"{'═'*62}")
+    print(f"  vs Random:   p={e['p_vs_random']:.2e}  d={e['d_vs_random']}  [{tag(e['pass_vs_random'])}]")
+    print(f"  vs Shuffled: p={e['p_vs_shuffled']:.2e}  d={e['d_vs_shuffled']}  [{tag(e['pass_vs_shuffled'])}]")
+    print(f"  vs Seeds:    p={e['p_vs_seeds']:.2e}  d={e['d_vs_seeds']}")
+    print(f"  Means: evolved={s['mean_evolved']}  seed={s['mean_seeds']}  "
+          f"rand={s['mean_random']}  shuf={s['mean_shuffled']}")
+    di = stats["diversity"]
+    print(f"  Diversity: mean_dist={di['mean_pairwise_dist']:.3f}  "
+          f"near_dup_frac={di['near_dup_fraction']:.2f}  "
+          f"[{'PASS ✓' if di['diversity_pass'] else 'FAIL ✗'}]")
+    print(f"  Filtering: {stats['filtering']}")
+    print(f"{'═'*62}\n  → {path.name}")
 
-    p_r = stats["mann_whitney_p_vs_random"]
-    p_s = stats["mann_whitney_p_vs_shuffled"]
-    p_sd = stats["mann_whitney_p_vs_seeds"]
-    tag = lambda p: "PASS ✓" if p < 0.05 else "FAIL ✗"
 
-    print(f"\n{'═' * 62}")
-    print(f"  EVALUATION SUMMARY")
-    print(f"{'═' * 62}")
-    print(f"  Evolved vs Random:   p = {p_r:.2e}  [{tag(p_r)}]")
-    print(f"  Evolved vs Shuffled: p = {p_s:.2e}  [{tag(p_s)}]")
-    print(f"  Evolved vs Seeds:    p = {p_sd:.2e}  [{tag(p_sd)}]")
-    print(f"  Effect size d (vs random):   {stats['effect_size_vs_random']}")
-    print(f"  Effect size d (vs shuffled): {stats['effect_size_vs_shuffled']}")
-    print(f"  Mean evolved={stats['mean_evolved']:.4f}  "
-          f"seeds={stats['mean_seeds']:.4f}  "
-          f"random={stats['mean_random']:.4f}  "
-          f"shuffled={stats['mean_shuffled']:.4f}")
-    print(f"  Filtered out: {stats['n_filtered_out']}/{stats['n_population']}")
-    print(f"{'═' * 62}")
+# ── Run manifest ──────────────────────────────────────────────────────────
+
+def write_manifest(path: Path, config: dict, stats: dict) -> None:
+    lines = [
+        "# Enhancer Designer — Run Manifest",
+        f"timestamp: {time.strftime('%Y-%m-%dT%H:%M:%SZ', time.gmtime())}",
+        f"target_cell_type: K562",
+        f"sequence_length: {config.get('seq_len', 200)}",
+        "",
+        "# GA parameters",
+        f"generations: {config['n_gen']}",
+        f"population_size: {config['pop_size']}",
+        f"mutation_rate: {config['mut_rate']}",
+        f"crossover_prob: {config['xover_prob']}",
+        f"elite_fraction: {config['elite_frac']}",
+        f"tournament_size: {config['tourn_size']}",
+        f"top_k: {config['top_k']}",
+        f"random_seed: {config['seed']}",
+        "",
+        "# Scoring",
+        "scoring_method: PWM quality^4 + Gaussian cooperativity + GC + trinuc entropy",
+        f"motifs: [{', '.join(K562_MOTIFS.keys())}]",
+        "",
+        "# Filters",
+        "gc_range: [0.30, 0.70]",
+        "max_homopolymer: 6",
+        "max_dinuc_repeat: 4",
+        "restriction_sites: [EcoRI, BamHI, HindIII, NotI]",
+        "max_single_motif_coverage: 0.30",
+        "",
+        "# Results",
+        f"best_score: {stats['trajectory']['score_final']}",
+        f"improvement: {stats['trajectory']['improvement']}",
+        f"p_vs_random: {stats['evaluation']['p_vs_random']:.2e}",
+        f"p_vs_shuffled: {stats['evaluation']['p_vs_shuffled']:.2e}",
+        f"diversity_pass: {stats['diversity']['diversity_pass']}",
+    ]
+    path.write_text("\n".join(lines) + "\n")
     print(f"  → {path.name}")
 
 
-# ── Multi-panel figure ────────────────────────────────────────────────────
-
-def _pairwise_hamming(seqs: list[str]) -> np.ndarray:
-    """Pairwise Hamming distance matrix (normalised to [0, 1])."""
-    n = len(seqs)
-    mat = np.zeros((n, n))
-    for i in range(n):
-        for j in range(i + 1, n):
-            d = sum(a != b for a, b in zip(seqs[i], seqs[j])) / len(seqs[i])
-            mat[i, j] = mat[j, i] = d
-    return mat
-
+# ── 6-panel figure ────────────────────────────────────────────────────────
 
 def generate_figure(
-    evolved_seqs: list[str],
-    evolved_scores: np.ndarray,
-    seed_scores: np.ndarray,
-    random_scores: np.ndarray,
-    shuffled_scores: np.ndarray,
-    trajectory: list[dict],
+    ev_seqs: list[str], ev_scores: np.ndarray,
+    seed_scores: np.ndarray, rand_scores: np.ndarray, shuf_scores: np.ndarray,
+    seed_seqs: list[str], rand_seqs: list[str], shuf_seqs: list[str],
+    traj: list[dict], diversity_mat: np.ndarray,
     path: Path,
 ) -> None:
-    """Create a 2×2 publication-quality panel."""
-    fig = plt.figure(figsize=(14, 11))
-    gs = gridspec.GridSpec(2, 2, hspace=0.32, wspace=0.30)
+    """2×3 publication-quality panel."""
+    fig = plt.figure(figsize=(18, 11))
+    gs = gridspec.GridSpec(2, 3, hspace=0.34, wspace=0.30,
+                           left=0.05, right=0.97, top=0.92, bottom=0.06)
 
-    # ── Panel A: Score distributions (box + strip) ────────────────────────
-    ax_a = fig.add_subplot(gs[0, 0])
-    groups = [evolved_scores, seed_scores, shuffled_scores, random_scores]
-    labels = ["Evolved", "Seeds", "Shuffled", "Random"]
-    colours = [C_EVOLVED, C_SEED, C_SHUFFLED, C_RANDOM]
-
-    bp = ax_a.boxplot(
-        groups, labels=labels, patch_artist=True, widths=0.5,
-        medianprops=dict(color="black", linewidth=1.5),
-        flierprops=dict(marker=".", markersize=3),
-    )
-    for patch, c in zip(bp["boxes"], colours):
-        patch.set_facecolor(c)
-        patch.set_alpha(0.55)
-
-    # Overlay individual points (jittered)
     rng = np.random.RandomState(0)
-    for i, (grp, c) in enumerate(zip(groups, colours)):
-        jitter = rng.normal(0, 0.06, size=len(grp))
-        ax_a.scatter(
-            np.full(len(grp), i + 1) + jitter, grp,
-            c=c, alpha=0.6, s=12, edgecolors="none", zorder=3,
-        )
+    groups = [ev_scores, seed_scores, shuf_scores, rand_scores]
+    labels = ["Evolved", "Seeds", "Shuffled", "Random"]
+    cols = [C["evolved"], C["seed"], C["shuffled"], C["random"]]
 
-    ax_a.set_ylabel("Enhancer Activity Score")
-    ax_a.set_title("A. Score Distributions", fontweight="bold", loc="left")
-    ax_a.grid(axis="y", alpha=0.2)
+    # ── A: Score distributions ────────────────────────────────────────────
+    ax = fig.add_subplot(gs[0, 0])
+    bp = ax.boxplot(groups, labels=labels, patch_artist=True, widths=0.5,
+                    medianprops=dict(color="k", lw=1.5),
+                    flierprops=dict(marker=".", ms=3))
+    for p, c in zip(bp["boxes"], cols):
+        p.set_facecolor(c); p.set_alpha(0.5)
+    for i, (g, c) in enumerate(zip(groups, cols)):
+        ax.scatter(np.full(len(g), i+1) + rng.normal(0, 0.06, len(g)), g,
+                   c=c, alpha=0.55, s=10, edgecolors="none", zorder=3)
+    ax.set_ylabel("Enhancer Score"); ax.grid(axis="y", alpha=0.15)
+    ax.set_title("A. Score Distributions", fontweight="bold", loc="left")
 
-    # ── Panel B: GA evolution trajectory ──────────────────────────────────
-    ax_b = fig.add_subplot(gs[0, 1])
-    gens = [t["gen"] for t in trajectory]
-    bests = [t["best"] for t in trajectory]
-    means = [t["mean"] for t in trajectory]
-    stds = [t["std"] for t in trajectory]
-    mins  = [t["min"] for t in trajectory]
+    # ── B: GA trajectory ──────────────────────────────────────────────────
+    ax = fig.add_subplot(gs[0, 1])
+    gens = [t["gen"] for t in traj]
+    ax.fill_between(gens, [t["mean"]-t["std"] for t in traj],
+                    [t["mean"]+t["std"] for t in traj],
+                    alpha=0.15, color=C["evolved"])
+    ax.plot(gens, [t["best"] for t in traj], "-", color=C["evolved"], lw=2, label="Best")
+    ax.plot(gens, [t["mean"] for t in traj], "--", color=C["evolved"], lw=1.5, label="Mean")
+    ax.plot(gens, [t["min"] for t in traj], ":", color=C["random"], lw=1, label="Min")
+    ax.set_xlabel("Generation"); ax.set_ylabel("Score")
+    ax.legend(fontsize=8, framealpha=0.8); ax.grid(alpha=0.15)
+    ax.set_title("B. Optimisation Trajectory", fontweight="bold", loc="left")
 
-    ax_b.fill_between(
-        gens,
-        [m - s for m, s in zip(means, stds)],
-        [m + s for m, s in zip(means, stds)],
-        alpha=0.18, color=C_EVOLVED,
-    )
-    ax_b.plot(gens, bests, "-", color=C_EVOLVED, lw=2, label="Best")
-    ax_b.plot(gens, means, "--", color=C_EVOLVED, lw=1.5, label="Mean")
-    ax_b.plot(gens, mins, ":", color=C_RANDOM, lw=1, label="Min")
-    ax_b.set_xlabel("Generation")
-    ax_b.set_ylabel("Score")
-    ax_b.set_title("B. GA Optimisation Trajectory", fontweight="bold", loc="left")
-    ax_b.legend(fontsize=9, framealpha=0.8)
-    ax_b.grid(alpha=0.2)
+    # ── C: Motif quality heatmap ──────────────────────────────────────────
+    ax = fig.add_subplot(gs[0, 2])
+    mat = _motif_matrix(ev_seqs)
+    im = ax.imshow(mat, cmap="YlGn", vmin=0.5, vmax=1.0, aspect="auto")
+    ax.set_xticks(range(len(K562_MOTIFS)))
+    ax.set_xticklabels(K562_MOTIFS.keys(), rotation=45, ha="right", fontsize=8)
+    ax.set_ylabel("Sequence")
+    ax.set_title("C. Motif Match Quality", fontweight="bold", loc="left")
+    fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04, label="Quality")
 
-    # ── Panel C: Score vs GC content ──────────────────────────────────────
-    ax_c = fig.add_subplot(gs[1, 0])
-    ev_gc = [gc_content(s) for s in evolved_seqs]
-    ax_c.scatter(ev_gc, evolved_scores, c=C_EVOLVED, s=40, alpha=0.8,
-                 edgecolors="white", linewidths=0.5, label="Evolved", zorder=3)
-    # Add reference bands
-    ax_c.axvspan(0.30, 0.70, alpha=0.06, color="green",
-                 label="Mfg. GC range")
-    ax_c.axvline(0.52, ls="--", color="grey", lw=0.8, alpha=0.5)
-    ax_c.set_xlabel("GC Content")
-    ax_c.set_ylabel("Score")
-    ax_c.set_title("C. Score vs GC Content", fontweight="bold", loc="left")
-    ax_c.legend(fontsize=9, framealpha=0.8)
-    ax_c.grid(alpha=0.2)
+    # ── D: Score vs GC (all groups) ───────────────────────────────────────
+    ax = fig.add_subplot(gs[1, 0])
+    for seqs, scores, lab, c in [
+        (ev_seqs, ev_scores, "Evolved", C["evolved"]),
+        (seed_seqs, seed_scores, "Seeds", C["seed"]),
+        (shuf_seqs, shuf_scores, "Shuffled", C["shuffled"]),
+        (rand_seqs, rand_scores, "Random", C["random"]),
+    ]:
+        gcs = [gc_content(s) for s in seqs]
+        ax.scatter(gcs, scores, c=c, s=14, alpha=0.5, label=lab, edgecolors="none")
+    ax.axvspan(0.30, 0.70, alpha=0.04, color="green")
+    ax.axvline(0.52, ls="--", color="grey", lw=0.6, alpha=0.5)
+    ax.set_xlabel("GC Content"); ax.set_ylabel("Score")
+    ax.legend(fontsize=7, markerscale=1.5, framealpha=0.8); ax.grid(alpha=0.15)
+    ax.set_title("D. Score vs GC Content", fontweight="bold", loc="left")
 
-    # ── Panel D: Pairwise diversity heatmap ───────────────────────────────
-    ax_d = fig.add_subplot(gs[1, 1])
-    dist_mat = _pairwise_hamming(evolved_seqs)
-    im = ax_d.imshow(dist_mat, cmap="YlOrRd", vmin=0, aspect="auto")
-    ax_d.set_xlabel("Sequence Index")
-    ax_d.set_ylabel("Sequence Index")
-    ax_d.set_title("D. Pairwise Hamming Distance", fontweight="bold", loc="left")
-    cbar = fig.colorbar(im, ax=ax_d, fraction=0.046, pad=0.04)
-    cbar.set_label("Normalised Distance")
+    # ── E: Diversity heatmap ──────────────────────────────────────────────
+    ax = fig.add_subplot(gs[1, 1])
+    im = ax.imshow(diversity_mat, cmap="YlOrRd", vmin=0, aspect="auto")
+    ax.set_xlabel("Sequence"); ax.set_ylabel("Sequence")
+    ax.set_title("E. Pairwise Hamming Distance", fontweight="bold", loc="left")
+    cb = fig.colorbar(im, ax=ax, fraction=0.046, pad=0.04)
+    cb.set_label("Norm. Distance")
+    triu = diversity_mat[np.triu_indices(len(diversity_mat), k=1)]
+    ax.text(0.02, 0.97, f"mean={triu.mean():.3f}\nmin={triu.min():.3f}",
+            transform=ax.transAxes, va="top", fontsize=7,
+            bbox=dict(boxstyle="round,pad=0.3", fc="white", alpha=0.85))
 
-    # Diversity metric annotation
-    triu = dist_mat[np.triu_indices(len(dist_mat), k=1)]
-    mean_dist = triu.mean()
-    min_dist = triu.min()
-    ax_d.text(
-        0.02, 0.98,
-        f"mean dist = {mean_dist:.3f}\nmin dist = {min_dist:.3f}",
-        transform=ax_d.transAxes, va="top", fontsize=8,
-        bbox=dict(boxstyle="round,pad=0.3", fc="white", alpha=0.8),
-    )
+    # ── F: Motif enrichment (evolved vs controls) ─────────────────────────
+    ax = fig.add_subplot(gs[1, 2])
+    names = list(K562_MOTIFS.keys())
+    x = np.arange(len(names))
+    w = 0.20
+    for offset, (seqs, lab, c) in enumerate([
+        (ev_seqs, "Evolved", C["evolved"]),
+        (seed_seqs, "Seeds", C["seed"]),
+        (shuf_seqs, "Shuffled", C["shuffled"]),
+        (rand_seqs, "Random", C["random"]),
+    ]):
+        vals = _mean_good_hits(seqs)
+        ax.bar(x + (offset - 1.5) * w, vals, w, label=lab, color=c, alpha=0.75)
+    ax.set_xticks(x); ax.set_xticklabels(names, rotation=45, ha="right", fontsize=8)
+    ax.set_ylabel("Mean Good Hits / Seq"); ax.legend(fontsize=7, framealpha=0.8)
+    ax.grid(axis="y", alpha=0.15)
+    ax.set_title("F. Motif Enrichment", fontweight="bold", loc="left")
 
-    fig.suptitle(
-        "Enhancer Designer — K562 Synthetic Enhancer Optimisation",
-        fontsize=14, fontweight="bold", y=0.98,
-    )
+    fig.suptitle("Enhancer Designer — K562 Synthetic Enhancer Optimisation",
+                 fontsize=15, fontweight="bold")
     fig.savefig(str(path), dpi=200, bbox_inches="tight")
     plt.close(fig)
     print(f"  → {path.name}")
