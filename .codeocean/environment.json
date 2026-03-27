@@ -7,6 +7,34 @@
 		"git_ask_pass": true,
 		"mount_secrets": true
 	},
+	"installers": {
+		"pip": {
+			"packages": [
+				{
+					"name": "biopython",
+					"version": "1.86"
+				},
+				{
+					"name": "matplotlib",
+					"version": "3.10.8"
+				},
+				{
+					"name": "numpy",
+					"version": "2.2.6"
+				},
+				{
+					"name": "scipy",
+					"version": "1.15.3"
+				},
+				{
+					"name": "torch",
+					"version": "2.11.0"
+				}
+			],
+			"options": {},
+			"pre_install_options": {}
+		}
+	},
 	"env_variables": [
 		{
 			"name": "CLAUDE_CODE_USE_BEDROCK",
@@ -15,6 +43,14 @@
 		{
 			"name": "AWS_REGION",
 			"value": "us-east-1"
+		},
+		{
+			"name": "DISABLE_PROMPT_CACHING",
+			"value": "1"
+		},
+		{
+			"name": "ANTHROPIC_MODEL",
+			"value": "us.anthropic.claude-sonnet-4-5-20250929-v1:0"
 		}
 	]
 }

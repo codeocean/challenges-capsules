@@ -1,59 +1,64 @@
-# Claude Code Template - Bedrock Backend
+# Challenge 03: Enhancer Designer 🧬
 
-Template capsule for executing AI-assisted coding tasks with Claude Code using AWS Bedrock backend.
+## What This Capsule Does
 
-## Quick Start
+Designs synthetic K562 enhancer DNA sequences via a genetic algorithm
+with biologically-informed scoring, manufacturability filtering, and
+diversity-aware selection.
 
-```bash
-./run "Create a Python script that processes CSV files"
-```
+### Pipeline
 
-Claude Code will execute your command and save outputs to `/results`.
+1. **Seed generation** — 100 K562-like sequences with embedded TF motifs
+   (GATA1, TAL1, SP1, NF-E2, KLF1, MYC) in GC-matched backgrounds.
+   Uses real FASTA if attached at `/data/k562_peaks.fasta`.
+2. **Scoring oracle** — Position Weight Matrix log-quality scoring with
+   inter-motif cooperativity, GC optimality, and sequence complexity.
+   Falls back to a pretrained DeepSTARR model when weights are at
+   `/data/model_weights/deepstarr_human.pt`.
+3. **Genetic algorithm** — 50 generations, population 200, tournament
+   selection (k=3), single-point crossover (p=0.6), point mutation
+   (rate=0.04), and 5 % elitism.
+4. **Manufacturability filter** — GC 30–70 %, no homopolymer >6 bp,
+   no dinucleotide repeats >4 units, no EcoRI/BamHI/HindIII/NotI sites.
+5. **Diversity selection** — 4-mer farthest-point sampling (score-weighted)
+   to choose 20 diverse high-scoring finalists.
+6. **Evaluation** — Mann-Whitney U tests (evolved vs random, shuffled,
+   and seed controls) with Cohen's d effect sizes.
 
-## Configuration
+## Evaluation Criteria
 
-This capsule is pre-configured to use AWS Bedrock:
-- `CLAUDE_CODE_USE_BEDROCK=1` - Uses AWS Bedrock instead of Anthropic API
-- `AWS_REGION=us-east-1` - Bedrock region
-- Code Ocean managed IAM credentials (no manual setup needed)
-- Claude Code automatically selects the best available Sonnet model
+Mann-Whitney U test showing evolved sequences score significantly higher
+than both random and shuffled controls (p < 0.05).
 
-## Usage Examples
+## Required Data Assets (optional — capsule is self-contained)
 
-```bash
-# Create code
-./run "Write a function to calculate prime numbers"
+| Mount path | Description |
+|---|---|
+| `/data/k562_peaks.fasta` | Real K562 ATAC-seq peak sequences (200 bp) |
+| `/data/model_weights/deepstarr_human.pt` | Human DeepSTARR TorchScript checkpoint |
 
-# Analyze data  
-./run "Create a data analysis script for genomics data in /data"
+If not attached, the capsule generates biologically realistic seed
+sequences and uses the PWM proxy scorer.
 
-# Debug code
-./run "Fix the bug in /code/analysis.py"
+## Outputs
 
-# Generate documentation
-./run "Add docstrings to all functions in /code"
-```
+| File | Description |
+|---|---|
+| `top20.fasta` | 20 optimised sequences with score, GC, motif, and mfg annotations |
+| `boxplot.png` | 4-panel figure: distributions, GA trajectory, GC scatter, diversity heatmap |
+| `stats.json` | Mann-Whitney p-values, effect sizes, run parameters |
 
-## For Hackathon Participants
+## Environment
 
-1. **Duplicate this capsule** for your challenge
-2. **Add your data assets** to `/data`
-3. **Run commands** to let Claude Code build your solution
-4. **Results** saved automatically to `/results`
+- Python 3.10 + numpy, scipy, matplotlib, biopython
+- CPU sufficient (PWM scorer is vectorised numpy)
 
-## File Structure
+## Code Structure
 
-```
-/code/
-  └── run          # Passes commands to Claude Code
-
-/results/
-  └── claude_output.txt   # Claude's response
-```
-
-## Notes
-
-- Runs headlessly (no interactive prompts)
-- Uses Code Ocean managed AWS credentials
-- Works in reproducible runs and Cloud Workstations
-- All code generation is done by Claude Code via Bedrock
+| File | Role |
+|---|---|
+| `run` | Bash entrypoint |
+| `run.py` | Orchestrator — config, pipeline stages, output writing |
+| `score.py` | PWM-based scorer: vectorised motif scanning, cooperativity, GC, complexity |
+| `generate.py` | Seed generation, GA engine, controls, filters, diversity selection |
+| `report.py` | Multi-panel figure, annotated FASTA, statistics |

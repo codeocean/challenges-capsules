@@ -1,11 +1,15 @@
 metadata_version: 1
-name: Claude Code + Bedrock Template
-description: Claude Code template using AWS Bedrock backend. No API keys needed -
-  uses Code Ocean managed IAM credentials. Perfect for hackathons and AI-assisted
-  development.
+name: "\U0001F9EC Challenge 3: Enhancer Designer"
+description: Generate synthetic enhancer-like DNA sequences for K562 cells using computational
+  design loops with in silico oracles (DeepSTARR, ChromBPNet, Enformer), demonstrating
+  reproducible enhancer design with scoring, filtering, and diversity selection for
+  experimental validation.
 tags:
-- template
-- claude-code
-- aws-bedrock
-- AI-assistant
-- hackathon
+- hackathon-challenge
+- enhancer-design
+- synthetic-biology
+- deep-learning
+- genomics
+- K562
+- regulatory-elements
+- DNA-design
