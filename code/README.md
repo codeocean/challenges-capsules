@@ -1,59 +1,32 @@
-# Claude Code Template - Bedrock Backend
+# Challenge 07: Engineering Automation
 
-Template capsule for executing AI-assisted coding tasks with Claude Code using AWS Bedrock backend.
+## What This Capsule Does
 
-## Quick Start
+Takes 3–5 pre-staged bug-fix tasks (each a repo snapshot + issue description +
+failing test), runs a Claude-powered edit-test-retry loop (max 5 iterations per
+task), and outputs diffs, pass/fail results, and a cost summary.
 
-```bash
-./run "Create a Python script that processes CSV files"
-```
+## Evaluation Criteria
 
-Claude Code will execute your command and save outputs to `/results`.
+Pass rate (failing tests now pass without breaking existing tests) across the
+task set, plus total API cost and iterations.
 
-## Configuration
+## Required Data Assets
 
-This capsule is pre-configured to use AWS Bedrock:
-- `CLAUDE_CODE_USE_BEDROCK=1` - Uses AWS Bedrock instead of Anthropic API
-- `AWS_REGION=us-east-1` - Bedrock region
-- Code Ocean managed IAM credentials (no manual setup needed)
-- Claude Code automatically selects the best available Sonnet model
+| File | Description |
+|------|-------------|
+| `repos/*.bundle` | Git bundles of small, well-tested repos |
+| `tasks.jsonl` | 3–5 tasks: `repo`, `issue_text`, `test_selector`, `expected_files` |
 
-## Usage Examples
+## Expected Outputs
 
-```bash
-# Create code
-./run "Write a function to calculate prime numbers"
+| File | Description |
+|------|-------------|
+| `patches/task_001.diff` | Git diff for each task |
+| `reports/task_001_summary.json` | Status, iterations, wall time per task |
+| `dashboard.json` | Aggregate: resolve rate, avg iterations |
 
-# Analyze data  
-./run "Create a data analysis script for genomics data in /data"
+## Environment
 
-# Debug code
-./run "Fix the bug in /code/analysis.py"
-
-# Generate documentation
-./run "Add docstrings to all functions in /code"
-```
-
-## For Hackathon Participants
-
-1. **Duplicate this capsule** for your challenge
-2. **Add your data assets** to `/data`
-3. **Run commands** to let Claude Code build your solution
-4. **Results** saved automatically to `/results`
-
-## File Structure
-
-```
-/code/
-  └── run          # Passes commands to Claude Code
-
-/results/
-  └── claude_output.txt   # Claude's response
-```
-
-## Notes
-
-- Runs headlessly (no interactive prompts)
-- Uses Code Ocean managed AWS credentials
-- Works in reproducible runs and Cloud Workstations
-- All code generation is done by Claude Code via Bedrock
+- Python 3.10+, CPU only
+- `anthropic`, `gitpython`, `pytest`

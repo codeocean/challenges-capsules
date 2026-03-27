@@ -7,6 +7,30 @@
 		"git_ask_pass": true,
 		"mount_secrets": true
 	},
+	"installers": {
+		"pip": {
+			"packages": [
+				{
+					"name": "boto3",
+					"version": "1.42.77"
+				},
+				{
+					"name": "gitpython",
+					"version": "3.1.46"
+				},
+				{
+					"name": "pytest",
+					"version": "9.0.2"
+				},
+				{
+					"name": "tqdm",
+					"version": "4.67.3"
+				}
+			],
+			"options": {},
+			"pre_install_options": {}
+		}
+	},
 	"env_variables": [
 		{
 			"name": "CLAUDE_CODE_USE_BEDROCK",
@@ -15,6 +39,14 @@
 		{
 			"name": "AWS_REGION",
 			"value": "us-east-1"
+		},
+		{
+			"name": "DISABLE_PROMPT_CACHING",
+			"value": "1"
+		},
+		{
+			"name": "ANTHROPIC_MODEL",
+			"value": "us.anthropic.claude-sonnet-4-5-20250929-v1:0"
 		}
 	]
 }

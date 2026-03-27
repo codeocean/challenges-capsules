@@ -1,11 +1,15 @@
 metadata_version: 1
-name: Claude Code + Bedrock Template
-description: Claude Code template using AWS Bedrock backend. No API keys needed -
-  uses Code Ocean managed IAM credentials. Perfect for hackathons and AI-assisted
-  development.
+name: '⚙️ Challenge 7: Engineering Automation'
+description: Demonstrate AI-powered software maintenance automation through targeted
+  refactoring, dependency updates, or bug fixes with structured context building,
+  test validation, safe stopping conditions, and reviewer-ready output demonstrating
+  trustworthy code generation.
 tags:
-- template
-- claude-code
-- aws-bedrock
-- AI-assistant
-- hackathon
+- hackathon-challenge
+- software-engineering
+- AI-coding
+- refactoring
+- automation
+- code-review
+- maintenance
+- testing
