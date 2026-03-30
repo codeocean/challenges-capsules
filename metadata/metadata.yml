@@ -1,11 +1,17 @@
 metadata_version: 1
-name: Claude Code + Bedrock Template
-description: Claude Code template using AWS Bedrock backend. No API keys needed -
-  uses Code Ocean managed IAM credentials. Perfect for hackathons and AI-assisted
-  development.
+name: "\U0001F504 Challenge 2: Agentic Data Harmonization"
+description: Build an AI agent system that harmonizes Allen Institute single-cell
+  datasets by inferring and aligning cell type mappings across studies with different
+  taxonomies, demonstrating autonomous schema reconciliation, quality validation,
+  and transparent decision-making in biological data integration.
 tags:
-- template
-- claude-code
-- aws-bedrock
-- AI-assistant
-- hackathon
+- hackathon-challenge
+- agentic-AI
+- data-harmonization
+- single-cell
+- cell-type-mapping
+- schema-alignment
+- bioinformatics
+- ABC-Atlas
+- cc_mode:cc_orchestration
+- cc_intent:iterative_analysis

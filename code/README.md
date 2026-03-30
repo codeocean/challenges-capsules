@@ -1,59 +1,35 @@
-# Claude Code Template - Bedrock Backend
+# Challenge 02: Agentic Data Harmonization
 
-Template capsule for executing AI-assisted coding tasks with Claude Code using AWS Bedrock backend.
+## What This Capsule Does
 
-## Quick Start
+Takes cell type labels from two different neuroscience datasets, matches each label
+to a Cell Ontology term using fuzzy string matching and synonym lookup, and outputs
+a mapping table split into mapped / needs-review / unmapped buckets.
 
-```bash
-./run "Create a Python script that processes CSV files"
-```
+## Evaluation Criteria
 
-Claude Code will execute your command and save outputs to `/results`.
+Precision and recall of the mappings against a hand-curated gold standard of 30–50
+label pairs.
 
-## Configuration
+## Required Data Assets
 
-This capsule is pre-configured to use AWS Bedrock:
-- `CLAUDE_CODE_USE_BEDROCK=1` - Uses AWS Bedrock instead of Anthropic API
-- `AWS_REGION=us-east-1` - Bedrock region
-- Code Ocean managed IAM credentials (no manual setup needed)
-- Claude Code automatically selects the best available Sonnet model
+Attach a data asset containing:
 
-## Usage Examples
+| File | Description |
+|------|-------------|
+| `labels_a.csv` | Unique cell type labels from ABC Atlas (column: `label`) |
+| `labels_b.csv` | Unique cell type labels from a GEO study (column: `label`) |
+| `cl.obo` | Cell Ontology OBO file (~15 MB, from OBO Foundry) |
+| `gold_mappings.csv` | 30–50 hand-curated mappings: `source_label`, `cl_id`, `cl_name` |
 
-```bash
-# Create code
-./run "Write a function to calculate prime numbers"
+## Expected Outputs
 
-# Analyze data  
-./run "Create a data analysis script for genomics data in /data"
+| File | Description |
+|------|-------------|
+| `mapping_table.csv` | `source_label`, `cl_id`, `cl_name`, `confidence`, `status` |
+| `eval_report.json` | Precision, recall, F1, and bucket counts |
 
-# Debug code
-./run "Fix the bug in /code/analysis.py"
+## Environment
 
-# Generate documentation
-./run "Add docstrings to all functions in /code"
-```
-
-## For Hackathon Participants
-
-1. **Duplicate this capsule** for your challenge
-2. **Add your data assets** to `/data`
-3. **Run commands** to let Claude Code build your solution
-4. **Results** saved automatically to `/results`
-
-## File Structure
-
-```
-/code/
-  └── run          # Passes commands to Claude Code
-
-/results/
-  └── claude_output.txt   # Claude's response
-```
-
-## Notes
-
-- Runs headlessly (no interactive prompts)
-- Uses Code Ocean managed AWS credentials
-- Works in reproducible runs and Cloud Workstations
-- All code generation is done by Claude Code via Bedrock
+- Python 3.10+, CPU only
+- `pandas`, `pronto`, `rapidfuzz`

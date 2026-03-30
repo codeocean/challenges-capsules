@@ -7,14 +7,38 @@
 		"git_ask_pass": true,
 		"mount_secrets": true
 	},
+	"installers": {
+		"pip": {
+			"packages": [
+				{
+					"name": "pandas",
+					"version": "2.3.3"
+				},
+				{
+					"name": "pronto",
+					"version": "2.7.3"
+				},
+				{
+					"name": "rapidfuzz",
+					"version": "3.14.3"
+				},
+				{
+					"name": "requests",
+					"version": "2.33.0"
+				}
+			],
+			"options": {},
+			"pre_install_options": {}
+		}
+	},
 	"env_variables": [
 		{
-			"name": "CLAUDE_CODE_USE_BEDROCK",
-			"value": "1"
+			"name": "CLAUDE_CODE_MAX_OUTPUT_TOKENS",
+			"value": "100000"
 		},
 		{
-			"name": "AWS_REGION",
-			"value": "us-east-1"
+			"name": "MAX_THINKING_TOKENS",
+			"value": "10000"
 		}
 	]
 }
