@@ -1,5 +1,19 @@
 # Challenge 04: Light Sheet Alignment QC
 
+
+## Results Summary
+
+| Metric | Value |
+|--------|-------|
+| **AUC** | 0.9773 |
+| **Test Accuracy** | 93.75% |
+| **Aligned F1** | 0.9302 |
+| **Misaligned F1** | 0.9434 |
+| **Review Rate** | 3.3% |
+| **False Negative Rate** | 0.8% |
+
+> See [RESULTS.md](RESULTS.md) for full metrics, feature importance, and per-class details.
+
 ## What This Capsule Does
 
 A complete, self-contained quality control system for light-sheet microscopy image

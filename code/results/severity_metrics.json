@@ -1,0 +1,1 @@
+{"borderline":{"n":60,"auc":0.9806,"accuracy":0.9667},"mild":{"n":68,"auc":1.0,"accuracy":0.9706},"moderate":{"n":70,"auc":1.0,"accuracy":0.9714},"none":{"n":110,"accuracy":0.9818},"severe":{"n":62,"auc":1.0,"accuracy":0.9677}}
