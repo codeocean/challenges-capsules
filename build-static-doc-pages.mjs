@@ -18,6 +18,7 @@ function buildHtml({ capsuleId, docType }) {
       name="description"
       content="Styled local document page for Code Ocean challenge capsule markdown."
     />
+    <link rel="icon" type="image/svg+xml" href="../code-ocean-logo.svg" />
     <link rel="stylesheet" href="../styles.css" />
   </head>
   <body>
