@@ -1,59 +1,25 @@
-# Claude Code Template - Bedrock Backend
+# Challenge 11: ABC Atlas Literature Assistant
 
-Template capsule for executing AI-assisted coding tasks with Claude Code using AWS Bedrock backend.
+## What This Capsule Does
+Pre-stages ~100 papers as JSONL, runs 5 queries, retrieves passages via similarity,
+classifies paper relationship (SOURCE/REUSE/VALIDATION/MENTION), generates grounded answers.
 
-## Quick Start
+## Evaluation
+Correct relationship labels and verifiable citations for each query.
 
-```bash
-./run "Create a Python script that processes CSV files"
-```
+## Required Data Assets
+| File | Description |
+|------|-------------|
+| `seed_papers.jsonl` | ~100 papers with title, abstract, doi, year |
+| `paper_embeddings.npy` | Pre-computed dense embeddings |
+| `abc_taxonomy.json` | CCN taxonomy tree |
+| `eval_queries.json` | 5 queries with expected relationship types |
 
-Claude Code will execute your command and save outputs to `/results`.
+## Expected Outputs
+| File | Description |
+|------|-------------|
+| `demo_outputs.json` | Per-query answer + citations with relationships |
+| `eval_report.json` | Citation verification stats |
 
-## Configuration
-
-This capsule is pre-configured to use AWS Bedrock:
-- `CLAUDE_CODE_USE_BEDROCK=1` - Uses AWS Bedrock instead of Anthropic API
-- `AWS_REGION=us-east-1` - Bedrock region
-- Code Ocean managed IAM credentials (no manual setup needed)
-- Claude Code automatically selects the best available Sonnet model
-
-## Usage Examples
-
-```bash
-# Create code
-./run "Write a function to calculate prime numbers"
-
-# Analyze data  
-./run "Create a data analysis script for genomics data in /data"
-
-# Debug code
-./run "Fix the bug in /code/analysis.py"
-
-# Generate documentation
-./run "Add docstrings to all functions in /code"
-```
-
-## For Hackathon Participants
-
-1. **Duplicate this capsule** for your challenge
-2. **Add your data assets** to `/data`
-3. **Run commands** to let Claude Code build your solution
-4. **Results** saved automatically to `/results`
-
-## File Structure
-
-```
-/code/
-  └── run          # Passes commands to Claude Code
-
-/results/
-  └── claude_output.txt   # Claude's response
-```
-
-## Notes
-
-- Runs headlessly (no interactive prompts)
-- Uses Code Ocean managed AWS credentials
-- Works in reproducible runs and Cloud Workstations
-- All code generation is done by Claude Code via Bedrock
+## Environment
+- CPU only. `anthropic`/`openai`, `numpy`, `pandas`, `rapidfuzz`
