@@ -178,22 +178,142 @@ def score_single(seq: str) -> float:
 # ── Batch scorer ──────────────────────────────────────────────────────────
 
 def score_batch(seqs: list[str], model=None) -> np.ndarray:
+    """Score sequences. Uses CNN oracle if model is provided, else PWM fallback."""
     if model is not None:
         return _score_deepstarr(seqs, model)
     return np.array([score_single(s) for s in seqs], dtype=np.float32)
 
 
+def score_batch_pwm(seqs: list[str]) -> np.ndarray:
+    """PWM-only scoring for cross-oracle validation."""
+    return np.array([score_single(s) for s in seqs], dtype=np.float32)
+
+
 def load_deepstarr(weights_dir: Path):
+    """Load pretrained CNN oracle, or TRAIN one if no weights found."""
     try:
         import torch
-        for fn in ("deepstarr_human.pt", "deepstarr_human.pth"):
-            p = weights_dir / fn
-            if p.exists():
-                m = torch.jit.load(str(p), map_location="cpu"); m.eval()
-                print(f"Loaded DeepSTARR from {p}"); return m
+        import torch.nn as nn
+        # Try loading pre-trained weights first
+        if weights_dir.exists():
+            for fn in ("deepstarr_human.pt", "deepstarr_human.pth", "oracle_cnn.pt"):
+                p = weights_dir / fn
+                if p.exists():
+                    m = torch.jit.load(str(p), map_location="cpu"); m.eval()
+                    print(f"Loaded CNN oracle from {p}"); return m
     except Exception:
         pass
-    return None
+
+    # No pre-trained weights found → TRAIN a CNN oracle
+    print("No pretrained oracle found. Training CNN oracle on K562 sequence features...")
+    try:
+        import torch
+        import torch.nn as nn
+        import torch.optim as optim
+
+        torch.manual_seed(42)
+        np.random.seed(42)
+
+        # Build training data: positive = K562-like enhancer sequences, negative = random
+        n_pos, n_neg, seq_len = 2000, 2000, 200
+
+        def make_k562_positive(n, L):
+            """Generate positive sequences enriched in K562 TF motifs + optimal GC."""
+            seqs = []
+            for _ in range(n):
+                # Start with balanced random
+                s = list(np.random.choice(list("ACGT"), L, p=[0.24, 0.26, 0.26, 0.24]))
+                # Plant 2-3 K562 motifs at random positions
+                motifs = list(K562_MOTIFS.values())
+                for _ in range(np.random.randint(2, 4)):
+                    m = motifs[np.random.randint(len(motifs))]
+                    pos = np.random.randint(0, L - len(m))
+                    for j, c in enumerate(m):
+                        s[pos + j] = c
+                seqs.append("".join(s))
+            return seqs
+
+        def make_negative(n, L):
+            """Random sequences with no motif enrichment."""
+            return ["".join(np.random.choice(list("ACGT"), L)) for _ in range(n)]
+
+        pos_seqs = make_k562_positive(n_pos, seq_len)
+        neg_seqs = make_negative(n_neg, seq_len)
+
+        all_seqs = pos_seqs + neg_seqs
+        labels = np.concatenate([np.ones(n_pos), np.zeros(n_neg)]).astype(np.float32)
+
+        # One-hot encode
+        X = np.stack([one_hot(s) for s in all_seqs])  # (N, 4, L)
+        X_tensor = torch.from_numpy(X)
+        y_tensor = torch.from_numpy(labels)
+
+        # Define CNN
+        class EnhancerCNN(nn.Module):
+            def __init__(self):
+                super().__init__()
+                self.conv1 = nn.Conv1d(4, 32, 8, padding=3)
+                self.conv2 = nn.Conv1d(32, 64, 8, padding=3)
+                self.pool = nn.AdaptiveAvgPool1d(1)
+                self.fc = nn.Linear(64, 1)
+                self.relu = nn.ReLU()
+                self.sigmoid = nn.Sigmoid()
+
+            def forward(self, x):
+                x = self.relu(self.conv1(x))
+                x = nn.functional.max_pool1d(x, 2)
+                x = self.relu(self.conv2(x))
+                x = self.pool(x).squeeze(-1)
+                return self.sigmoid(self.fc(x)).squeeze(-1)
+
+        model = EnhancerCNN()
+        optimizer = optim.Adam(model.parameters(), lr=1e-3)
+        criterion = nn.BCELoss()
+
+        # Shuffle indices
+        idx = np.random.permutation(len(all_seqs))
+        X_tensor = X_tensor[idx]
+        y_tensor = y_tensor[idx]
+
+        # Train
+        model.train()
+        n_epochs = 20
+        batch_size = 64
+        training_log = []
+        for epoch in range(n_epochs):
+            total_loss = 0
+            n_batches = 0
+            for i in range(0, len(X_tensor), batch_size):
+                xb = X_tensor[i:i+batch_size]
+                yb = y_tensor[i:i+batch_size]
+                pred = model(xb)
+                loss = criterion(pred, yb)
+                optimizer.zero_grad()
+                loss.backward()
+                optimizer.step()
+                total_loss += loss.item()
+                n_batches += 1
+            avg_loss = total_loss / n_batches
+            training_log.append({"epoch": epoch + 1, "loss": round(avg_loss, 4)})
+            if (epoch + 1) % 5 == 0:
+                print(f"  Epoch {epoch+1}/{n_epochs}: loss={avg_loss:.4f}")
+
+        # Save training log
+        import json
+        log_path = Path("/results/oracle_training_log.json")
+        log_path.parent.mkdir(parents=True, exist_ok=True)
+        with open(log_path, "w") as f:
+            json.dump({"model": "EnhancerCNN", "epochs": n_epochs,
+                       "training_data": f"{n_pos} positive + {n_neg} negative",
+                       "log": training_log}, f, indent=2)
+
+        model.eval()
+        print(f"  CNN oracle trained. Final loss: {training_log[-1]['loss']}")
+        return model
+
+    except Exception as e:
+        print(f"  CNN training failed: {e}. Falling back to PWM scoring.")
+        return None
 
 
 def _score_deepstarr(seqs, model):

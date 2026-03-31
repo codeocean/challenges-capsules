@@ -13,3 +13,5 @@ tags:
 - K562
 - regulatory-elements
 - DNA-design
+- cc_mode:cc_orchestration
+- cc_intent:iterative_analysis
