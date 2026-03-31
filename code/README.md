@@ -1,5 +1,13 @@
 # Challenge 12: Brain-map + BKP Assistant
 
+
+## Results Summary
+- **Overall Accuracy:** 86.7% (13/15 queries)
+- Easy/Medium/Cross-product: **100%** | Adversarial: **33.3%**
+- Deprecated resources correctly flagged
+
+> See [RESULTS.md](RESULTS.md) for per-category breakdown.
+
 ## What This Capsule Does
 Pre-curates ~100 Allen Institute web pages as JSONL, embeds into FAISS, runs 20 eval
 questions through retrieve-then-generate pipeline that returns cited answers.
