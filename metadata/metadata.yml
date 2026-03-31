@@ -1,11 +1,28 @@
 metadata_version: 1
-name: Claude Code + Bedrock Template
-description: Claude Code template using AWS Bedrock backend. No API keys needed -
-  uses Code Ocean managed IAM credentials. Perfect for hackathons and AI-assisted
-  development.
+name: "\U0001F50D Query BFF: Natural Language Search for BioFileFinder Metadata"
+description: |-
+  Natural language query interface for BioFileFinder (BFF) cell imaging metadata from the Allen Cell Collection.
+
+  Attach any BFF-compatible manifest (CSV or Parquet) as a data asset — the app auto-extracts the schema (field names, types, enumerated values), then translates plain-English researcher questions into validated, schema-grounded filters using AWS Bedrock (Claude Sonnet). Filters execute locally via pandas against the manifest and return matching results with clear explanations.
+
+  Includes a data fetcher that downloads real Allen Cell metadata from the public s3://allencell bucket (hipsc_12x_overview, NPM1_drug_perturbations, MYH10_supplementary datasets) so the pipeline works out of the box without manual data prep.
+
+  Key capabilities:
+  • Schema auto-extraction from any CSV/Parquet manifest
+  • Scientific vocabulary normalization (gene synonyms, organelle names → BFF field values)
+  • Confidence scoring with clarification when results are empty or ambiguous
+  • 15-query gold-standard evaluation with precision/recall/F1 metrics
+  • Single-query App Panel mode for interactive researcher use
 tags:
-- template
-- claude-code
-- aws-bedrock
-- AI-assistant
-- hackathon
+- hackathon-challenge
+- BioFileFinder
+- natural-language-query
+- metadata-search
+- Allen-Cell-Collection
+- schema-grounding
+- bioinformatics
+- LLM
+- cell-biology
+- Bedrock
+- cc_mode:cc_orchestration
+- cc_intent:iterative_analysis
