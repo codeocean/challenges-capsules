@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euo pipefail
+python /code/create_test_repos.py
+python /code/run.py "$@"

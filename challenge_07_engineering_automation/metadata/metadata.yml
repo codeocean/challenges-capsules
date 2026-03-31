@@ -1,0 +1,17 @@
+metadata_version: 1
+name: '⚙️ Challenge 7: Engineering Automation'
+description: Demonstrate AI-powered software maintenance automation through targeted
+  refactoring, dependency updates, or bug fixes with structured context building,
+  test validation, safe stopping conditions, and reviewer-ready output demonstrating
+  trustworthy code generation.
+tags:
+- hackathon-challenge
+- software-engineering
+- AI-coding
+- refactoring
+- automation
+- code-review
+- maintenance
+- testing
+- cc_mode:cc_orchestration
+- cc_intent:iterative_analysis

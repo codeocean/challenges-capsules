@@ -1,0 +1,44 @@
+{
+	"version": 1,
+	"base_image": "codeocean/mambaforge3:22.11.1-4-ubuntu22.04",
+	"post_install": true,
+	"options": {
+		"registry_host_arg": true,
+		"git_ask_pass": true,
+		"mount_secrets": true
+	},
+	"installers": {
+		"pip": {
+			"packages": [
+				{
+					"name": "boto3",
+					"version": "1.42.77"
+				},
+				{
+					"name": "gitpython",
+					"version": "3.1.46"
+				},
+				{
+					"name": "pytest",
+					"version": "9.0.2"
+				},
+				{
+					"name": "tqdm",
+					"version": "4.67.3"
+				}
+			],
+			"options": {},
+			"pre_install_options": {}
+		}
+	},
+	"env_variables": [
+		{
+			"name": "CLAUDE_CODE_MAX_OUTPUT_TOKENS",
+			"value": "100000"
+		},
+		{
+			"name": "MAX_THINKING_TOKENS",
+			"value": "10000"
+		}
+	]
+}

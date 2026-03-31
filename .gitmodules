@@ -1,6 +1,3 @@
-[submodule "challenge_07_engineering_automation"]
-	path = challenge_07_engineering_automation
-	url = https://aqua.aws.codeocean.dev/capsule-4865038.git
 [submodule "challenge_08_query_bff"]
 	path = challenge_08_query_bff
 	url = https://aqua.aws.codeocean.dev/capsule-2367623.git
