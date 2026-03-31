@@ -1,5 +1,13 @@
 # Challenge 14: Segment Intestine Villi
 
+
+## Results Summary
+- **GeoJSON boundaries** generated for villus polygons
+- **Cell assignments** for all cells to villus clusters
+- **Data:** Simulated spatial data (PARTIAL — pending real Xenium)
+
+> See [RESULTS.md](RESULTS.md) for output artifact details.
+
 ## What This Capsule Does
 Loads Xenium ileum spatial transcriptomics data, scores cells as epithelial using
 marker genes (EPCAM, FABP1, FABP2, VIL1), builds spatial neighbor graph, runs
