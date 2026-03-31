@@ -1,0 +1,13 @@
+region,dice_classical,dice_pretrained,dice_random
+Cerebellum,0.6667,0.4444,0.0
+Cortical subplate,0.0,0.0,0.0
+Hippocampal formation,0.5882,0.4,0.1429
+Hypothalamus,0.0,0.0,0.0
+Isocortex,0.7925,0.8627,0.6774
+Medulla,0.6,0.5,0.4444
+Midbrain,0.6,0.5,0.0
+Olfactory areas,0.625,0.6667,0.4348
+Pallidum,0.0,0.0,0.0
+Pons,0.0,0.0,0.0
+Striatum,0.5333,0.5,0.0
+Thalamus,0.0,0.0,0.0

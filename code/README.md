@@ -1,5 +1,15 @@
 # Challenge 10: NeuroBase Foundation Model Evaluation
 
+
+## Results Summary
+| Model | Mean Dice | vs Random |
+|-------|----------|-----------|
+| **Classical Features** | 0.3671 | 2.59× |
+| Pretrained Proxy | 0.3228 | 2.28× |
+| Random | 0.1416 | baseline |
+
+> See [RESULTS.md](RESULTS.md) for full evaluation, per-region analysis, and visualizations.
+
 ## Overview
 
 Benchmarks 3-D neuroanatomical encoders on **Allen CCFv3 brain region parcellation**,
