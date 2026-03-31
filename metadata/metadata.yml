@@ -1,11 +1,17 @@
 metadata_version: 1
-name: Claude Code + Bedrock Template
-description: Claude Code template using AWS Bedrock backend. No API keys needed -
-  uses Code Ocean managed IAM credentials. Perfect for hackathons and AI-assisted
-  development.
+name: "\U0001F3EA Challenge 15: Allen Single-Cell Model Pantry"
+description: Build a reproducible benchmark system for single-cell foundation models
+  on Allen datasets with frozen splits, shared evaluation contracts, and comparable
+  metrics across models demonstrating fair performance assessment for cell type annotation
+  and batch integration.
 tags:
-- template
-- claude-code
-- aws-bedrock
-- AI-assistant
-- hackathon
+- hackathon-challenge
+- foundation-models
+- single-cell
+- benchmarking
+- scRNA-seq
+- evaluation
+- ABC-Atlas
+- machine-learning
+- cc_mode:cc_orchestration
+- cc_intent:iterative_analysis

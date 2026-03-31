@@ -1,59 +1,27 @@
-# Claude Code Template - Bedrock Backend
+# Challenge 15: Allen Single Cell Model Pantry
 
-Template capsule for executing AI-assisted coding tasks with Claude Code using AWS Bedrock backend.
+## What This Capsule Does
+Head-to-head benchmark of scVI vs. Geneformer on Allen Human MTG cell-type
+annotation. Loads frozen pre-split h5ad, runs both through shared KNN classifier,
+outputs leaderboard CSV plus confusion matrices.
 
-## Quick Start
+## Evaluation
+Cell-type classification macro F1 on a donor-held-out test split.
 
-```bash
-./run "Create a Python script that processes CSV files"
-```
+## Required Data Assets
+| File | Description |
+|------|-------------|
+| `mtg_dataset.h5ad` | Frozen pre-split Allen Human MTG dataset with `split` column |
+| `gene_mapping.csv` | HGNC symbol → Ensembl ID mapping |
+| `geneformer_weights/` | Pre-downloaded Geneformer HuggingFace checkpoint |
 
-Claude Code will execute your command and save outputs to `/results`.
+## Expected Outputs
+| File | Description |
+|------|-------------|
+| `leaderboard.csv` | model, accuracy, macro_f1, runtime_seconds |
+| `confusion_scvi.png` | scVI confusion matrix |
+| `confusion_geneformer.png` | Geneformer confusion matrix |
+| `summary.json` | Winner, test cells, per-model F1 |
 
-## Configuration
-
-This capsule is pre-configured to use AWS Bedrock:
-- `CLAUDE_CODE_USE_BEDROCK=1` - Uses AWS Bedrock instead of Anthropic API
-- `AWS_REGION=us-east-1` - Bedrock region
-- Code Ocean managed IAM credentials (no manual setup needed)
-- Claude Code automatically selects the best available Sonnet model
-
-## Usage Examples
-
-```bash
-# Create code
-./run "Write a function to calculate prime numbers"
-
-# Analyze data  
-./run "Create a data analysis script for genomics data in /data"
-
-# Debug code
-./run "Fix the bug in /code/analysis.py"
-
-# Generate documentation
-./run "Add docstrings to all functions in /code"
-```
-
-## For Hackathon Participants
-
-1. **Duplicate this capsule** for your challenge
-2. **Add your data assets** to `/data`
-3. **Run commands** to let Claude Code build your solution
-4. **Results** saved automatically to `/results`
-
-## File Structure
-
-```
-/code/
-  └── run          # Passes commands to Claude Code
-
-/results/
-  └── claude_output.txt   # Claude's response
-```
-
-## Notes
-
-- Runs headlessly (no interactive prompts)
-- Uses Code Ocean managed AWS credentials
-- Works in reproducible runs and Cloud Workstations
-- All code generation is done by Claude Code via Bedrock
+## Environment
+- GPU required. `scanpy`, `anndata`, `scvi-tools`, `torch`, `transformers`, `scikit-learn`, `matplotlib`, `pandas`
