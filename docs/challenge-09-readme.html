@@ -1,0 +1,60 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Capsule document</title>
+    <meta
+      name="description"
+      content="Styled local document page for Code Ocean challenge capsule markdown."
+    />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <div class="background-shell" aria-hidden="true">
+      <div class="background-orb orb-a"></div>
+      <div class="background-orb orb-b"></div>
+      <div class="background-grid"></div>
+    </div>
+
+    <main class="doc-page">
+      <div class="doc-shell surface-card">
+        <div class="doc-header">
+          <a class="secondary-link doc-back" href="../index.html#challenge-09">Back to atlas</a>
+          <div class="doc-title-block">
+            <p class="section-kicker" id="doc-kicker">Capsule document</p>
+            <h1 id="doc-title">Loading document</h1>
+            <p class="doc-subtitle" id="doc-subtitle"></p>
+            <div class="doc-meta-row">
+              <span class="meta-pill" id="doc-type-pill"></span>
+              <span class="meta-pill" id="doc-status-pill"></span>
+            </div>
+            <div class="doc-action-row">
+              <a class="primary-link" id="doc-atlas-link" href="../index.html#challenge-09">Open atlas section</a>
+              <a class="secondary-link" id="doc-related-link" href="./challenge-09-review.html">Open review summary</a>
+            </div>
+          </div>
+        </div>
+
+        <article class="doc-content markdown-body" id="doc-content">
+          <p>Loading document content.</p>
+        </article>
+      </div>
+    </main>
+
+    <script>
+      window.DOC_PAGE = {
+        capsuleId: "challenge-09",
+        docType: "readme",
+        backHref: "../index.html#challenge-09",
+        atlasHref: "../index.html#challenge-09",
+        relatedHref: "./challenge-09-review.html",
+        relatedLabel: "Open review summary"
+      };
+    </script>
+    <script src="../capsules-data.js"></script>
+    <script src="../capsule-docs.js"></script>
+    <script src="../markdown-renderer.js"></script>
+    <script src="../doc-viewer.js"></script>
+  </body>
+</html>

@@ -1,21 +1,21 @@
 @import url("https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600&display=swap");
 
 :root {
-  --bg: #fffaf6;
-  --bg-deep: #fff6f1;
-  --surface: #fff2eb;
-  --surface-strong: #fff7f2;
-  --surface-muted: #fffaf7;
-  --line: rgba(17, 17, 17, 0.08);
-  --line-strong: rgba(17, 17, 17, 0.16);
-  --text: #121212;
-  --muted: #5f5f5f;
-  --accent: #00ff80;
-  --accent-soft: rgba(0, 255, 128, 0.10);
-  --accent-border: rgba(0, 255, 128, 0.24);
-  --accent-ink: #0e5b36;
-  --completed: #0e5b36;
-  --completed-soft: rgba(0, 255, 128, 0.10);
+  --bg: #f7fbff;
+  --bg-deep: #edf4ff;
+  --surface: #ffffff;
+  --surface-strong: #f8fbff;
+  --surface-muted: #f3f8ff;
+  --line: rgba(24, 52, 102, 0.08);
+  --line-strong: rgba(24, 52, 102, 0.16);
+  --text: #10213a;
+  --muted: #5c6d89;
+  --accent: #2d6cff;
+  --accent-soft: rgba(45, 108, 255, 0.10);
+  --accent-border: rgba(45, 108, 255, 0.22);
+  --accent-ink: #2458d5;
+  --completed: #2458d5;
+  --completed-soft: rgba(45, 108, 255, 0.10);
   --partial: #90621c;
   --partial-soft: rgba(144, 98, 28, 0.14);
   --blocked: #8b3a3a;
@@ -43,9 +43,9 @@ body {
   min-height: 100vh;
   color: var(--text);
   background:
-    radial-gradient(circle at top left, rgba(0, 255, 128, 0.08), transparent 22rem),
-    radial-gradient(circle at 85% 12%, rgba(0, 255, 128, 0.05), transparent 18rem),
-    linear-gradient(180deg, #fffcfa 0%, var(--bg) 48%, var(--bg-deep) 100%);
+    radial-gradient(circle at top left, rgba(45, 108, 255, 0.10), transparent 22rem),
+    radial-gradient(circle at 85% 12%, rgba(45, 108, 255, 0.06), transparent 20rem),
+    linear-gradient(180deg, #ffffff 0%, var(--bg) 48%, var(--bg-deep) 100%);
   font-family: "Poppins", "Segoe UI", "Helvetica Neue", sans-serif;
   font-size: 14px;
   line-height: 1.5;
@@ -96,7 +96,7 @@ ol {
   height: 28rem;
   top: 4rem;
   left: -6rem;
-  background: radial-gradient(circle, rgba(0, 255, 128, 0.18), rgba(0, 255, 128, 0));
+  background: radial-gradient(circle, rgba(45, 108, 255, 0.18), rgba(45, 108, 255, 0));
 }
 
 .orb-b {
@@ -104,7 +104,7 @@ ol {
   height: 24rem;
   right: 4rem;
   top: 10rem;
-  background: radial-gradient(circle, rgba(255, 242, 235, 0.95), rgba(255, 242, 235, 0));
+  background: radial-gradient(circle, rgba(221, 235, 255, 0.9), rgba(221, 235, 255, 0));
 }
 
 .hero,
@@ -125,6 +125,36 @@ ol {
   align-items: end;
 }
 
+.hero-brand {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.brand-mark {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  min-width: 116px;
+  padding: 0.75rem 0.95rem;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface-strong);
+  box-shadow: var(--shadow-soft);
+}
+
+.code-ocean-logo {
+  display: block;
+  width: 90px;
+  height: auto;
+}
+
+.brand-copy {
+  display: grid;
+  gap: 0.2rem;
+}
+
 .eyebrow,
 .panel-kicker,
 .section-kicker,
@@ -135,6 +165,13 @@ ol {
   font-weight: 500;
   letter-spacing: 0;
   text-transform: uppercase;
+}
+
+.brand-note {
+  margin: 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 18px;
 }
 
 .hero h1,
@@ -186,7 +223,7 @@ ol {
 }
 
 .primary-link {
-  color: var(--text);
+  color: #ffffff;
   background: var(--accent);
   border: 1px solid var(--accent-border);
   box-shadow: var(--shadow-soft);
@@ -194,8 +231,8 @@ ol {
 
 .secondary-link {
   border: 1px solid var(--line-strong);
-  color: var(--text);
-  background: var(--surface-strong);
+  color: var(--accent-ink);
+  background: #ffffff;
 }
 
 .hero-aside {
@@ -424,7 +461,7 @@ ol {
 }
 
 .filter-chip.is-active {
-  color: var(--text);
+  color: #ffffff;
   border-color: var(--accent-border);
   background: var(--accent);
 }
@@ -460,7 +497,7 @@ ol {
   position: sticky;
   top: 0;
   z-index: 1;
-  background: var(--surface);
+  background: #f6faff;
   font-size: 12px;
   font-weight: 500;
   text-transform: uppercase;
@@ -544,7 +581,7 @@ ol {
   position: absolute;
   inset: 0 auto 0 0;
   width: 0.5rem;
-  background: linear-gradient(180deg, rgba(0, 255, 128, 0.92), rgba(0, 255, 128, 0.28));
+  background: linear-gradient(180deg, rgba(45, 108, 255, 0.95), rgba(45, 108, 255, 0.24));
 }
 
 .capsule-head {
@@ -749,8 +786,8 @@ ol {
   overflow-x: auto;
   padding: 0.95rem;
   border-radius: 16px;
-  background: #111111;
-  color: #fff2eb;
+  background: #11203d;
+  color: #e9f1ff;
   box-shadow: var(--shadow-soft);
 }
 
@@ -790,7 +827,7 @@ ol {
 
 .markdown-table th {
   color: var(--text);
-  background: var(--surface);
+  background: #f6faff;
 }
 
 .markdown-empty {
@@ -813,6 +850,56 @@ ol {
   padding-top: 0.5rem;
   padding-bottom: 2.5rem;
   color: var(--muted);
+}
+
+.doc-page {
+  max-width: 1120px;
+  margin: 0 auto;
+  padding: 2rem 1.4rem 3rem;
+}
+
+.doc-shell {
+  padding: 1.4rem;
+}
+
+.doc-header {
+  display: grid;
+  gap: 1.1rem;
+  margin-bottom: 1.2rem;
+}
+
+.doc-back {
+  width: fit-content;
+}
+
+.doc-title-block h1 {
+  margin: 0;
+  font-size: clamp(28px, 3vw, 40px);
+  line-height: 1.25;
+  font-weight: 600;
+}
+
+.doc-subtitle {
+  margin: 0.4rem 0 0;
+  color: var(--muted);
+}
+
+.doc-meta-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-top: 0.85rem;
+}
+
+.doc-action-row {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.doc-content {
+  min-height: 40vh;
 }
 
 .reveal {
@@ -884,6 +971,12 @@ ol {
 
   .hero {
     padding-top: 2.2rem;
+  }
+
+  .hero-brand {
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 0.8rem;
   }
 
   .surface-card,
