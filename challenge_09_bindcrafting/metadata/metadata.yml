@@ -1,0 +1,16 @@
+metadata_version: 1
+name: "\U0001F3AF Challenge 9: BindCrafting"
+description: Design protein binders using BindCraft and AlphaFold2 for target proteins,
+  generating fluorescent-compatible affinity reagents with computational design, structural
+  validation, and ranked diverse candidates for experimental testing as antibody alternatives.
+tags:
+- hackathon-challenge
+- protein-design
+- BindCraft
+- AlphaFold2
+- binder-design
+- structural-biology
+- computational-biology
+- neural-dynamics
+- cc_mode:cc_orchestration
+- cc_intent:iterative_analysis
