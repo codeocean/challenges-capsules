@@ -1,11 +1,16 @@
 metadata_version: 1
-name: Claude Code + Bedrock Template
-description: Claude Code template using AWS Bedrock backend. No API keys needed -
-  uses Code Ocean managed IAM credentials. Perfect for hackathons and AI-assisted
-  development.
+name: "\U0001F52C Challenge 4: Light Sheet Alignment QC"
+description: Build a quality control system for light-sheet microscopy image registration
+  that automatically detects alignment failures, routes uncertain cases to human review,
+  and outperforms baseline metrics, ensuring reliable downstream neuroanatomical analysis.
 tags:
-- template
-- claude-code
-- aws-bedrock
-- AI-assistant
-- hackathon
+- hackathon-challenge
+- image-processing
+- quality-control
+- light-sheet-microscopy
+- image-alignment
+- neural-dynamics
+- computer-vision
+- registration-QC
+- cc_mode:cc_orchestration
+- cc_intent:iterative_analysis
