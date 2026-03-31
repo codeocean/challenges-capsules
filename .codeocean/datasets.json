@@ -1,0 +1,9 @@
+{
+	"version": 1,
+	"attached_datasets": [
+		{
+			"id": "73007d1e-fb07-4af8-b0ef-7b4b19031c02",
+			"mount": "hackathon_challanges"
+		}
+	]
+}

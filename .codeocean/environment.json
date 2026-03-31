@@ -7,14 +7,71 @@
 		"git_ask_pass": true,
 		"mount_secrets": true
 	},
+	"installers": {
+		"pip": {
+			"packages": [
+				{
+					"name": "anndata",
+					"version": "0.11.4"
+				},
+				{
+					"name": "igraph",
+					"version": "1.0.0"
+				},
+				{
+					"name": "leidenalg",
+					"version": "0.11.0"
+				},
+				{
+					"name": "matplotlib",
+					"version": "3.10.8"
+				},
+				{
+					"name": "numpy",
+					"version": "2.2.6"
+				},
+				{
+					"name": "pandas",
+					"version": "2.3.3"
+				},
+				{
+					"name": "scanpy",
+					"version": "1.11.5"
+				},
+				{
+					"name": "scikit-learn",
+					"version": "1.7.2"
+				},
+				{
+					"name": "scipy",
+					"version": "1.15.3"
+				},
+				{
+					"name": "squidpy",
+					"version": "1.6.5"
+				}
+			],
+			"options": {},
+			"pre_install_options": {}
+		}
+	},
 	"env_variables": [
 		{
-			"name": "CLAUDE_CODE_USE_BEDROCK",
-			"value": "1"
+			"name": "CLAUDE_CODE_MAX_OUTPUT_TOKENS",
+			"value": "100000"
 		},
 		{
-			"name": "AWS_REGION",
-			"value": "us-east-1"
+			"name": "MAX_THINKING_TOKENS",
+			"value": "10000"
+		},
+		{
+			"name": "ANTHROPIC_DEFAULT_SONNET_MODEL"
+		},
+		{
+			"name": "ANTHROPIC_MODEL"
+		},
+		{
+			"name": "BEDROCK_MODEL_ID"
 		}
 	]
 }

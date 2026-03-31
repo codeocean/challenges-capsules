@@ -1,59 +1,24 @@
-# Claude Code Template - Bedrock Backend
+# Challenge 14: Segment Intestine Villi
 
-Template capsule for executing AI-assisted coding tasks with Claude Code using AWS Bedrock backend.
+## What This Capsule Does
+Loads Xenium ileum spatial transcriptomics data, scores cells as epithelial using
+marker genes (EPCAM, FABP1, FABP2, VIL1), builds spatial neighbor graph, runs
+Leiden clustering, outputs color-coded spatial map + per-villus composition.
 
-## Quick Start
+## Evaluation
+Visual — do the colored clusters correspond to individual villi as judged by domain expert?
 
-```bash
-./run "Create a Python script that processes CSV files"
-```
+## Required Data Assets
+| File | Description |
+|------|-------------|
+| `xenium_ileum/` | Xenium cell feature matrix + spatial coordinates |
 
-Claude Code will execute your command and save outputs to `/results`.
+## Expected Outputs
+| File | Description |
+|------|-------------|
+| `spatial_plot.png` | Color-coded spatial map (each color = one villus cluster) |
+| `villus_assignments.csv` | cell_id, villus_cluster_id, is_epithelial, x, y |
+| `per_villus_summary.csv` | villus_cluster_id, n_cells |
 
-## Configuration
-
-This capsule is pre-configured to use AWS Bedrock:
-- `CLAUDE_CODE_USE_BEDROCK=1` - Uses AWS Bedrock instead of Anthropic API
-- `AWS_REGION=us-east-1` - Bedrock region
-- Code Ocean managed IAM credentials (no manual setup needed)
-- Claude Code automatically selects the best available Sonnet model
-
-## Usage Examples
-
-```bash
-# Create code
-./run "Write a function to calculate prime numbers"
-
-# Analyze data  
-./run "Create a data analysis script for genomics data in /data"
-
-# Debug code
-./run "Fix the bug in /code/analysis.py"
-
-# Generate documentation
-./run "Add docstrings to all functions in /code"
-```
-
-## For Hackathon Participants
-
-1. **Duplicate this capsule** for your challenge
-2. **Add your data assets** to `/data`
-3. **Run commands** to let Claude Code build your solution
-4. **Results** saved automatically to `/results`
-
-## File Structure
-
-```
-/code/
-  └── run          # Passes commands to Claude Code
-
-/results/
-  └── claude_output.txt   # Claude's response
-```
-
-## Notes
-
-- Runs headlessly (no interactive prompts)
-- Uses Code Ocean managed AWS credentials
-- Works in reproducible runs and Cloud Workstations
-- All code generation is done by Claude Code via Bedrock
+## Environment
+- CPU only. `scanpy`, `squidpy`, `matplotlib`, `pandas`, `numpy`, `anndata`
