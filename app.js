@@ -8,7 +8,9 @@
   const state = {
     search: "",
     status: "all",
-    flags: new Set()
+    flags: new Set(),
+    sortKey: "challenge",
+    sortDirection: "asc"
   };
 
   const statusOptions = [
@@ -34,6 +36,7 @@
   const searchInput = document.getElementById("search-input");
   const statusFilters = document.getElementById("status-filters");
   const flagFilters = document.getElementById("flag-filters");
+  const tableHead = document.querySelector(".capsule-table thead");
 
   let observer;
 
@@ -76,6 +79,95 @@
         .toLowerCase();
 
       return haystack.includes(query);
+    });
+  }
+
+  function getSortValue(capsule, sortKey) {
+    switch (sortKey) {
+      case "challenge":
+        return Number(capsule.number);
+      case "status": {
+        const order = { completed: 0, partial: 1, blocked: 2 };
+        return order[capsule.status] ?? 99;
+      }
+      case "summary":
+        return capsule.capsuleSummary;
+      case "usage":
+        return capsule.usageSteps[0] || capsule.usageMode;
+      case "inputs":
+        return capsule.inputs.join(" ");
+      case "links":
+        return capsule.directory;
+      default:
+        return capsule.title;
+    }
+  }
+
+  function sortCapsules(items) {
+    return items
+      .map((capsule, index) => ({ capsule, index }))
+      .sort((left, right) => {
+        const leftValue = getSortValue(left.capsule, state.sortKey);
+        const rightValue = getSortValue(right.capsule, state.sortKey);
+
+        let result = 0;
+
+        if (typeof leftValue === "number" && typeof rightValue === "number") {
+          result = leftValue - rightValue;
+        } else {
+          result = String(leftValue).localeCompare(String(rightValue), undefined, {
+            numeric: true,
+            sensitivity: "base"
+          });
+        }
+
+        if (result === 0) {
+          result = Number(left.capsule.number) - Number(right.capsule.number);
+        }
+
+        if (result === 0) {
+          result = left.index - right.index;
+        }
+
+        return state.sortDirection === "asc" ? result : -result;
+      })
+      .map((entry) => entry.capsule);
+  }
+
+  function formatSortLabel() {
+    const labels = {
+      challenge: "Challenge",
+      status: "Status",
+      summary: "What it solves",
+      usage: "How to use",
+      inputs: "Inputs",
+      links: "Links"
+    };
+
+    return `${labels[state.sortKey] || "Challenge"} ${state.sortDirection === "asc" ? "↑" : "↓"}`;
+  }
+
+  function renderSortHeaders() {
+    if (!tableHead) return;
+
+    const buttons = tableHead.querySelectorAll("[data-sort-key]");
+    buttons.forEach((button) => {
+      const key = button.getAttribute("data-sort-key");
+      const th = button.closest("th");
+      const indicator = button.querySelector(".sort-indicator");
+      const isActive = key === state.sortKey;
+
+      if (th) {
+        th.setAttribute(
+          "aria-sort",
+          isActive ? (state.sortDirection === "asc" ? "ascending" : "descending") : "none"
+        );
+      }
+
+      button.classList.toggle("is-active", isActive);
+      if (indicator) {
+        indicator.textContent = isActive ? (state.sortDirection === "asc" ? "↑" : "↓") : "↕";
+      }
     });
   }
 
@@ -285,7 +377,7 @@
   function renderResultsNote(filtered) {
     const capsulesCount = filtered.length;
     const label = capsulesCount === 1 ? "capsule" : "capsules";
-    resultsNote.textContent = `${capsulesCount} ${label} shown`;
+    resultsNote.textContent = `${capsulesCount} ${label} shown · sorted by ${formatSortLabel()}`;
   }
 
   function bindFilterEvents() {
@@ -312,6 +404,23 @@
       state.search = event.target.value;
       render();
     });
+
+    if (tableHead) {
+      tableHead.addEventListener("click", (event) => {
+        const button = event.target.closest("[data-sort-key]");
+        if (!button) return;
+
+        const nextKey = button.getAttribute("data-sort-key");
+        if (state.sortKey === nextKey) {
+          state.sortDirection = state.sortDirection === "asc" ? "desc" : "asc";
+        } else {
+          state.sortKey = nextKey;
+          state.sortDirection = "asc";
+        }
+
+        render();
+      });
+    }
 
     capsulesContainer.addEventListener("click", (event) => {
       const target = event.target.closest("[data-clear-filters]");
@@ -356,12 +465,14 @@
 
   function render() {
     const filtered = getFilteredCapsules();
+    const sorted = sortCapsules(filtered);
     renderStatusFilters();
     renderFlagFilters();
-    renderNav(filtered);
-    renderTable(filtered);
-    renderCapsules(filtered);
-    renderResultsNote(filtered);
+    renderSortHeaders();
+    renderNav(sorted);
+    renderTable(sorted);
+    renderCapsules(sorted);
+    renderResultsNote(sorted);
     activateNavOnScroll();
   }
 

@@ -271,6 +271,26 @@ ol {
   top: 1rem;
   display: grid;
   gap: 1rem;
+  max-height: calc(100vh - 2rem);
+  overflow-y: auto;
+  overscroll-behavior: contain;
+  scrollbar-gutter: stable;
+  padding-right: 0.3rem;
+}
+
+.sidebar::-webkit-scrollbar {
+  width: 10px;
+}
+
+.sidebar::-webkit-scrollbar-thumb {
+  border: 2px solid transparent;
+  border-radius: 999px;
+  background: rgba(36, 88, 213, 0.28);
+  background-clip: padding-box;
+}
+
+.sidebar::-webkit-scrollbar-track {
+  background: transparent;
 }
 
 .sidebar-panel,
@@ -503,6 +523,41 @@ ol {
   text-transform: uppercase;
   letter-spacing: 0;
   color: var(--muted);
+}
+
+.sort-button {
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 0.65rem;
+  width: 100%;
+  padding: 0;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  font-size: inherit;
+  font-weight: inherit;
+  text-transform: inherit;
+  letter-spacing: inherit;
+  text-align: left;
+  background: transparent;
+  cursor: pointer;
+}
+
+.sort-button:hover {
+  color: var(--accent-ink);
+}
+
+.sort-button.is-active {
+  color: var(--accent-ink);
+}
+
+.sort-indicator {
+  min-width: 1.1rem;
+  color: rgba(36, 88, 213, 0.72);
+  font-size: 12px;
+  line-height: 1;
+  text-align: right;
 }
 
 .capsule-table tbody tr:hover {
@@ -941,6 +996,9 @@ ol {
   .sidebar {
     position: static;
     grid-template-columns: repeat(3, minmax(0, 1fr));
+    max-height: none;
+    overflow: visible;
+    padding-right: 0;
   }
 }
 

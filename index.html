@@ -110,12 +110,42 @@
             <table class="capsule-table">
               <thead>
                 <tr>
-                  <th scope="col">Challenge</th>
-                  <th scope="col">Status</th>
-                  <th scope="col">What it solves</th>
-                  <th scope="col">How to use</th>
-                  <th scope="col">Inputs</th>
-                  <th scope="col">Links</th>
+                  <th scope="col" aria-sort="ascending">
+                    <button class="sort-button" type="button" data-sort-key="challenge">
+                      <span>Challenge</span>
+                      <span class="sort-indicator" aria-hidden="true"></span>
+                    </button>
+                  </th>
+                  <th scope="col" aria-sort="none">
+                    <button class="sort-button" type="button" data-sort-key="status">
+                      <span>Status</span>
+                      <span class="sort-indicator" aria-hidden="true"></span>
+                    </button>
+                  </th>
+                  <th scope="col" aria-sort="none">
+                    <button class="sort-button" type="button" data-sort-key="summary">
+                      <span>What it solves</span>
+                      <span class="sort-indicator" aria-hidden="true"></span>
+                    </button>
+                  </th>
+                  <th scope="col" aria-sort="none">
+                    <button class="sort-button" type="button" data-sort-key="usage">
+                      <span>How to use</span>
+                      <span class="sort-indicator" aria-hidden="true"></span>
+                    </button>
+                  </th>
+                  <th scope="col" aria-sort="none">
+                    <button class="sort-button" type="button" data-sort-key="inputs">
+                      <span>Inputs</span>
+                      <span class="sort-indicator" aria-hidden="true"></span>
+                    </button>
+                  </th>
+                  <th scope="col" aria-sort="none">
+                    <button class="sort-button" type="button" data-sort-key="links">
+                      <span>Links</span>
+                      <span class="sort-indicator" aria-hidden="true"></span>
+                    </button>
+                  </th>
                 </tr>
               </thead>
               <tbody id="overview-body"></tbody>
