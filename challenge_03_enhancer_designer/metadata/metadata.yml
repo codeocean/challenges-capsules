@@ -1,0 +1,17 @@
+metadata_version: 1
+name: "\U0001F9EC Challenge 3: Enhancer Designer"
+description: Generate synthetic enhancer-like DNA sequences for K562 cells using computational
+  design loops with in silico oracles (DeepSTARR, ChromBPNet, Enformer), demonstrating
+  reproducible enhancer design with scoring, filtering, and diversity selection for
+  experimental validation.
+tags:
+- hackathon-challenge
+- enhancer-design
+- synthetic-biology
+- deep-learning
+- genomics
+- K562
+- regulatory-elements
+- DNA-design
+- cc_mode:cc_orchestration
+- cc_intent:iterative_analysis
