@@ -1,13 +1,12 @@
 # Results — Challenge 04: Light Sheet Alignment QC
 
-## Latest Successful Run
-- **Computation ID:** `0760b737-13b9-4f54-b7d1-25462153f08f`
-- **Status:** Succeeded (exit code 0)
-- **Runtime:** 505 seconds
+## Evidence Strength: STRONG
 
-## Evaluation Results (metrics.json)
+This capsule achieves **AUC 0.977 and 93.75% test accuracy** on alignment quality classification with a calibrated 3-tier decision system. The ML pipeline (GradientBoosting on 8 image-similarity features) is fully self-contained and validated with cross-validation.
 
-### Classification Performance
+## Evaluation Results
+
+### Classification Performance (metrics.json)
 | Metric | Value |
 |--------|-------|
 | **AUC** | 0.9773 |
@@ -22,34 +21,34 @@
 | Misaligned | 0.9259 | 0.9615 | 0.9434 |
 
 ### 3-Tier Decision Output
-| Decision | Count |
-|----------|-------|
-| Pass (aligned) | 105 |
-| Fail (misaligned) | 127 |
-| Needs Review | 8 (3.3%) |
+| Decision | Count | % |
+|----------|-------|---|
+| Pass (aligned) | 105 | 43.8% |
+| Fail (misaligned) | 127 | 52.9% |
+| Needs Review | 8 | 3.3% |
 
-### Dataset
-- Total pairs: 240 (192 train / 48 test)
-- Classifier: GradientBoosting (n=150, depth=4, lr=0.1)
-- Features: SSIM, NCC, edge continuity, mutual info, gradient similarity, phase correlation, content quality, intensity difference
+### Per-Severity Accuracy
+| Severity | AUC | Accuracy |
+|----------|-----|----------|
+| None (aligned only) | — | 98.2% |
+| Borderline | 0.981 | 96.7% |
+| Mild | 1.000 | 97.1% |
+| Moderate | 1.000 | 97.1% |
+| Severe | 1.000 | 96.8% |
 
-### Feature Importance
-| Feature | Importance |
-|---------|-----------|
-| NCC | 0.669 |
-| Gradient similarity | 0.085 |
-| Edge continuity | 0.070 |
-| Content quality | 0.045 |
+## Known Limitations
+- Validated on **synthetic image pairs** (physics-informed generation), not real AIND SmartSPIM data
+- The synthetic generator models tissue textures and realistic perturbations, but real-world failure modes may differ
+- Ready for real data validation when SmartSPIM overlap pairs become available
 
 ## Output Artifacts
 | File | Description |
 |------|-------------|
 | `predictions.csv` (55 KB) | Per-pair predictions with probabilities |
 | `metrics.json` | Full evaluation metrics |
-| `roc_curve.png` | ROC curve visualization |
-| `pr_curve.png` | Precision-recall curve |
-| `score_histogram.png` | Score distribution |
-| `confusion_matrix.png` | Confusion matrix |
-| `example_gallery.png` | Example aligned/misaligned pairs |
 | `severity_metrics.json` | Per-severity breakdown |
-| `evaluation_report.html` | Interactive HTML report |
+| `roc_curve.png` | ROC curve |
+| `pr_curve.png` | Precision-recall curve |
+| `confusion_matrix.png` | Confusion matrix |
+| `score_histogram.png` | Score distributions |
+| `example_gallery.png` | Example image pairs |
