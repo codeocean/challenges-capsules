@@ -1,0 +1,16 @@
+metadata_version: 1
+name: "\U0001F52C Challenge 4: Light Sheet Alignment QC"
+description: Build a quality control system for light-sheet microscopy image registration
+  that automatically detects alignment failures, routes uncertain cases to human review,
+  and outperforms baseline metrics, ensuring reliable downstream neuroanatomical analysis.
+tags:
+- hackathon-challenge
+- image-processing
+- quality-control
+- light-sheet-microscopy
+- image-alignment
+- neural-dynamics
+- computer-vision
+- registration-QC
+- cc_mode:cc_orchestration
+- cc_intent:iterative_analysis
