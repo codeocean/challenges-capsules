@@ -1,5 +1,13 @@
 # ⚡ Challenge 05: Automate Your Productivity
 
+
+## Results Summary
+- **Status:** Pipeline runs end-to-end producing scenario-based analyses
+- **Output:** Productivity proposals, comparison reports, synthetic workspace analysis
+- **LLM Integration:** Bedrock mock mode with deterministic fallback
+
+> See [RESULTS.md](RESULTS.md) for full output artifact listing.
+
 ## What This Capsule Does
 
 An **agentic productivity analyser** that uses AWS Bedrock (Anthropic Claude)
