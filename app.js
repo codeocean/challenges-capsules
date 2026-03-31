@@ -337,12 +337,17 @@
       .join("");
   }
 
+  function formatChallengeNumber(value) {
+    const raw = String(value ?? "").trim();
+    return /^\d+$/.test(raw) ? raw.padStart(2, "0") : raw;
+  }
+
   function renderNav(filtered) {
     capsuleNav.innerHTML = filtered
       .map(
         (capsule) => `
           <a class="nav-link reveal" href="#${capsule.id}" data-nav-target="${capsule.id}">
-            <span class="nav-number">${capsule.number}</span>
+            <span class="nav-number">${formatChallengeNumber(capsule.number)}</span>
             <span class="nav-text">${escapeHtml(capsule.title)}</span>
           </a>
         `

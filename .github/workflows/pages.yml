@@ -21,9 +21,20 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: "22"
+      - name: Rebuild bundled docs
+        run: node build-embedded-docs.mjs
+      - name: Rebuild static doc pages
+        run: node build-static-doc-pages.mjs
+      - name: Stage Pages artifact with cache-busted assets
+        run: node stage-pages-artifact.mjs
+        env:
+          GITHUB_SHA: ${{ github.sha }}
       - uses: actions/configure-pages@v5
       - uses: actions/upload-pages-artifact@v3
         with:
-          path: .
+          path: .site
       - id: deployment
         uses: actions/deploy-pages@v4
