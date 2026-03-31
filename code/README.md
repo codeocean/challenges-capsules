@@ -1,5 +1,14 @@
 # Challenge 16: SciDEX — Scientific Discovery Exchange
 
+
+## Results Summary
+- **2 sessions** completed (initial extraction + refinement)
+- **17 verified evidence claims** from real paper corpus
+- **SQLite persistence** with full state tracking
+- **100% citation validity** — all paper_ids verified
+
+> See [RESULTS.md](RESULTS.md) for session details and evidence summary.
+
 ## What This Capsule Does
 Takes a neuroscience research question, retrieves ~50 paper abstracts, uses LLM to
 generate and critique structured hypotheses (citing specific papers), saves to SQLite,
