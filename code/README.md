@@ -1,5 +1,13 @@
 # Challenge 06: Plasmid Forge
 
+
+## Results Summary
+- **Test Cases:** 6 | **Passed:** 1/6 (17%)
+- **Safety Screening:** ✅ Correctly refuses toxin requests
+- **Construct Output:** GenBank format
+
+> See [RESULTS.md](RESULTS.md) for per-case test results and details.
+
 ## What This Capsule Does
 
 Takes a one-line biological request (e.g., "express GFP in E. coli with kanamycin
