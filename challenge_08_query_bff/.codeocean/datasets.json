@@ -1,0 +1,13 @@
+{
+	"version": 1,
+	"attached_datasets": [
+		{
+			"id": "392f58cb-c458-40ab-9095-b900b9db9301",
+			"mount": "bff_metadata"
+		},
+		{
+			"id": "73007d1e-fb07-4af8-b0ef-7b4b19031c02",
+			"mount": "hackathon_challanges"
+		}
+	]
+}
