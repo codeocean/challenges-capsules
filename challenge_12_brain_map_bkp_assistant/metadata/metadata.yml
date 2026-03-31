@@ -1,0 +1,16 @@
+metadata_version: 1
+name: "\U0001F5FA️ Challenge 12: Brain Map + BKP Assistant"
+description: Build a grounded discovery assistant over brain-map and Brain Knowledge
+  Platform content that finds resources, explains matches, handles deprecated content,
+  and evaluates cross-product retrieval quality for Allen neuroscience tools and datasets.
+tags:
+- hackathon-challenge
+- knowledge-assistant
+- brain-map
+- BKP
+- product-discovery
+- RAG
+- documentation-search
+- neuroscience
+- cc_mode:cc_orchestration
+- cc_intent:iterative_analysis

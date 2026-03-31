@@ -1,0 +1,1 @@
+{"total_queries":15,"correct":13,"accuracy":0.867,"per_category":{"easy":{"accuracy":1.0,"total":5,"correct":5},"medium":{"accuracy":1.0,"total":5,"correct":5},"cross_product":{"accuracy":1.0,"total":2,"correct":2},"adversarial":{"accuracy":0.333,"total":3,"correct":1}},"deprecated_flagged":2}

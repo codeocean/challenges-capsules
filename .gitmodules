@@ -1,6 +1,3 @@
-[submodule "challenge_12_brain_map_bkp_assistant"]
-	path = challenge_12_brain_map_bkp_assistant
-	url = https://aqua.aws.codeocean.dev/capsule-4161944.git
 [submodule "challenge_13_croissant_pipeline"]
 	path = challenge_13_croissant_pipeline
 	url = https://aqua.aws.codeocean.dev/capsule-1915445.git
