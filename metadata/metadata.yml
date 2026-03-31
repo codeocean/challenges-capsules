@@ -1,11 +1,17 @@
 metadata_version: 1
-name: Claude Code + Bedrock Template
-description: Claude Code template using AWS Bedrock backend. No API keys needed -
-  uses Code Ocean managed IAM credentials. Perfect for hackathons and AI-assisted
-  development.
+name: "\U0001F9EA Challenge 6: Plasmid Forge"
+description: Build a natural-language-to-plasmid design workflow that converts biological
+  requests into synthesis-ready constructs with Gibson Assembly, part retrieval from
+  registries, validation checks, safety screening, and complete documentation for
+  E. coli expression systems.
 tags:
-- template
-- claude-code
-- aws-bedrock
-- AI-assistant
-- hackathon
+- hackathon-challenge
+- plasmid-design
+- synthetic-biology
+- molecular-cloning
+- Gibson-assembly
+- bioinformatics
+- automation
+- genetic-engineering
+- cc_mode:cc_orchestration
+- cc_intent:iterative_analysis

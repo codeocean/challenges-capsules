@@ -1,59 +1,34 @@
-# Claude Code Template - Bedrock Backend
+# Challenge 06: Plasmid Forge
 
-Template capsule for executing AI-assisted coding tasks with Claude Code using AWS Bedrock backend.
+## What This Capsule Does
 
-## Quick Start
+Takes a one-line biological request (e.g., "express GFP in E. coli with kanamycin
+resistance"), uses an LLM to parse intent, selects from ~20 pre-curated genetic parts,
+assembles a circular plasmid with Biopython, and outputs an annotated GenBank file
+plus an assumptions manifest.
 
-```bash
-./run "Create a Python script that processes CSV files"
-```
+## Evaluation Criteria
 
-Claude Code will execute your command and save outputs to `/results`.
+The .gb file opens correctly in SnapGene/Benchling showing the right parts in the
+right order and orientation.
 
-## Configuration
+## Required Data Assets
 
-This capsule is pre-configured to use AWS Bedrock:
-- `CLAUDE_CODE_USE_BEDROCK=1` - Uses AWS Bedrock instead of Anthropic API
-- `AWS_REGION=us-east-1` - Bedrock region
-- Code Ocean managed IAM credentials (no manual setup needed)
-- Claude Code automatically selects the best available Sonnet model
+| File | Description |
+|------|-------------|
+| `request.txt` | One-line biological request |
+| `parts_library/` | ~20 GenBank files of common parts (promoters, RBS, terminators, genes, resistance) |
+| `backbones/` | 5–10 standard backbone vectors as .gb files |
 
-## Usage Examples
+## Expected Outputs
 
-```bash
-# Create code
-./run "Write a function to calculate prime numbers"
+| File | Description |
+|------|-------------|
+| `construct.gb` | Annotated circular plasmid GenBank file |
+| `manifest.json` | Every assumption: parts selected, alternatives, rationale |
+| `protocol.md` | Simple Gibson Assembly protocol |
 
-# Analyze data  
-./run "Create a data analysis script for genomics data in /data"
+## Environment
 
-# Debug code
-./run "Fix the bug in /code/analysis.py"
-
-# Generate documentation
-./run "Add docstrings to all functions in /code"
-```
-
-## For Hackathon Participants
-
-1. **Duplicate this capsule** for your challenge
-2. **Add your data assets** to `/data`
-3. **Run commands** to let Claude Code build your solution
-4. **Results** saved automatically to `/results`
-
-## File Structure
-
-```
-/code/
-  └── run          # Passes commands to Claude Code
-
-/results/
-  └── claude_output.txt   # Claude's response
-```
-
-## Notes
-
-- Runs headlessly (no interactive prompts)
-- Uses Code Ocean managed AWS credentials
-- Works in reproducible runs and Cloud Workstations
-- All code generation is done by Claude Code via Bedrock
+- Python 3.10+, CPU only
+- `biopython`, `pydna`, `anthropic` (or `openai`), `pydantic`
