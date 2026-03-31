@@ -783,6 +783,33 @@ ol {
   content: "−";
 }
 
+.doc-disclosure.kind-results {
+  background: linear-gradient(180deg, rgba(45, 108, 255, 0.08), rgba(45, 108, 255, 0.02));
+  border-color: rgba(45, 108, 255, 0.2);
+}
+
+.doc-disclosure.kind-howto {
+  background: linear-gradient(180deg, rgba(22, 141, 97, 0.10), rgba(22, 141, 97, 0.02));
+  border-color: rgba(22, 141, 97, 0.2);
+}
+
+.doc-disclosure.kind-aqua {
+  background: linear-gradient(180deg, rgba(144, 98, 28, 0.10), rgba(144, 98, 28, 0.02));
+  border-color: rgba(144, 98, 28, 0.2);
+}
+
+.doc-disclosure.kind-results summary {
+  color: var(--accent-ink);
+}
+
+.doc-disclosure.kind-howto summary {
+  color: #0f7b55;
+}
+
+.doc-disclosure.kind-aqua summary {
+  color: #8a5c18;
+}
+
 .markdown-body {
   padding: 0 1.05rem 1.05rem;
   border-top: 1px solid var(--line);
@@ -1099,6 +1126,60 @@ ol {
   margin-bottom: 0.45rem;
 }
 
+.doc-spotlight-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 1rem;
+}
+
+.doc-spotlight-card {
+  padding: 1rem 1.05rem;
+  border-radius: var(--radius-lg);
+  border: 1px solid var(--line);
+  background: var(--surface-strong);
+}
+
+.doc-spotlight-head {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.9rem;
+  align-items: center;
+  margin-bottom: 0.75rem;
+}
+
+.doc-spotlight-head .mini-label {
+  margin-bottom: 0;
+}
+
+.doc-spotlight-link {
+  font-size: 12px;
+  font-weight: 600;
+  text-transform: uppercase;
+}
+
+.spotlight-results {
+  background: linear-gradient(180deg, rgba(45, 108, 255, 0.10), rgba(45, 108, 255, 0.03));
+  border-color: rgba(45, 108, 255, 0.22);
+}
+
+.spotlight-howto {
+  background: linear-gradient(180deg, rgba(22, 141, 97, 0.12), rgba(22, 141, 97, 0.03));
+  border-color: rgba(22, 141, 97, 0.22);
+}
+
+.spotlight-howto .mini-label,
+.spotlight-howto .doc-spotlight-link {
+  color: #0f7b55;
+}
+
+.spotlight-copy {
+  margin-bottom: 0.65rem;
+  color: var(--text);
+  font-weight: 500;
+  line-height: 1.6;
+}
+
 .docs-hub {
   display: flex;
   flex-wrap: wrap;
@@ -1274,6 +1355,7 @@ ol {
 
 @media (max-width: 860px) {
   .io-columns,
+  .doc-spotlight-grid,
   .doc-summary-grid,
   .doc-artifacts-grid {
     grid-template-columns: 1fr;

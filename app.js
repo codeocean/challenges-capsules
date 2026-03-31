@@ -122,6 +122,15 @@
     return `${prefix}${normalizeRelativePath(relativePath)}`;
   }
 
+  function getHowToSpotlightCopy(capsule) {
+    return (
+      capsule.solution[0] ||
+      capsule.usageHighlights[0] ||
+      capsule.usageSteps[0] ||
+      capsule.capsuleSummary
+    );
+  }
+
   function getDocPageHref(capsule, docType, prefix = "./docs/") {
     return `${prefix}${capsule.id}-${docType.pageSuffix}.html`;
   }
@@ -414,9 +423,10 @@
     }
 
     const openAttr = options.open ? " open" : "";
+    const kindClass = options.kind ? ` kind-${options.kind}` : "";
 
     return `
-      <details class="doc-disclosure"${openAttr}>
+      <details class="doc-disclosure${kindClass}"${openAttr}>
         <summary>${escapeHtml(title)}</summary>
         <div class="markdown-body">${renderMarkdown(markdown)}</div>
       </details>
@@ -498,6 +508,28 @@
             <p class="capsule-subtitle">${escapeHtml(capsule.primaryUseCase || capsule.capsuleSummary)}</p>
             <p class="lead-text">${escapeHtml(capsule.problem)}</p>
 
+            <div class="doc-spotlight-grid">
+              <section class="doc-spotlight-card spotlight-results">
+                <div class="doc-spotlight-head">
+                  <p class="mini-label">RESULTS</p>
+                  <a class="doc-spotlight-link" href="${getDocPageHref(capsule, DOC_TYPES[0], "./docs/")}">Open RESULTS</a>
+                </div>
+                <ul class="highlight-list">
+                  ${(capsule.resultsHighlights || []).slice(0, 2).map((item) => `<li>${escapeHtml(item)}</li>`).join("")}
+                </ul>
+                <p class="supporting-note">Featured artifacts: ${featuredArtifacts.length} · Total indexed artifacts: ${allArtifacts.length}</p>
+              </section>
+
+              <section class="doc-spotlight-card spotlight-howto">
+                <div class="doc-spotlight-head">
+                  <p class="mini-label">HOW TO IMPLEMENT</p>
+                  <a class="doc-spotlight-link" href="${getDocPageHref(capsule, DOC_TYPES[3], "./docs/")}">Open HOW TO IMPLEMENT</a>
+                </div>
+                <p class="spotlight-copy">${escapeHtml(getHowToSpotlightCopy(capsule))}</p>
+                <p class="supporting-note">Use this doc when you want to recreate, adapt, or port the capsule workflow to your own data and environment.</p>
+              </section>
+            </div>
+
             <div class="detail-grid summary-grid">
               <section class="detail-block accent-block">
                 <h3>How to use</h3>
@@ -577,11 +609,11 @@
             </div>
 
             <div class="embedded-docs">
-              ${renderEmbeddedDoc("Embedded RESULTS", docs.resultsMarkdown, { open: true })}
-              ${renderEmbeddedDoc("Embedded HOW TO IMPLEMENT", docs.howToImplementMarkdown, { open: true })}
-              ${renderEmbeddedDoc("Embedded AQUA PROMPT", docs.aquaPromptMarkdown)}
-              ${renderEmbeddedDoc("Embedded README", docs.readmeMarkdown)}
-              ${renderEmbeddedDoc("Embedded REVIEW", docs.reviewMarkdown)}
+              ${renderEmbeddedDoc("Embedded RESULTS", docs.resultsMarkdown, { open: true, kind: "results" })}
+              ${renderEmbeddedDoc("Embedded HOW TO IMPLEMENT", docs.howToImplementMarkdown, { open: true, kind: "howto" })}
+              ${renderEmbeddedDoc("Embedded AQUA PROMPT", docs.aquaPromptMarkdown, { kind: "aqua" })}
+              ${renderEmbeddedDoc("Embedded README", docs.readmeMarkdown, { kind: "readme" })}
+              ${renderEmbeddedDoc("Embedded REVIEW", docs.reviewMarkdown, { kind: "review" })}
             </div>
 
             <div class="capsule-actions">
