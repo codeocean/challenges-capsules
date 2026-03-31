@@ -1,0 +1,21 @@
+{
+	"version": 1,
+	"attached_datasets": [
+		{
+			"id": "73007d1e-fb07-4af8-b0ef-7b4b19031c02",
+			"mount": "hackathon_challanges"
+		},
+		{
+			"id": "8ef0614d-b92e-4390-98a6-4a56fe3bb7fb",
+			"mount": "cellxgene_brain"
+		},
+		{
+			"id": "97f2a1ae-3c7c-4145-92b4-6a2d6d376afa",
+			"mount": "WHB-taxonomy"
+		},
+		{
+			"id": "d99ad8f3-771e-4ade-83fc-3fb67d3c60af",
+			"mount": "challenge_02_input"
+		}
+	]
+}
