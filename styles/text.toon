@@ -1,0 +1,361 @@
+# @file: styles/text.toon
+# @type: TEXT
+# @count: 51
+# @exported: 2026-03-17T12:55:35Z
+
+[Body/Caption]
+family: Poppins
+size  : 10.0px
+weight: 400
+line  : 12px
+track : 0.0
+
+[Body/Caption-Medium]
+family: Poppins
+size  : 10.0px
+weight: 500
+line  : 12px
+track : 0.0
+
+[Body/Caption-link]
+family: Poppins
+size  : 10.0px
+weight: 500
+line  : 12px
+track : 0.0
+
+[Body/xs]
+family: Poppins
+size  : 12.0px
+weight: 400
+line  : 18px
+track : 0.0
+
+[Body/xs-Medium]
+family: Poppins
+size  : 12.0px
+weight: 500
+line  : 14px
+track : 0.0
+
+[Body/xs-link]
+family: Poppins
+size  : 12.0px
+weight: 500
+line  : 14px
+track : 0.0
+
+[Body/sm]
+family: Poppins
+size  : 14.0px
+weight: 400
+line  : 21px
+track : 0.0
+
+[Body/sm-Bold]
+family: Poppins
+size  : 14.0px
+weight: 500
+line  : 21px
+track : 0.0
+
+[Body/sm-link-Medium]
+family: Poppins
+size  : 14.0px
+weight: 500
+line  : 21px
+track : 0.0
+
+[Body/md]
+family: Poppins
+size  : 16.0px
+weight: 400
+line  : 24px
+track : 0.0
+
+[Body/md-Medium]
+family: Poppins
+size  : 16.0px
+weight: 500
+line  : 24px
+track : 0.0
+
+[Body/md-link]
+family: Poppins
+size  : 16.0px
+weight: 500
+line  : 24px
+track : 0.0
+
+[Body/lg]
+family: Poppins
+size  : 18.0px
+weight: 400
+line  : 27px
+track : 0.0
+
+[Body/lg-Medium]
+family: Poppins
+size  : 18.0px
+weight: 500
+line  : 27px
+track : 0.0
+
+[Body/lg-link]
+family: Poppins
+size  : 18.0px
+weight: 500
+line  : 27px
+track : 0.0
+
+[Body/xl]
+family: Poppins
+size  : 24.0px
+weight: 400
+line  : 36px
+track : 0.0
+
+[Body/xl-Medium]
+family: Poppins
+size  : 24.0px
+weight: 500
+line  : 36px
+track : 0.0
+
+[Body/xl-link]
+family: Poppins
+size  : 24.0px
+weight: 500
+line  : 36px
+track : 0.0
+
+[Body/2xl]
+family: Poppins
+size  : 32.0px
+weight: 400
+line  : 51px
+track : 0.0
+
+[Body/2xl-Medium]
+family: Poppins
+size  : 32.0px
+weight: 500
+line  : 51px
+track : 0.0
+
+[Body/2xl-link]
+family: Poppins
+size  : 32.0px
+weight: 500
+line  : 51px
+track : 0.0
+
+[Heading/H6]
+family: Poppins
+size  : 12.0px
+weight: 400
+line  : 14px
+track : 0.0
+
+[Heading/H6-Medium]
+family: Poppins
+size  : 12.0px
+weight: 500
+line  : 14px
+track : 0.0
+
+[Heading/H6-link]
+family: Poppins
+size  : 12.0px
+weight: 500
+line  : 14px
+track : 0.0
+
+[Heading/H5]
+family: Poppins
+size  : 16.0px
+weight: 400
+line  : 24px
+track : 0.0
+
+[Heading/H5-Medium]
+family: Poppins
+size  : 16.0px
+weight: 500
+line  : 24px
+track : 0.0
+
+[Heading/H5-link]
+family: Poppins
+size  : 16.0px
+weight: 500
+line  : 24px
+track : 0.0
+
+[Heading/H4]
+family: Poppins
+size  : 20.0px
+weight: 400
+line  : 30px
+track : 0.0
+
+[Heading/H4-Semibold]
+family: Poppins
+size  : 20.0px
+weight: 500
+line  : 30px
+track : 0.0
+
+[Heading/H4-link]
+family: Poppins
+size  : 20.0px
+weight: 500
+line  : 30px
+track : 0.0
+
+[Heading/H3]
+family: Poppins
+size  : 24.0px
+weight: 400
+line  : 36px
+track : 0.0
+
+[Heading/H3-Medium]
+family: Poppins
+size  : 24.0px
+weight: 500
+line  : 29px
+track : 0.0
+
+[Heading/H3-link]
+family: Poppins
+size  : 24.0px
+weight: 500
+line  : 29px
+track : 0.0
+
+[Heading/H2]
+family: Poppins
+size  : 32.0px
+weight: 400
+line  : 48px
+track : 0.0
+
+[Heading/H2-Semibold]
+family: Poppins
+size  : 32.0px
+weight: 600
+line  : 51px
+track : 0.0
+
+[Heading/H2-link]
+family: Poppins
+size  : 32.0px
+weight: 500
+line  : 51px
+track : 0.0
+
+[Heading/H1]
+family: Poppins
+size  : 48.0px
+weight: 400
+line  : 77px
+track : 0.0
+
+[Heading/H1-Medium]
+family: Poppins
+size  : 48.0px
+weight: 500
+line  : 77px
+track : 0.0
+
+[Heading/H1-link]
+family: Poppins
+size  : 48.0px
+weight: 500
+line  : 77px
+track : 0.0
+
+[Body/xs-link Medium]
+family: Poppins
+size  : 12.0px
+weight: 500
+line  : 14px
+track : 0.0
+
+[Heading/H4-Medium]
+family: Poppins
+size  : 20.0px
+weight: 500
+line  : 30px
+track : 0.0
+
+[Body/sm-Medium]
+family: Poppins
+size  : 14.0px
+weight: 500
+line  : 21px
+track : 0.0
+
+[Body/sm-Semibold]
+family: Poppins
+size  : 14.0px
+weight: 500
+line  : 21px
+track : 0.0
+
+[Body/md-Semibold]
+family: Poppins
+size  : 16.0px
+weight: 500
+line  : 24px
+track : 0.0
+
+[Body/xs Tooltip]
+family: Poppins
+size  : 12.0px
+weight: 400
+line  : 18px
+track : 0.0
+
+[Body/xs-Semibold]
+family: Poppins
+size  : 12.0px
+weight: 600
+line  : 14px
+track : 0.0
+
+[Heading/H2-Medium]
+family: Poppins
+size  : 32.0px
+weight: 500
+line  : 51px
+track : 0.0
+
+[Heading/H5-Semibold]
+family: Poppins
+size  : 16.0px
+weight: 600
+line  : 24px
+track : 0.0
+
+[Body/sm-link]
+family: Poppins
+size  : 14.0px
+weight: 400
+line  : 21px
+track : 0.0
+
+[Heading/H1-Semibold]
+family: Poppins
+size  : 48.0px
+weight: 600
+line  : 72px
+track : 0.0
+
+[Body/3xl]
+family: Poppins
+size  : 40.0px
+weight: 400
+line  : 51px
+track : 0.0

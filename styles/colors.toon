@@ -1,0 +1,8 @@
+# @file: styles/colors.toon
+# @type: FILL
+# @count: 2
+# @exported: 2026-03-17T12:55:35Z
+
+[fill-styles]
+card   : linear(#FFF2EB 0%, #FFF2EB 100%)
+#00FF80: #00FF80 @10%

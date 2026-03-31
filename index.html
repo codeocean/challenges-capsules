@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Challenge Capsules Atlas</title>
+    <meta
+      name="description"
+      content="A navigable atlas of Code Ocean challenge capsules, including what each capsule solves, how the codebase works, and how to use it in Code Ocean."
+    />
+    <link rel="stylesheet" href="./styles.css" />
+  </head>
+  <body>
+    <div class="background-shell" aria-hidden="true">
+      <div class="background-orb orb-a"></div>
+      <div class="background-orb orb-b"></div>
+      <div class="background-grid"></div>
+    </div>
+
+    <header class="hero">
+      <div class="hero-copy">
+        <p class="eyebrow">Code Ocean Capsule Atlas</p>
+        <h1>Allen challenge capsules, explained as runnable Code Ocean products.</h1>
+        <p class="hero-intro">
+          Explore how each capsule frames a research problem, how the codebase solves
+          it, what to attach in Code Ocean, and what outputs to expect. The table is
+          the fastest way to scan; the sections below give the fuller story.
+        </p>
+
+        <div class="hero-actions">
+          <a class="primary-link" href="#overview">Browse the overview table</a>
+          <a class="secondary-link" href="#challenge-08">Jump to Query BFF</a>
+        </div>
+      </div>
+
+      <div class="hero-aside">
+        <div class="hero-card">
+          <p class="mini-label">What this site covers</p>
+          <p>
+            Challenges 02 through 16, grounded in the local capsule READMEs and the
+            iteration-03 review summaries in this repository.
+          </p>
+        </div>
+        <div class="hero-card">
+          <p class="mini-label">Designed for</p>
+          <p>
+            Researchers, judges, and operators who want to understand what each
+            capsule actually does before running it.
+          </p>
+        </div>
+      </div>
+    </header>
+
+    <main class="site-layout">
+      <aside class="sidebar">
+        <div class="sidebar-panel stats-panel">
+          <p class="panel-kicker">Snapshot</p>
+          <div id="stats-grid" class="stats-grid"></div>
+        </div>
+
+        <div class="sidebar-panel">
+          <p class="panel-kicker">Jump to capsule</p>
+          <nav id="capsule-nav" class="capsule-nav" aria-label="Capsule navigation"></nav>
+        </div>
+
+        <div class="sidebar-panel legend-panel">
+          <p class="panel-kicker">How to read</p>
+          <ul class="legend-list">
+            <li><span class="status-dot dot-completed"></span> Completed capsules are usable end to end.</li>
+            <li><span class="status-dot dot-partial"></span> Partial capsules run, but important parts are still weak or missing.</li>
+            <li><span class="status-dot dot-blocked"></span> Blocked capsules document intent but do not currently run cleanly.</li>
+          </ul>
+        </div>
+      </aside>
+
+      <div class="content-column">
+        <section id="overview" class="surface-card overview-card">
+          <div class="section-heading">
+            <div>
+              <p class="section-kicker">Overview</p>
+              <h2>Find the right capsule fast</h2>
+            </div>
+            <p class="section-note" id="results-note"></p>
+          </div>
+
+          <div class="toolbar">
+            <label class="search-field">
+              <span class="visually-hidden">Search capsules</span>
+              <input
+                id="search-input"
+                type="search"
+                placeholder="Search by challenge, method, data asset, or output"
+              />
+            </label>
+
+            <div class="button-row" id="status-filters" aria-label="Status filters"></div>
+            <div class="button-row" id="flag-filters" aria-label="Capability filters"></div>
+          </div>
+
+          <div class="table-wrap">
+            <table class="capsule-table">
+              <thead>
+                <tr>
+                  <th scope="col">Challenge</th>
+                  <th scope="col">Status</th>
+                  <th scope="col">What it solves</th>
+                  <th scope="col">How to use</th>
+                  <th scope="col">Inputs</th>
+                  <th scope="col">Links</th>
+                </tr>
+              </thead>
+              <tbody id="overview-body"></tbody>
+            </table>
+          </div>
+        </section>
+
+        <section class="story-intro">
+          <div class="surface-card intro-card">
+            <p class="section-kicker">Capsule guide</p>
+            <h2>Every description uses the same structure</h2>
+            <p>
+              Each capsule section below explains the problem, the concrete code
+              strategy, how to run it inside Code Ocean, what data to attach when
+              needed, and which files prove the run worked.
+            </p>
+          </div>
+        </section>
+
+        <section id="capsules-container" class="capsules-stack" aria-label="Capsule details"></section>
+      </div>
+    </main>
+
+    <footer class="footer">
+      <p>
+        Source material: local capsule READMEs, local challenge folders, and
+        iteration-03 review summaries in
+        <a href="./review-challanges-iteration-03/index.md">review-challanges-iteration-03/</a>.
+      </p>
+    </footer>
+
+    <script src="./capsules-data.js"></script>
+    <script src="./capsule-docs.js"></script>
+    <script src="./app.js"></script>
+  </body>
+</html>
