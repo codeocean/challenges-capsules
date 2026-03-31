@@ -1,6 +1,3 @@
-[submodule "challenge_10_neurobase_foundation_model_evaluation"]
-	path = challenge_10_neurobase_foundation_model_evaluation
-	url = https://aqua.aws.codeocean.dev/capsule-4973013.git
 [submodule "challenge_11_abc_atlas_literature_assistant"]
 	path = challenge_11_abc_atlas_literature_assistant
 	url = https://aqua.aws.codeocean.dev/capsule-2740751.git
