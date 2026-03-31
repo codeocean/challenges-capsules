@@ -362,6 +362,20 @@
     `;
   }
 
+  function renderExpandableCell(previewMarkup, expandedMarkup, summaryLabel = "More") {
+    return `
+      <div class="table-preview-block">
+        ${previewMarkup}
+        <details class="table-disclosure">
+          <summary>${escapeHtml(summaryLabel)}</summary>
+          <div class="table-disclosure-content">
+            ${expandedMarkup}
+          </div>
+        </details>
+      </div>
+    `;
+  }
+
   function renderArtifactList(artifacts, assetPrefix = "./", compact = false) {
     if (!artifacts.length) {
       return `<p class="supporting-note">No result artifacts were indexed for this capsule.</p>`;
@@ -439,34 +453,76 @@
         const featuredArtifacts = getFeaturedArtifacts(capsule);
         const resultsArtifacts = getResultsArtifacts(capsule);
         const docsCount = getDocEntries(capsule).length;
+        const useCasePreview = `
+          <p class="table-emphasis table-clamp table-clamp-2">${escapeHtml(capsule.primaryUseCase || capsule.capsuleSummary)}</p>
+          <div class="table-subtext table-clamp table-clamp-2">${escapeHtml(capsule.problem)}</div>
+        `;
+        const useCaseExpanded = `
+          <p class="table-emphasis">${escapeHtml(capsule.primaryUseCase || capsule.capsuleSummary)}</p>
+          <div class="table-subtext table-subtext-full">${escapeHtml(capsule.problem)}</div>
+        `;
+        const usagePreview = `
+          <p class="table-mode table-clamp table-clamp-1">${escapeHtml(capsule.usageMode)}</p>
+          ${renderInlineList((capsule.usageHighlights || []).slice(0, 2), capsule.usageSteps[0] || "See capsule section")}
+        `;
+        const usageExpanded = `
+          <p class="table-mode">${escapeHtml(capsule.usageMode)}</p>
+          ${renderInlineList(capsule.usageHighlights || [], capsule.usageSteps[0] || "See capsule section")}
+        `;
+        const resultPreview = `
+          ${renderInlineList((capsule.resultsHighlights || []).slice(0, 2), capsule.notes || "See results documentation")}
+          <div class="table-subtext">Featured artifacts: ${featuredArtifacts.length || resultsArtifacts.length}</div>
+        `;
+        const resultExpanded = `
+          ${renderInlineList(capsule.resultsHighlights || [], capsule.notes || "See results documentation")}
+          <div class="table-subtext table-subtext-full">Featured artifacts: ${featuredArtifacts.length || resultsArtifacts.length}</div>
+        `;
+        const docsContent = `
+          ${renderDocsHub(capsule, { compact: true })}
+          <div class="table-subtext">Docs ${docsCount} · Artifacts ${resultsArtifacts.length}</div>
+        `;
 
         return `
           <tr class="reveal">
-            <td>
+            <td class="col-challenge">
               <a class="table-anchor" href="#${capsule.id}">
                 <span class="challenge-number">Ch${capsule.number}</span>
                 <strong>${escapeHtml(capsule.title)}</strong>
               </a>
-              <div class="table-subtext">${escapeHtml(capsule.directory)}</div>
+              <div class="table-subtext table-clamp table-clamp-1">${escapeHtml(capsule.directory)}</div>
             </td>
-            <td>
+            <td class="col-status">
               <span class="status-pill ${statusClass(capsule.status)}">${escapeHtml(capsule.statusLabel)}</span>
             </td>
-            <td>
-              <p class="table-emphasis">${escapeHtml(capsule.primaryUseCase || capsule.capsuleSummary)}</p>
-              <div class="table-subtext">${escapeHtml(capsule.problem)}</div>
+            <td class="col-usecase">
+              ${renderExpandableCell(useCasePreview, useCaseExpanded)}
             </td>
-            <td>
-              <p class="table-mode">${escapeHtml(capsule.usageMode)}</p>
-              ${renderInlineList((capsule.usageHighlights || []).slice(0, 2), capsule.usageSteps[0] || "See capsule section")}
+            <td class="col-usage">
+              ${renderExpandableCell(usagePreview, usageExpanded)}
             </td>
-            <td>
-              ${renderInlineList((capsule.resultsHighlights || []).slice(0, 2), capsule.notes || "See results documentation")}
-              <div class="table-subtext">Featured artifacts: ${featuredArtifacts.length || resultsArtifacts.length}</div>
+            <td class="col-result">
+              ${renderExpandableCell(resultPreview, resultExpanded)}
             </td>
-            <td>
-              ${renderDocsHub(capsule, { compact: true })}
-              <div class="table-subtext">Docs ${docsCount} · Artifacts ${resultsArtifacts.length}</div>
+            <td class="col-docs">
+              ${docsContent}
+            </td>
+          </tr>
+          <tr class="table-row-details reveal">
+            <td colspan="6">
+              <details class="table-row-disclosure">
+                <summary>Row details</summary>
+                <div class="table-row-disclosure-grid">
+                  <section class="table-detail-block">
+                    <p class="mini-label">How to run</p>
+                    ${usageExpanded}
+                  </section>
+                  <section class="table-detail-block">
+                    <p class="mini-label">Docs and artifacts</p>
+                    ${docsContent}
+                    <div class="table-subtext table-subtext-full">${escapeHtml(capsule.directory)}</div>
+                  </section>
+                </div>
+              </details>
             </td>
           </tr>
         `;
