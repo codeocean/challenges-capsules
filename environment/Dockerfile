@@ -1,4 +1,4 @@
-# hash:sha256:6c2d15d160ddc43876cf1c3cef11e043ac989fb996e82c891abfa8b165524dcf
+# hash:sha256:f1fc6e252749b6ce84bd35541206b3d61e4922ee7c497517795c2705a0df28b6
 ARG REGISTRY_HOST
 FROM $REGISTRY_HOST/codeocean/pytorch:2.4.0-cuda12.4.0-mambaforge24.5.0-0-python3.12.4-ubuntu22.04
 
@@ -6,10 +6,8 @@ ARG DEBIAN_FRONTEND=noninteractive
 ARG GIT_ASKPASS
 COPY git-ask-pass /
 
-ENV CLAUDE_CODE_USE_BEDROCK=1
-ENV AWS_REGION=us-east-1
-ENV DISABLE_PROMPT_CACHING=1
-ENV ANTHROPIC_MODEL=us.anthropic.claude-sonnet-4-5-20250929-v1:0
+ENV CLAUDE_CODE_MAX_OUTPUT_TOKENS=100000
+ENV MAX_THINKING_TOKENS=10000
 
 RUN pip install -U --no-cache-dir \
     biopython==1.86 \
