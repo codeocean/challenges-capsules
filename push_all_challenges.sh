@@ -18,7 +18,7 @@ fi
 
 require_clean_tree() {
   if [[ -n "$(git status --porcelain)" ]]; then
-    echo "Working tree is not clean. Commit or stash changes before running subtree pull." >&2
+    echo "Working tree is not clean. Commit or stash changes before running subtree push." >&2
     git status --short >&2
     exit 1
   fi
@@ -61,7 +61,7 @@ should_process() {
 
 print_summary() {
   echo
-  echo "Subtree pull summary"
+  echo "Subtree push summary"
   echo "===================="
   local entry path status
   for entry in "${SUMMARY[@]}"; do
@@ -81,7 +81,7 @@ while IFS=$'\t' read -r name path remote_name remote_url branch; do
   fi
 
   echo
-  echo "Processing subtree pull for $path"
+  echo "Processing subtree push for $path"
   echo "----------------------------------------------"
 
   ensure_remote "$remote_name" "$remote_url"
@@ -92,15 +92,14 @@ while IFS=$'\t' read -r name path remote_name remote_url branch; do
   remote_head="$(git rev-parse --verify "$remote_ref")"
 
   if [[ "$local_split" == "$remote_head" ]]; then
-    echo "  Status: skipped (already aligned with $remote_name/$branch)"
-    SUMMARY+=("$path|skipped")
+    echo "  Status: unchanged"
+    SUMMARY+=("$path|unchanged")
     continue
   fi
 
-  echo "  Status: pulling updates from $remote_name/$branch"
-  git subtree pull --prefix="$path" "$remote_name" "$branch" \
-    -m "Merge subtree updates for $path from $remote_name/$branch"
-  SUMMARY+=("$path|updated")
+  echo "  Status: pushing split $local_split to $remote_name/$branch"
+  git subtree push --prefix="$path" "$remote_name" "$branch"
+  SUMMARY+=("$path|pushed")
 done < "$MANIFEST_PATH"
 
 if [[ ${#TARGETS[@]} -gt 0 ]]; then
