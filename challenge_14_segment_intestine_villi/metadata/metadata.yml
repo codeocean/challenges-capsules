@@ -1,0 +1,17 @@
+metadata_version: 1
+name: "\U0001F9EC Challenge 14: Segment Intestine Villi"
+description: Segment individual intestinal villi from ileum Xenium spatial transcriptomics
+  data by integrating spatial coordinates, gene expression gradients, and cell-type
+  composition into biologically meaningful villus-scale boundaries with cell assignments
+  and QC metrics.
+tags:
+- hackathon-challenge
+- spatial-transcriptomics
+- Xenium
+- image-segmentation
+- intestine
+- villi
+- immunology
+- computational-biology
+- cc_mode:cc_orchestration
+- cc_intent:iterative_analysis
