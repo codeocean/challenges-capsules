@@ -1,0 +1,17 @@
+metadata_version: 1
+name: "\U0001F52C Challenge 16: SciDEX - Scientific Discovery Exchange"
+description: Prototype a persistent hypothesis workbench where AI agents generate
+  testable hypotheses from Allen data and literature, critique reasoning, link evidence,
+  and maintain decision history across sessions for reproducible scientific discovery
+  workflows.
+tags:
+- hackathon-challenge
+- hypothesis-generation
+- scientific-discovery
+- AI-agents
+- literature-mining
+- Allen-data
+- evidence-grounding
+- knowledge-work
+- cc_mode:cc_orchestration
+- cc_intent:iterative_analysis

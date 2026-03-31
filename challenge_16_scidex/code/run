@@ -1,0 +1,4 @@
+#!/usr/bin/env bash
+set -euo pipefail
+python /code/run.py
+python /code/run_session2.py
