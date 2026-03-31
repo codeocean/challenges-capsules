@@ -1,5 +1,14 @@
 # Challenge 09: BindCrafting
 
+
+## Results Summary
+- **Top Candidate iPTM:** 0.926 (binder_0124, pLDDT 96.55)
+- **5 ranked candidates** passing iPTM ≥ 0.7 and pLDDT ≥ 80
+- **Target:** PDB 1RK9 (Parvalbumin) — real structure
+- **Fusion compatibility** assessed for fluorescent protein tagging
+
+> See [RESULTS.md](RESULTS.md) for ranked candidate table and filtering details.
+
 ## Overview
 
 Protein binder analysis pipeline that filters, ranks, and analyzes pre-computed
