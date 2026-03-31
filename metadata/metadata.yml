@@ -1,11 +1,16 @@
 metadata_version: 1
-name: Claude Code + Bedrock Template
-description: Claude Code template using AWS Bedrock backend. No API keys needed -
-  uses Code Ocean managed IAM credentials. Perfect for hackathons and AI-assisted
-  development.
+name: "\U0001F950 Challenge 13: Croissant Pipeline for AI-Ready Data"
+description: Package Allen datasets as Croissant-compliant ML-ready resources with
+  validated metadata, reproducible train/test splits, documented schemas, and working
+  loading examples demonstrating the MLCommons standard for scientific data interoperability.
 tags:
-- template
-- claude-code
-- aws-bedrock
-- AI-assistant
-- hackathon
+- hackathon-challenge
+- data-packaging
+- Croissant
+- ML-ready-data
+- metadata
+- reproducibility
+- ABC-Atlas
+- interoperability
+- cc_mode:cc_orchestration
+- cc_intent:iterative_analysis
