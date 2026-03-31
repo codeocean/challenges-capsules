@@ -1,0 +1,17 @@
+metadata_version: 1
+name: "\U0001F4D6 Challenge 11: ABC Atlas Literature Assistant"
+description: Expand ABC Atlas with a literature agent that contextualizes atlas data
+  within published research, distinguishing source papers from reuse/validation studies
+  with passage-level evidence and explicit relationship labeling for dataset-aware
+  scientific discovery.
+tags:
+- hackathon-challenge
+- literature-mining
+- ABC-Atlas
+- RAG
+- scientific-search
+- cell-types
+- evidence-grounding
+- knowledge-graph
+- cc_mode:cc_orchestration
+- cc_intent:iterative_analysis

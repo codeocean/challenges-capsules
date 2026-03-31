@@ -1,0 +1,60 @@
+{
+	"version": 1,
+	"base_image": "codeocean/mambaforge3:22.11.1-4-ubuntu22.04",
+	"post_install": true,
+	"options": {
+		"registry_host_arg": true,
+		"git_ask_pass": true,
+		"mount_secrets": true
+	},
+	"installers": {
+		"pip": {
+			"packages": [
+				{
+					"name": "biopython",
+					"version": "1.87"
+				},
+				{
+					"name": "boto3",
+					"version": "1.42.79"
+				},
+				{
+					"name": "numpy",
+					"version": "2.2.6"
+				},
+				{
+					"name": "pandas",
+					"version": "2.3.3"
+				},
+				{
+					"name": "rapidfuzz",
+					"version": "3.14.3"
+				},
+				{
+					"name": "requests",
+					"version": "2.33.1"
+				},
+				{
+					"name": "scikit-learn",
+					"version": "1.7.2"
+				},
+				{
+					"name": "tqdm",
+					"version": "4.67.3"
+				}
+			],
+			"options": {},
+			"pre_install_options": {}
+		}
+	},
+	"env_variables": [
+		{
+			"name": "CLAUDE_CODE_MAX_OUTPUT_TOKENS",
+			"value": "100000"
+		},
+		{
+			"name": "MAX_THINKING_TOKENS",
+			"value": "10000"
+		}
+	]
+}
