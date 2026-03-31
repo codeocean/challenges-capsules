@@ -1,11 +1,17 @@
 metadata_version: 1
-name: Claude Code + Bedrock Template
-description: Claude Code template using AWS Bedrock backend. No API keys needed -
-  uses Code Ocean managed IAM credentials. Perfect for hackathons and AI-assisted
-  development.
+name: "\U0001F52C Challenge 16: SciDEX - Scientific Discovery Exchange"
+description: Prototype a persistent hypothesis workbench where AI agents generate
+  testable hypotheses from Allen data and literature, critique reasoning, link evidence,
+  and maintain decision history across sessions for reproducible scientific discovery
+  workflows.
 tags:
-- template
-- claude-code
-- aws-bedrock
-- AI-assistant
-- hackathon
+- hackathon-challenge
+- hypothesis-generation
+- scientific-discovery
+- AI-agents
+- literature-mining
+- Allen-data
+- evidence-grounding
+- knowledge-work
+- cc_mode:cc_orchestration
+- cc_intent:iterative_analysis

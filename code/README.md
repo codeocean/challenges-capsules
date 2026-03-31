@@ -1,59 +1,27 @@
-# Claude Code Template - Bedrock Backend
+# Challenge 16: SciDEX — Scientific Discovery Exchange
 
-Template capsule for executing AI-assisted coding tasks with Claude Code using AWS Bedrock backend.
+## What This Capsule Does
+Takes a neuroscience research question, retrieves ~50 paper abstracts, uses LLM to
+generate and critique structured hypotheses (citing specific papers), saves to SQLite,
+then runs a second session that loads prior state and refines hypotheses.
 
-## Quick Start
+## Evaluation
+Diff session 1 vs session 2 — does the system demonstrably remember and build on prior decisions?
 
-```bash
-./run "Create a Python script that processes CSV files"
-```
+## Required Data Assets
+| File | Description |
+|------|-------------|
+| `question.json` | `{"question": "..."}` |
+| `corpus/papers.jsonl` | ~50 pre-fetched abstracts |
+| `human_decisions.json` | Simulated human review decisions for session 2 |
 
-Claude Code will execute your command and save outputs to `/results`.
+## Expected Outputs
+| File | Description |
+|------|-------------|
+| `session_001_hypotheses.jsonl` | Session 1 hypotheses with evidence and critique |
+| `session_002_hypotheses.jsonl` | Session 2 refined hypotheses |
+| `session_state.db` | SQLite with full state |
+| `evidence.jsonl` | Extracted evidence records |
 
-## Configuration
-
-This capsule is pre-configured to use AWS Bedrock:
-- `CLAUDE_CODE_USE_BEDROCK=1` - Uses AWS Bedrock instead of Anthropic API
-- `AWS_REGION=us-east-1` - Bedrock region
-- Code Ocean managed IAM credentials (no manual setup needed)
-- Claude Code automatically selects the best available Sonnet model
-
-## Usage Examples
-
-```bash
-# Create code
-./run "Write a function to calculate prime numbers"
-
-# Analyze data  
-./run "Create a data analysis script for genomics data in /data"
-
-# Debug code
-./run "Fix the bug in /code/analysis.py"
-
-# Generate documentation
-./run "Add docstrings to all functions in /code"
-```
-
-## For Hackathon Participants
-
-1. **Duplicate this capsule** for your challenge
-2. **Add your data assets** to `/data`
-3. **Run commands** to let Claude Code build your solution
-4. **Results** saved automatically to `/results`
-
-## File Structure
-
-```
-/code/
-  └── run          # Passes commands to Claude Code
-
-/results/
-  └── claude_output.txt   # Claude's response
-```
-
-## Notes
-
-- Runs headlessly (no interactive prompts)
-- Uses Code Ocean managed AWS credentials
-- Works in reproducible runs and Cloud Workstations
-- All code generation is done by Claude Code via Bedrock
+## Environment
+- CPU only. `anthropic`/`openai`, `pydantic`, `numpy`, `pandas`
