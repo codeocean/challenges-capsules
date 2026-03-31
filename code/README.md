@@ -2,6 +2,21 @@
 
 ## What This Capsule Does
 
+
+## Results Summary
+
+| Metric | Value |
+|--------|-------|
+| **Evolved vs Random p-value** | 9.73e-13 |
+| **Evolved vs Shuffled p-value** | 9.73e-13 |
+| **Cohen's d (vs Random)** | 6.20 |
+| **Mean Evolved Score** | 1.000 |
+| **Mean Random Score** | 0.196 |
+| **Diversity Pass** | ✅ |
+| **Oracle** | Trained CNN (K562 features) |
+
+> See [RESULTS.md](RESULTS.md) for full statistical tests, diversity metrics, and oracle details.
+
 Designs synthetic K562 enhancer DNA sequences via a genetic algorithm with
 biologically-informed PWM scoring, manufacturability filtering, and
 diversity-aware selection.  Fully configurable via the **App Panel**.
