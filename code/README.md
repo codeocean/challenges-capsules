@@ -1,5 +1,13 @@
 # Challenge 08: Your Query BFF (BioFileFinder)
 
+
+## Results Summary
+- **Query Accuracy:** 75% (3/4 correct on real BFF data)
+- **Data Source:** Real Allen Cell Collection MYH10 metadata (395 rows)
+- **LLM:** Bedrock Claude Sonnet
+
+> See [RESULTS.md](RESULTS.md) for per-query results and schema details.
+
 ## What This Capsule Does
 
 Translates natural-language questions about Allen Cell Collection metadata into
