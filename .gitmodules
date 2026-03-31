@@ -1,6 +1,3 @@
-[submodule "challenge_15_allen_single_cell_model_pantry"]
-	path = challenge_15_allen_single_cell_model_pantry
-	url = https://aqua.aws.codeocean.dev/capsule-4359564.git
 [submodule "challenge_16_scidex"]
 	path = challenge_16_scidex
 	url = https://aqua.aws.codeocean.dev/capsule-6182444.git

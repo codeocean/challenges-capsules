@@ -1,0 +1,4 @@
+model,accuracy,macro_f1,error,runtime_seconds
+scVI,0.0,0.0,partially initialized module 'torchvision' has no attribute 'extension' (most likely due to a circular import),
+Geneformer,0.0,0.0,Repo id must be in the form 'repo_name' or 'namespace/repo_name': '/data/geneformer_weights'. Use `repo_type` argument if needed.,
+PCA_baseline,0.0775,0.0718,,2.1

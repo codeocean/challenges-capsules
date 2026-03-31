@@ -1,0 +1,67 @@
+{
+	"version": 1,
+	"base_image": "codeocean/pytorch:2.4.0-cuda12.4.0-mambaforge24.5.0-0-python3.12.4-ubuntu22.04",
+	"post_install": true,
+	"options": {
+		"registry_host_arg": true,
+		"git_ask_pass": true,
+		"mount_secrets": true
+	},
+	"installers": {
+		"pip": {
+			"packages": [
+				{
+					"name": "anndata"
+				},
+				{
+					"name": "matplotlib"
+				},
+				{
+					"name": "numpy"
+				},
+				{
+					"name": "pandas"
+				},
+				{
+					"name": "scanpy"
+				},
+				{
+					"name": "scikit-learn"
+				},
+				{
+					"name": "scvi-tools"
+				},
+				{
+					"name": "torch"
+				},
+				{
+					"name": "torchvision"
+				},
+				{
+					"name": "transformers"
+				}
+			],
+			"options": {},
+			"pre_install_options": {}
+		}
+	},
+	"env_variables": [
+		{
+			"name": "CLAUDE_CODE_MAX_OUTPUT_TOKENS",
+			"value": "100000"
+		},
+		{
+			"name": "MAX_THINKING_TOKENS",
+			"value": "10000"
+		},
+		{
+			"name": "ANTHROPIC_DEFAULT_SONNET_MODEL"
+		},
+		{
+			"name": "ANTHROPIC_MODEL"
+		},
+		{
+			"name": "BEDROCK_MODEL_ID"
+		}
+	]
+}
