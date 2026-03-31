@@ -1,0 +1,16 @@
+metadata_version: 1
+name: '⚡ Challenge 5: Automate Your Productivity'
+description: Analyze Microsoft 365 behavioral data to build a trustworthy productivity
+  agent that detects work patterns, proposes reversible automations with human approval,
+  maintains audit logs, and demonstrates safe AI-assisted workflow optimization.
+tags:
+- hackathon-challenge
+- productivity
+- automation
+- microsoft-365
+- ai-agent
+- workflow-optimization
+- copilot
+- enterprise-AI
+- cc_mode:cc_orchestration
+- cc_intent:iterative_analysis
