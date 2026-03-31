@@ -1,5 +1,15 @@
 # Challenge 15: Allen Single Cell Model Pantry
 
+
+## Results Summary
+| Model | Macro F1 | Status |
+|-------|----------|--------|
+| PCA Baseline | 0.072 | ✅ Working |
+| scVI | — | ❌ Import error |
+| Geneformer | — | ❌ Weights path error |
+
+> See [RESULTS.md](RESULTS.md) for full leaderboard and error details.
+
 ## What This Capsule Does
 Head-to-head benchmark of scVI vs. Geneformer on Allen Human MTG cell-type
 annotation. Loads frozen pre-split h5ad, runs both through shared KNN classifier,
