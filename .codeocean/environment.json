@@ -11,6 +11,10 @@
 		"pip": {
 			"packages": [
 				{
+					"name": "boto3",
+					"version": "1.42.78"
+				},
+				{
 					"name": "pandas",
 					"version": "2.3.3"
 				},
@@ -24,7 +28,15 @@
 				},
 				{
 					"name": "requests",
-					"version": "2.33.0"
+					"version": "2.33.1"
+				},
+				{
+					"name": "strands-agents",
+					"version": "1.33.0"
+				},
+				{
+					"name": "strands-agents-tools",
+					"version": "0.3.0"
 				}
 			],
 			"options": {},
