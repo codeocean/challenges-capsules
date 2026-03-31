@@ -1,5 +1,12 @@
 # Challenge 11: ABC Atlas Literature Assistant
 
+
+## Results Summary
+- **15 queries** evaluated, **41/41 citations verified** (100%)
+- Paper corpus: 50+ real papers from PubMed
+
+> See [RESULTS.md](RESULTS.md) for evaluation details and artifact listing.
+
 ## What This Capsule Does
 Pre-stages ~100 papers as JSONL, runs 5 queries, retrieves passages via similarity,
 classifies paper relationship (SOURCE/REUSE/VALIDATION/MENTION), generates grounded answers.
