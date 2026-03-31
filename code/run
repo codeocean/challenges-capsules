@@ -1,9 +1,4 @@
 #!/usr/bin/env bash
 set -euo pipefail
-
-echo "=== Phase 1: Creating test repositories ==="
 python /code/create_test_repos.py
-
-echo ""
-echo "=== Phase 2: Running Bedrock-powered agent ==="
-python /code/run.py
+python /code/run.py "$@"

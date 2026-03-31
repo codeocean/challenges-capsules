@@ -13,3 +13,5 @@ tags:
 - code-review
 - maintenance
 - testing
+- cc_mode:cc_orchestration
+- cc_intent:iterative_analysis

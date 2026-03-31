@@ -258,7 +258,11 @@ def main() -> None:
         LOG_PATH.unlink()
 
     if not TASKS_PATH.exists():
-        sys.exit(f"ERROR: {TASKS_PATH} not found")
+        print("Tasks not found. Generating test repos and tasks ...")
+        import subprocess
+        subprocess.run([sys.executable, "/code/create_test_repos.py"], check=True)
+        if not TASKS_PATH.exists():
+            sys.exit(f"ERROR: {TASKS_PATH} still not found after generation")
 
     tasks = [json.loads(ln) for ln in open(TASKS_PATH) if ln.strip()]
     print(f"Loaded {len(tasks)} tasks from {TASKS_PATH}")
