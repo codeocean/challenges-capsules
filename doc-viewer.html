@@ -6,7 +6,7 @@
     <title>Capsule Document Viewer</title>
     <meta
       name="description"
-      content="Styled local viewer for capsule README and review markdown files."
+      content="Styled local viewer for capsule README, RESULTS, HOW_TO_IMPLEMENT, AQUA_PROMPT, and review markdown files."
     />
     <link rel="icon" type="image/svg+xml" href="./code-ocean-logo.svg" />
     <link rel="stylesheet" href="./styles.css" />
@@ -32,10 +32,14 @@
             </div>
             <div class="doc-action-row">
               <a class="primary-link" id="doc-atlas-link" href="./index.html">Open atlas section</a>
-              <a class="secondary-link" id="doc-related-link" href="./index.html">Open related document</a>
+              <a class="secondary-link" id="doc-source-link" href="./index.html">Open raw source file</a>
             </div>
           </div>
         </div>
+
+        <section class="doc-summary-grid" id="doc-summary-grid" aria-label="Capsule summary"></section>
+        <nav class="doc-nav" id="doc-nav" aria-label="Capsule document navigation"></nav>
+        <section class="doc-artifacts" id="doc-artifacts" hidden></section>
 
         <article class="doc-content markdown-body" id="doc-content">
           <p>Loading document content.</p>

@@ -6,7 +6,7 @@
     <title>Challenge Capsules Atlas</title>
     <meta
       name="description"
-      content="A navigable atlas of Code Ocean challenge capsules, including what each capsule solves, how the codebase works, and how to use it in Code Ocean."
+      content="A usage-first atlas of Code Ocean challenge capsules with result highlights, artifact links, AQUA prompts, implementation docs, and review summaries."
     />
     <link rel="icon" type="image/svg+xml" href="./code-ocean-logo.svg" />
     <link rel="stylesheet" href="./styles.css" />
@@ -26,14 +26,15 @@
           </div>
           <div class="brand-copy">
             <p class="eyebrow">Code Ocean Capsule Atlas</p>
-            <p class="brand-note">A local, navigable guide to the Allen challenge capsules.</p>
+            <p class="brand-note">Usage, evidence, artifacts, and copy-ready prompts for the Allen challenge capsules.</p>
           </div>
         </div>
-        <h1>Allen Institute Nautilex 2026 challenges, solved by Code Ocean Aqua as Code Ocean capsules.</h1>
+        <h1>Choose the right capsule, see what it proves, and grab the files you need to run or reuse it.</h1>
         <p class="hero-intro">
-          Explore how each capsule frames a research problem, how the codebase solves
-          it, what to attach in Code Ocean, and what outputs to expect. The table is
-          the fastest way to scan; the sections below give the fuller story.
+          The atlas now starts from operator questions: what the capsule is best for,
+          how to run it, what evidence the latest run produced, which result artifacts
+          to open first, and which prompt to copy into Aqua. The sections below then
+          expand into README, RESULTS, HOW TO IMPLEMENT, AQUA PROMPT, and review docs.
         </p>
 
         <div class="hero-actions">
@@ -44,17 +45,17 @@
 
       <div class="hero-aside">
         <div class="hero-card">
-          <p class="mini-label">What this site covers</p>
+          <p class="mini-label">Start here</p>
           <p>
-            Challenges 02 through 16, grounded in the local capsule READMEs and the
-            iteration-03 review summaries in this repository.
+            Open <strong>RESULTS</strong> first when you need proof, then open
+            <strong>README</strong> or <strong>HOW TO IMPLEMENT</strong> when you need context or adaptation details.
           </p>
         </div>
         <div class="hero-card">
-          <p class="mini-label">Designed for</p>
+          <p class="mini-label">Aqua workflow</p>
           <p>
-            Researchers, judges, and operators who want to understand what each
-            capsule actually does before running it.
+            Every capsule card now links both to a rendered AQUA prompt page and to the raw
+            <code>AQUA_PROMPT.md</code> file so the prompt can be copied straight into Aqua.
           </p>
         </div>
       </div>
@@ -75,9 +76,9 @@
         <div class="sidebar-panel legend-panel">
           <p class="panel-kicker">How to read</p>
           <ul class="legend-list">
-            <li><span class="status-dot dot-completed"></span> Completed capsules are usable end to end.</li>
-            <li><span class="status-dot dot-partial"></span> Partial capsules run, but important parts are still weak or missing.</li>
-            <li><span class="status-dot dot-blocked"></span> Blocked capsules document intent but do not currently run cleanly.</li>
+            <li><span class="status-dot dot-completed"></span> Completed capsules are usable end to end and have evidence worth opening.</li>
+            <li><span class="status-dot dot-partial"></span> Partial capsules expose a valuable workflow but still have blocked science or environment steps.</li>
+            <li><span class="status-dot dot-blocked"></span> Blocked capsules describe intent more than runnable value.</li>
           </ul>
         </div>
       </aside>
@@ -87,7 +88,7 @@
           <div class="section-heading">
             <div>
               <p class="section-kicker">Overview</p>
-              <h2>Find the right capsule fast</h2>
+              <h2>Scan by use case, run path, and proof</h2>
             </div>
             <p class="section-note" id="results-note"></p>
           </div>
@@ -98,7 +99,7 @@
               <input
                 id="search-input"
                 type="search"
-                placeholder="Search by challenge, method, data asset, or output"
+                placeholder="Search by challenge, use case, result artifact, data asset, or prompt"
               />
             </label>
 
@@ -123,26 +124,26 @@
                     </button>
                   </th>
                   <th scope="col" aria-sort="none">
-                    <button class="sort-button" type="button" data-sort-key="summary">
-                      <span>What it solves</span>
+                    <button class="sort-button" type="button" data-sort-key="useCase">
+                      <span>Best for</span>
                       <span class="sort-indicator" aria-hidden="true"></span>
                     </button>
                   </th>
                   <th scope="col" aria-sort="none">
                     <button class="sort-button" type="button" data-sort-key="usage">
-                      <span>How to use</span>
+                      <span>How to run</span>
                       <span class="sort-indicator" aria-hidden="true"></span>
                     </button>
                   </th>
                   <th scope="col" aria-sort="none">
-                    <button class="sort-button" type="button" data-sort-key="inputs">
-                      <span>Inputs</span>
+                    <button class="sort-button" type="button" data-sort-key="result">
+                      <span>Key result</span>
                       <span class="sort-indicator" aria-hidden="true"></span>
                     </button>
                   </th>
                   <th scope="col" aria-sort="none">
-                    <button class="sort-button" type="button" data-sort-key="links">
-                      <span>Links</span>
+                    <button class="sort-button" type="button" data-sort-key="docs">
+                      <span>Docs and artifacts</span>
                       <span class="sort-indicator" aria-hidden="true"></span>
                     </button>
                   </th>
@@ -156,11 +157,12 @@
         <section class="story-intro">
           <div class="surface-card intro-card">
             <p class="section-kicker">Capsule guide</p>
-            <h2>Every description uses the same structure</h2>
+            <h2>Every capsule section now starts with usage and evidence</h2>
             <p>
-              Each capsule section below explains the problem, the concrete code
-              strategy, how to run it inside Code Ocean, what data to attach when
-              needed, and which files prove the run worked.
+              Each capsule card below opens with the best-fit use case, run mode,
+              result highlights, key artifacts, and the raw AQUA prompt link. The
+              embedded docs underneath then expose README, RESULTS, HOW TO IMPLEMENT,
+              AQUA PROMPT, and review content without leaving the atlas.
             </p>
           </div>
         </section>
@@ -171,8 +173,9 @@
 
     <footer class="footer">
       <p>
-        Source material: local capsule READMEs, local challenge folders, and
-        iteration-03 review summaries in
+        Source material: local capsule READMEs, RESULTS, HOW TO IMPLEMENT, AQUA PROMPT files,
+        machine-readable result artifacts under each <code>code/results</code> directory, and the
+        independent review summaries in
         <a href="./review-challanges-iteration-03/index.md">review-challanges-iteration-03/</a>.
       </p>
     </footer>

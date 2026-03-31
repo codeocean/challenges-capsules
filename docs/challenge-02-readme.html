@@ -6,7 +6,7 @@
     <title>Capsule document</title>
     <meta
       name="description"
-      content="Styled local document page for Code Ocean challenge capsule markdown."
+      content="Styled local document page for Code Ocean challenge capsule markdown and results artifacts."
     />
     <link rel="icon" type="image/svg+xml" href="../code-ocean-logo.svg" />
     <link rel="stylesheet" href="../styles.css" />
@@ -32,10 +32,14 @@
             </div>
             <div class="doc-action-row">
               <a class="primary-link" id="doc-atlas-link" href="../index.html#challenge-02">Open atlas section</a>
-              <a class="secondary-link" id="doc-related-link" href="./challenge-02-review.html">Open review summary</a>
+              <a class="secondary-link" id="doc-source-link" href="../index.html#challenge-02">Open raw source file</a>
             </div>
           </div>
         </div>
+
+        <section class="doc-summary-grid" id="doc-summary-grid" aria-label="Capsule summary"></section>
+        <nav class="doc-nav" id="doc-nav" aria-label="Capsule document navigation"></nav>
+        <section class="doc-artifacts" id="doc-artifacts" hidden></section>
 
         <article class="doc-content markdown-body" id="doc-content">
           <p>Loading document content.</p>
@@ -47,10 +51,9 @@
       window.DOC_PAGE = {
         capsuleId: "challenge-02",
         docType: "readme",
-        backHref: "../index.html#challenge-02",
-        atlasHref: "../index.html#challenge-02",
-        relatedHref: "./challenge-02-review.html",
-        relatedLabel: "Open review summary"
+        atlasPrefix: "../",
+        docsPrefix: "./",
+        assetPrefix: "../"
       };
     </script>
     <script src="../capsules-data.js"></script>

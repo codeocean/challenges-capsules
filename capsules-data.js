@@ -476,3 +476,268 @@ window.CAPSULES = [
     reviewPath: "./review-challanges-iteration-03/challenge-16-review.md"
   }
 ];
+
+const CAPSULE_DOC_AVAILABILITY = {
+  readme: true,
+  results: true,
+  howToImplement: true,
+  aquaPrompt: true,
+  review: true
+};
+
+const CAPSULE_ENHANCEMENTS = {
+  "challenge-02": {
+    primaryUseCase: "Audit large Allen-style label harmonization runs against Cell Ontology with quantitative evaluation.",
+    usageHighlights: [
+      "Attach Allen labels, Cell Ontology, and gold mappings when you want the full real-data evaluation path.",
+      "Run once to produce mapping outputs plus machine-readable quality reports.",
+      "Use the reports to separate auto-mapped labels from the cases that still need curator review."
+    ],
+    resultsHighlights: [
+      "Strong evidence on real Allen taxonomy data with F1 0.949 on the WHB mapping benchmark.",
+      "Cross-dataset CELLxGENE evaluation also remains above 0.97 precision and recall.",
+      "Bedrock support exists, but deterministic matching still carries most of the final signal."
+    ],
+    featuredArtifacts: [
+      "challenge_02_agentic_data_harmonization/code/results/quality_report.json",
+      "challenge_02_agentic_data_harmonization/code/results/difficulty_analysis.json",
+      "challenge_02_agentic_data_harmonization/code/results/agentic_proof.json"
+    ]
+  },
+  "challenge-03": {
+    primaryUseCase: "Generate enhancer candidate panels with statistical evidence that evolved designs beat all controls.",
+    usageHighlights: [
+      "Use the App Panel when you want to steer generations, population size, mutation rate, and finalist count.",
+      "Run self-contained for the default benchmark path or attach optional sequence assets for alternate seeds.",
+      "Inspect the results bundle before opening the FASTA so you know whether the design loop actually improved scores."
+    ],
+    resultsHighlights: [
+      "Strong statistical evidence: evolved sequences beat random, shuffled, and seed controls with p = 9.73e-13.",
+      "The top-20 panel reaches a mean score of 1.000 while preserving diversity and manufacturability checks.",
+      "This is one of the clearest self-contained result packages in the atlas."
+    ],
+    featuredArtifacts: ["challenge_03_enhancer_designer/code/results/stats.json"]
+  },
+  "challenge-04": {
+    primaryUseCase: "Score light-sheet registration quality and triage confident passes from cases that need human review.",
+    usageHighlights: [
+      "Run directly when you want a self-contained QC benchmark with synthetic image pairs.",
+      "Start with the metrics output, then inspect the severity breakdown if you need error-mode detail.",
+      "Treat the current capsule as a validated QC harness rather than a real microscopy deployment."
+    ],
+    resultsHighlights: [
+      "Strong evidence with AUC 0.977 and 93.75% test accuracy on the reviewed benchmark.",
+      "The decision system is calibrated into pass, fail, and needs-review instead of only a raw classifier score.",
+      "The main limitation is data realism, not pipeline completeness."
+    ],
+    featuredArtifacts: [
+      "challenge_04_light_sheet_alignment_qc/code/results/metrics.json",
+      "challenge_04_light_sheet_alignment_qc/code/results/severity_metrics.json"
+    ]
+  },
+  "challenge-05": {
+    primaryUseCase: "Analyze productivity anti-patterns and produce auditable automation proposals rather than direct calendar actions.",
+    usageHighlights: [
+      "Use Reproducible Run for the built-in scenarios or open the Cloud Workstation when you want the Streamlit workflow.",
+      "Treat the output as a recommendation and audit system, not as a fully automated execution engine.",
+      "Open the manifest first so you can see which scenarios, proposals, and traces were actually generated."
+    ],
+    resultsHighlights: [
+      "Evidence is qualitative rather than benchmarked, because there is no objective ground-truth productivity target.",
+      "The pipeline does run end to end across two realistic scenarios and preserves audit-trail information.",
+      "Review findings still mark this capsule partial because several promised downstream workflow artifacts are missing."
+    ],
+    featuredArtifacts: ["challenge_05_automate_your_productivity/code/results/manifest.json"]
+  },
+  "challenge-06": {
+    primaryUseCase: "Prototype plasmid request interpretation with deterministic safety refusal and file-based design outputs.",
+    usageHighlights: [
+      "Attach natural-language requests plus part libraries when you want to exercise the design path.",
+      "Use the safety workflow even without Bedrock because refusal logic remains deterministic.",
+      "Read the implementation and prompt docs before expecting broad biological request coverage."
+    ],
+    resultsHighlights: [
+      "Partial evidence only: 1 of 6 evaluation cases passes, and that passing case is the safety refusal workflow.",
+      "Most construct-generation cases still depend on live Bedrock parsing and part selection.",
+      "This capsule currently proves the safety gate more clearly than the design engine."
+    ],
+    featuredArtifacts: ["challenge_06_plasmid_forge/code/results/evaluation_summary.json"]
+  },
+  "challenge-07": {
+    primaryUseCase: "Run an agentic maintenance benchmark that attempts code fixes, tests them, and tracks cost and outcomes.",
+    usageHighlights: [
+      "Attach task bundles when you want to benchmark your own repository repair tasks.",
+      "Inspect the dashboard before diving into patches so you can separate true fixes from already-passing tasks.",
+      "Use the AQUA prompt and implementation notes if you want to adapt the agent loop to another repair benchmark."
+    ],
+    resultsHighlights: [
+      "Moderate evidence: 5 of 15 total tasks resolve, with 5 of 7 genuine fix attempts succeeding.",
+      "The pipeline records iterations, status, and Bedrock cost so the benchmark is auditable rather than anecdotal.",
+      "The current benchmark mix still includes too many already-passing tasks."
+    ],
+    featuredArtifacts: ["challenge_07_engineering_automation/code/results/dashboard.json"]
+  },
+  "challenge-08": {
+    primaryUseCase: "Turn natural-language metadata questions into validated BFF filters over real Allen Cell Collection manifests.",
+    usageHighlights: [
+      "Use Aqua or the App Panel when you want one grounded metadata query with structured filters and provenance.",
+      "Leave the query blank and run the capsule to switch into evaluation mode.",
+      "Use the raw AQUA prompt file from the atlas when you want copy-ready instructions for Aqua."
+    ],
+    resultsHighlights: [
+      "Moderate real-data evidence: 75% accuracy on the current four-query evaluation set.",
+      "Latency and manifest dimensions are reported, which makes the query translation behavior inspectable.",
+      "This is still one of the most directly usable capsules in the atlas because the underlying data is real and the interaction model is simple."
+    ],
+    featuredArtifacts: ["challenge_08_query_bff/code/results/evaluation_report.json"]
+  },
+  "challenge-09": {
+    primaryUseCase: "Analyze and rank binder candidates against a real target structure when full generative design is not available.",
+    usageHighlights: [
+      "Run the default analysis demo when you want the ranking, filtering, and fusion-compatibility workflow.",
+      "Open the ranked candidate table alongside the compatibility output to understand why each binder rose or fell.",
+      "Treat the current pipeline as post-design analysis, not as a real BindCraft generation run."
+    ],
+    resultsHighlights: [
+      "Partial evidence: the target structure is real, but all candidate binder metrics are simulated.",
+      "The results package is still useful for downstream decision-making because it preserves structural ranking and fusion checks.",
+      "GPU-bound design generation remains the missing step."
+    ],
+    featuredArtifacts: [
+      "challenge_09_bindcrafting/code/results/ranked_candidates.csv",
+      "challenge_09_bindcrafting/code/results/fusion_compatibility.json"
+    ]
+  },
+  "challenge-10": {
+    primaryUseCase: "Benchmark 3D neuroanatomical encoders on Allen CCFv3 data and compare them with reusable result artifacts.",
+    usageHighlights: [
+      "Run directly for the default Allen CCFv3 benchmark path; the capsule downloads and caches public Allen assets itself.",
+      "Start with summary.json and dice_scores.csv, then open the richer markdown and figure outputs for interpretation.",
+      "Attach real NeuroBase weights later if you want to swap the proxy encoder for the intended model."
+    ],
+    resultsHighlights: [
+      "Partial but meaningful evidence: classical features reach mean Dice 0.367 and outperform random by 2.59x.",
+      "The self-supervised 3D proxy also improves over random, which validates the benchmark harness.",
+      "The scientific gap is still the missing NeuroBase checkpoint, not the evaluation plumbing."
+    ],
+    featuredArtifacts: [
+      "challenge_10_neurobase_foundation_model_evaluation/code/results/summary.json",
+      "challenge_10_neurobase_foundation_model_evaluation/code/results/dice_scores.csv"
+    ]
+  },
+  "challenge-11": {
+    primaryUseCase: "Answer ABC Atlas literature questions with a retrieval pipeline that verifies every cited paper exists in the corpus.",
+    usageHighlights: [
+      "Run with the built-in bootstrap path when you want the default literature pack, or attach your own corpus for custom evaluation.",
+      "Open the results report first to confirm citation validity before reading any narrative answer output.",
+      "Use the implementation and prompt docs if you want to adapt the retrieval-plus-validation pattern to another literature corpus."
+    ],
+    resultsHighlights: [
+      "Moderate evidence across 15 queries with 41 of 41 citations verified against the corpus.",
+      "The current evaluation proves citation grounding more clearly than answer correctness.",
+      "This is a strong retrieval-and-verification capsule, but not yet a full answer-quality benchmark."
+    ],
+    featuredArtifacts: ["challenge_11_abc_atlas_literature_assistant/code/results/eval_report.json"]
+  },
+  "challenge-12": {
+    primaryUseCase: "Build a grounded assistant over Allen product resources with honest evaluation across easy, hard, and adversarial cases.",
+    usageHighlights: [
+      "Run with the built-in corpus when you want the reviewed benchmark path, or attach a custom corpus to reuse the same workflow.",
+      "Start with the evaluation report because the category breakdown is the clearest signal of where the assistant is reliable.",
+      "Use the AQUA prompt and implementation docs if you want to reuse the retrieval-and-citation pattern for another product knowledge base."
+    ],
+    resultsHighlights: [
+      "Strong evidence with 86.7% overall accuracy on a 15-query evaluation set.",
+      "Adversarial accuracy drops to 33.3%, which makes the benchmark more credible rather than less useful.",
+      "Cross-product connections are also preserved as a separate structured artifact."
+    ],
+    featuredArtifacts: [
+      "challenge_12_brain_map_bkp_assistant/code/results/evaluation_report.json",
+      "challenge_12_brain_map_bkp_assistant/code/results/product_bridges.json"
+    ]
+  },
+  "challenge-13": {
+    primaryUseCase: "Package a scientific dataset as Croissant metadata and verify where the descriptor is valid or still broken.",
+    usageHighlights: [
+      "Attach your H5AD when you want to run the packaging flow on real data, or use the built-in synthetic generation path to test the pipeline.",
+      "Open the validation report first because it tells you whether the Croissant descriptor is actually consumable.",
+      "Use the implementation notes to fix schema issues before relying on the metadata downstream."
+    ],
+    resultsHighlights: [
+      "Partial evidence: dataset generation and export work, but Croissant validation still fails on a schema bug.",
+      "The capsule does prove the surrounding pipeline, including train/test split logic and CSV export.",
+      "This is best treated as a near-complete packaging workflow with one blocking metadata fix."
+    ],
+    featuredArtifacts: ["challenge_13_croissant_pipeline/code/results/validation_report.json"]
+  },
+  "challenge-14": {
+    primaryUseCase: "Segment villus-scale regions from spatial transcriptomics and export geometry plus per-villus summaries.",
+    usageHighlights: [
+      "Attach real Xenium ileum data when you have it, or run the synthetic fallback to validate the geometry-and-expression workflow.",
+      "Open the per-villus summary together with the provenance file so you know whether the run used simulated or real data.",
+      "Use the HOW TO IMPLEMENT notes if you want to adapt the spatial-neighbor graph logic to another tissue layout."
+    ],
+    resultsHighlights: [
+      "Partial evidence on simulated data: the pipeline identifies 7 villi and exports GeoJSON-ready boundaries.",
+      "The end-to-end segmentation plumbing works, but the current evidence is limited by the absence of real Xenium data.",
+      "This is a strong proof-of-concept for the spatial workflow, not yet a validated biological result."
+    ],
+    featuredArtifacts: [
+      "challenge_14_segment_intestine_villi/code/results/per_villus_summary.csv",
+      "challenge_14_segment_intestine_villi/code/results/data_provenance.json"
+    ]
+  },
+  "challenge-15": {
+    primaryUseCase: "Benchmark Allen-style single-cell model adapters under one evaluation contract and surface where the environment still blocks them.",
+    usageHighlights: [
+      "Attach the frozen dataset and model weights if you want to exercise the intended benchmark path.",
+      "Start with the leaderboard and summary because they make the current environment failures immediately visible.",
+      "Use the implementation notes before spending time on the outputs, since environment repair is still the main blocker."
+    ],
+    resultsHighlights: [
+      "Partial evidence only: the PCA baseline completes, but scVI and Geneformer are blocked by environment and configuration errors.",
+      "Current macro F1 is weak because the benchmark effectively collapses to a PCA-only path.",
+      "The useful part here is the benchmarking harness and exported comparison contract, not the current scientific result."
+    ],
+    featuredArtifacts: [
+      "challenge_15_allen_single_cell_model_pantry/code/results/leaderboard.csv",
+      "challenge_15_allen_single_cell_model_pantry/code/results/summary.json"
+    ]
+  },
+  "challenge-16": {
+    primaryUseCase: "Run a persistent scientific hypothesis workbench that carries evidence and decisions across sessions.",
+    usageHighlights: [
+      "Run with embedded defaults for the reviewed demo, or attach your own question and corpus when you want to steer the workbench.",
+      "Open the evidence file and stateful session outputs together so you can confirm traceability across sessions.",
+      "Use the AQUA prompt if you want to hand Aqua a copy-ready workflow prompt for hypothesis generation."
+    ],
+    resultsHighlights: [
+      "Qualitative evidence rather than benchmark accuracy, but the citation chain and state persistence are verifiable.",
+      "The capsule demonstrates a complete two-session refinement workflow backed by SQLite state.",
+      "This is one of the strongest atlas entries for visible cross-session memory."
+    ],
+    featuredArtifacts: [
+      "challenge_16_scidex/code/results/evidence.jsonl",
+      "challenge_16_scidex/code/results/question.json"
+    ]
+  }
+};
+
+window.CAPSULES = window.CAPSULES.map((capsule) => {
+  const enhancement = CAPSULE_ENHANCEMENTS[capsule.id] || {};
+
+  return {
+    ...capsule,
+    primaryUseCase: enhancement.primaryUseCase || capsule.capsuleSummary,
+    usageHighlights: enhancement.usageHighlights || [],
+    resultsHighlights: enhancement.resultsHighlights || [],
+    featuredArtifacts: enhancement.featuredArtifacts || [],
+    docAvailability: {
+      ...CAPSULE_DOC_AVAILABILITY,
+      ...(enhancement.docAvailability || {})
+    },
+    resultsPath: `./${capsule.directory}/code/RESULTS.md`,
+    howToImplementPath: `./${capsule.directory}/code/HOW_TO_IMPLEMENT.md`,
+    aquaPromptPath: `./${capsule.directory}/code/AQUA_PROMPT.md`
+  };
+});

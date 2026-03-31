@@ -1,0 +1,64 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Capsule document</title>
+    <meta
+      name="description"
+      content="Styled local document page for Code Ocean challenge capsule markdown and results artifacts."
+    />
+    <link rel="icon" type="image/svg+xml" href="../code-ocean-logo.svg" />
+    <link rel="stylesheet" href="../styles.css" />
+  </head>
+  <body>
+    <div class="background-shell" aria-hidden="true">
+      <div class="background-orb orb-a"></div>
+      <div class="background-orb orb-b"></div>
+      <div class="background-grid"></div>
+    </div>
+
+    <main class="doc-page">
+      <div class="doc-shell surface-card">
+        <div class="doc-header">
+          <a class="secondary-link doc-back" href="../index.html#challenge-14">Back to atlas</a>
+          <div class="doc-title-block">
+            <p class="section-kicker" id="doc-kicker">Capsule document</p>
+            <h1 id="doc-title">Loading document</h1>
+            <p class="doc-subtitle" id="doc-subtitle"></p>
+            <div class="doc-meta-row">
+              <span class="meta-pill" id="doc-type-pill"></span>
+              <span class="meta-pill" id="doc-status-pill"></span>
+            </div>
+            <div class="doc-action-row">
+              <a class="primary-link" id="doc-atlas-link" href="../index.html#challenge-14">Open atlas section</a>
+              <a class="secondary-link" id="doc-source-link" href="../index.html#challenge-14">Open raw source file</a>
+            </div>
+          </div>
+        </div>
+
+        <section class="doc-summary-grid" id="doc-summary-grid" aria-label="Capsule summary"></section>
+        <nav class="doc-nav" id="doc-nav" aria-label="Capsule document navigation"></nav>
+        <section class="doc-artifacts" id="doc-artifacts" hidden></section>
+
+        <article class="doc-content markdown-body" id="doc-content">
+          <p>Loading document content.</p>
+        </article>
+      </div>
+    </main>
+
+    <script>
+      window.DOC_PAGE = {
+        capsuleId: "challenge-14",
+        docType: "results",
+        atlasPrefix: "../",
+        docsPrefix: "./",
+        assetPrefix: "../"
+      };
+    </script>
+    <script src="../capsules-data.js"></script>
+    <script src="../capsule-docs.js"></script>
+    <script src="../markdown-renderer.js"></script>
+    <script src="../doc-viewer.js"></script>
+  </body>
+</html>

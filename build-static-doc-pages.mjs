@@ -4,10 +4,23 @@ import path from "node:path";
 const root = process.cwd();
 const docsDir = path.join(root, "docs");
 
-function buildHtml({ capsuleId, docType }) {
-  const otherType = docType === "review" ? "readme" : "review";
-  const otherLabel = docType === "review" ? "Open local README" : "Open review summary";
+const DOC_TYPES = [
+  { slug: "readme", title: "README", description: "Usage, scope, and repository overview." },
+  { slug: "results", title: "RESULTS", description: "Evidence, metrics, and result artifacts." },
+  {
+    slug: "how-to-implement",
+    title: "HOW TO IMPLEMENT",
+    description: "Technical implementation notes and adaptation guidance."
+  },
+  {
+    slug: "aqua-prompt",
+    title: "AQUA PROMPT",
+    description: "Copy-ready prompt instructions for Aqua."
+  },
+  { slug: "review", title: "REVIEW", description: "Independent review summary for the capsule." }
+];
 
+function buildHtml({ capsuleId, docType }) {
   return `<!doctype html>
 <html lang="en">
   <head>
@@ -16,7 +29,7 @@ function buildHtml({ capsuleId, docType }) {
     <title>Capsule document</title>
     <meta
       name="description"
-      content="Styled local document page for Code Ocean challenge capsule markdown."
+      content="Styled local document page for Code Ocean challenge capsule markdown and results artifacts."
     />
     <link rel="icon" type="image/svg+xml" href="../code-ocean-logo.svg" />
     <link rel="stylesheet" href="../styles.css" />
@@ -42,10 +55,14 @@ function buildHtml({ capsuleId, docType }) {
             </div>
             <div class="doc-action-row">
               <a class="primary-link" id="doc-atlas-link" href="../index.html#${capsuleId}">Open atlas section</a>
-              <a class="secondary-link" id="doc-related-link" href="./${capsuleId}-${otherType}.html">${otherLabel}</a>
+              <a class="secondary-link" id="doc-source-link" href="../index.html#${capsuleId}">Open raw source file</a>
             </div>
           </div>
         </div>
+
+        <section class="doc-summary-grid" id="doc-summary-grid" aria-label="Capsule summary"></section>
+        <nav class="doc-nav" id="doc-nav" aria-label="Capsule document navigation"></nav>
+        <section class="doc-artifacts" id="doc-artifacts" hidden></section>
 
         <article class="doc-content markdown-body" id="doc-content">
           <p>Loading document content.</p>
@@ -57,10 +74,9 @@ function buildHtml({ capsuleId, docType }) {
       window.DOC_PAGE = {
         capsuleId: "${capsuleId}",
         docType: "${docType}",
-        backHref: "../index.html#${capsuleId}",
-        atlasHref: "../index.html#${capsuleId}",
-        relatedHref: "./${capsuleId}-${otherType}.html",
-        relatedLabel: "${otherLabel}"
+        atlasPrefix: "../",
+        docsPrefix: "./",
+        assetPrefix: "../"
       };
     </script>
     <script src="../capsules-data.js"></script>
@@ -79,15 +95,18 @@ async function build() {
   const challengeDirs = entries
     .filter((entry) => entry.isDirectory() && /^challenge_\d{2}_/.test(entry.name))
     .map((entry) => entry.name)
-    .sort((a, b) => a.localeCompare(b));
+    .sort((left, right) => left.localeCompare(right));
 
   for (const directory of challengeDirs) {
     const match = directory.match(/^challenge_(\d{2})_/);
     if (!match) continue;
 
     const capsuleId = `challenge-${match[1]}`;
-    await fs.writeFile(path.join(docsDir, `${capsuleId}-readme.html`), buildHtml({ capsuleId, docType: "readme" }), "utf8");
-    await fs.writeFile(path.join(docsDir, `${capsuleId}-review.html`), buildHtml({ capsuleId, docType: "review" }), "utf8");
+
+    for (const docType of DOC_TYPES) {
+      const filePath = path.join(docsDir, `${capsuleId}-${docType.slug}.html`);
+      await fs.writeFile(filePath, buildHtml({ capsuleId, docType: docType.slug }), "utf8");
+    }
   }
 }
 

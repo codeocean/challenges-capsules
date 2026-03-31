@@ -1061,3 +1061,229 @@ ol {
     text-align: center;
   }
 }
+
+.table-emphasis,
+.summary-card-copy {
+  margin-bottom: 0.4rem;
+  font-weight: 500;
+}
+
+.table-mode {
+  margin-bottom: 0.5rem;
+  color: var(--text);
+  font-weight: 500;
+}
+
+.capsule-subtitle {
+  margin: -0.2rem 0 0.9rem;
+  color: var(--accent-ink);
+  font-size: 16px;
+  line-height: 1.55;
+  font-weight: 500;
+}
+
+.accent-block {
+  background: linear-gradient(180deg, rgba(45, 108, 255, 0.06), rgba(45, 108, 255, 0.02));
+}
+
+.results-block {
+  background: linear-gradient(180deg, rgba(36, 88, 213, 0.08), rgba(36, 88, 213, 0.02));
+}
+
+.highlight-list {
+  margin: 0 0 1rem;
+  padding-left: 1.1rem;
+}
+
+.highlight-list li {
+  margin-bottom: 0.45rem;
+}
+
+.docs-hub {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+}
+
+.docs-hub.compact {
+  gap: 0.45rem;
+}
+
+.doc-chip {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.55rem 0.85rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--accent-ink);
+  font-size: 12px;
+  font-weight: 500;
+  line-height: 1.2;
+  text-align: center;
+}
+
+.doc-chip:hover,
+.doc-nav-link:hover {
+  text-decoration: none;
+}
+
+.doc-chip.is-primary {
+  color: #ffffff;
+  background: var(--accent);
+  border-color: var(--accent-border);
+}
+
+.doc-chip.is-raw {
+  background: var(--surface-strong);
+}
+
+.artifact-list {
+  margin: 0;
+  padding: 0;
+  list-style: none;
+  display: grid;
+  gap: 0.75rem;
+}
+
+.artifact-item {
+  display: flex;
+  justify-content: space-between;
+  gap: 0.9rem;
+  align-items: flex-start;
+  padding: 0.95rem 1rem;
+  border: 1px solid var(--line);
+  border-radius: 16px;
+  background: var(--surface-strong);
+}
+
+.artifact-item.compact {
+  padding: 0.8rem 0.9rem;
+}
+
+.artifact-meta {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.45rem;
+  justify-content: flex-end;
+}
+
+.artifact-type,
+.artifact-size {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.28rem 0.6rem;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: #ffffff;
+  color: var(--muted);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+.artifact-note {
+  margin: 0.28rem 0 0;
+  color: var(--muted);
+  font-size: 12px;
+  line-height: 1.45;
+  word-break: break-word;
+}
+
+.artifact-disclosure {
+  margin-top: 0.9rem;
+}
+
+.artifact-disclosure summary {
+  cursor: pointer;
+  color: var(--accent-ink);
+  font-weight: 500;
+}
+
+.io-columns {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.doc-summary-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  margin-bottom: 1.15rem;
+}
+
+.summary-card {
+  padding: 1rem;
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  background: var(--surface-strong);
+}
+
+.doc-nav {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.65rem;
+  margin-bottom: 1.25rem;
+}
+
+.doc-nav-link {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0.6rem 0.9rem;
+  border: 1px solid var(--line-strong);
+  border-radius: 999px;
+  background: #ffffff;
+  color: var(--accent-ink);
+  font-size: 12px;
+  font-weight: 500;
+  text-align: center;
+}
+
+.doc-nav-link.is-current {
+  color: #ffffff;
+  background: var(--accent);
+  border-color: var(--accent-border);
+}
+
+.doc-artifacts {
+  margin-bottom: 1.25rem;
+  padding: 1.1rem;
+  border: 1px solid var(--line);
+  border-radius: 22px;
+  background: linear-gradient(180deg, rgba(45, 108, 255, 0.05), rgba(45, 108, 255, 0.01));
+}
+
+.doc-artifacts h2 {
+  margin: 0 0 0.45rem;
+  font-size: 22px;
+}
+
+.doc-artifacts-grid {
+  display: grid;
+  gap: 1rem;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+}
+
+.compact-artifact-list {
+  gap: 0.55rem;
+}
+
+@media (max-width: 860px) {
+  .io-columns,
+  .doc-summary-grid,
+  .doc-artifacts-grid {
+    grid-template-columns: 1fr;
+  }
+
+  .artifact-item {
+    flex-direction: column;
+  }
+
+  .artifact-meta {
+    justify-content: flex-start;
+  }
+}
