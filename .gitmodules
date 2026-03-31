@@ -1,0 +1,45 @@
+[submodule "challenge_02_agentic_data_harmonization"]
+	path = challenge_02_agentic_data_harmonization
+	url = https://aqua.aws.codeocean.dev/capsule-7610750.git
+[submodule "challenge_03_enhancer_designer"]
+	path = challenge_03_enhancer_designer
+	url = https://aqua.aws.codeocean.dev/capsule-2082500.git
+[submodule "challenge_04_light_sheet_alignment_qc"]
+	path = challenge_04_light_sheet_alignment_qc
+	url = https://aqua.aws.codeocean.dev/capsule-0359654.git
+[submodule "challenge_05_automate_your_productivity"]
+	path = challenge_05_automate_your_productivity
+	url = https://aqua.aws.codeocean.dev/capsule-1932372.git
+[submodule "challenge_06_plasmid_forge"]
+	path = challenge_06_plasmid_forge
+	url = https://aqua.aws.codeocean.dev/capsule-9426210.git
+[submodule "challenge_07_engineering_automation"]
+	path = challenge_07_engineering_automation
+	url = https://aqua.aws.codeocean.dev/capsule-4865038.git
+[submodule "challenge_08_query_bff"]
+	path = challenge_08_query_bff
+	url = https://aqua.aws.codeocean.dev/capsule-2367623.git
+[submodule "challenge_09_bindcrafting"]
+	path = challenge_09_bindcrafting
+	url = https://aqua.aws.codeocean.dev/capsule-5372812.git
+[submodule "challenge_10_neurobase_foundation_model_evaluation"]
+	path = challenge_10_neurobase_foundation_model_evaluation
+	url = https://aqua.aws.codeocean.dev/capsule-4973013.git
+[submodule "challenge_11_abc_atlas_literature_assistant"]
+	path = challenge_11_abc_atlas_literature_assistant
+	url = https://aqua.aws.codeocean.dev/capsule-2740751.git
+[submodule "challenge_12_brain_map_bkp_assistant"]
+	path = challenge_12_brain_map_bkp_assistant
+	url = https://aqua.aws.codeocean.dev/capsule-4161944.git
+[submodule "challenge_13_croissant_pipeline"]
+	path = challenge_13_croissant_pipeline
+	url = https://aqua.aws.codeocean.dev/capsule-1915445.git
+[submodule "challenge_14_segment_intestine_villi"]
+	path = challenge_14_segment_intestine_villi
+	url = https://aqua.aws.codeocean.dev/capsule-5175648.git
+[submodule "challenge_15_allen_single_cell_model_pantry"]
+	path = challenge_15_allen_single_cell_model_pantry
+	url = https://aqua.aws.codeocean.dev/capsule-4359564.git
+[submodule "challenge_16_scidex"]
+	path = challenge_16_scidex
+	url = https://aqua.aws.codeocean.dev/capsule-6182444.git
