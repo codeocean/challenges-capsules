@@ -1,59 +1,27 @@
-# Claude Code Template - Bedrock Backend
+# Challenge 10: NeuroBase Foundation Model Evaluation
 
-Template capsule for executing AI-assisted coding tasks with Claude Code using AWS Bedrock backend.
+## What This Capsule Does
+Takes one pre-registered mouse brain volume, runs it through the NeuroBase encoder
+to get patch embeddings, trains a logistic regression to predict 12 coarse brain
+regions, and outputs Dice score table + overlay visualizations — pretrained vs random.
 
-## Quick Start
+## Evaluation
+Per-region Dice scores showing pretrained encoder meaningfully outperforms random baseline.
 
-```bash
-./run "Create a Python script that processes CSV files"
-```
+## Required Data Assets
+| File | Description |
+|------|-------------|
+| `brain_volume.nrrd` | 25μm STPT mouse brain volume |
+| `annotation.nrrd` | CCFv3 annotation volume at matching resolution |
+| `neurobase_weights/` | NeuroBase encoder checkpoint |
+| `region_mapping.json` | CCFv3 label IDs → 12 coarse region names |
 
-Claude Code will execute your command and save outputs to `/results`.
+## Expected Outputs
+| File | Description |
+|------|-------------|
+| `dice_scores.csv` | `region`, `dice_pretrained`, `dice_random` |
+| `overlay_coronal.png`, `overlay_sagittal.png`, `overlay_horizontal.png` | Slice overlays |
+| `summary.json` | Mean Dice, improvement factor |
 
-## Configuration
-
-This capsule is pre-configured to use AWS Bedrock:
-- `CLAUDE_CODE_USE_BEDROCK=1` - Uses AWS Bedrock instead of Anthropic API
-- `AWS_REGION=us-east-1` - Bedrock region
-- Code Ocean managed IAM credentials (no manual setup needed)
-- Claude Code automatically selects the best available Sonnet model
-
-## Usage Examples
-
-```bash
-# Create code
-./run "Write a function to calculate prime numbers"
-
-# Analyze data  
-./run "Create a data analysis script for genomics data in /data"
-
-# Debug code
-./run "Fix the bug in /code/analysis.py"
-
-# Generate documentation
-./run "Add docstrings to all functions in /code"
-```
-
-## For Hackathon Participants
-
-1. **Duplicate this capsule** for your challenge
-2. **Add your data assets** to `/data`
-3. **Run commands** to let Claude Code build your solution
-4. **Results** saved automatically to `/results`
-
-## File Structure
-
-```
-/code/
-  └── run          # Passes commands to Claude Code
-
-/results/
-  └── claude_output.txt   # Claude's response
-```
-
-## Notes
-
-- Runs headlessly (no interactive prompts)
-- Uses Code Ocean managed AWS credentials
-- Works in reproducible runs and Cloud Workstations
-- All code generation is done by Claude Code via Bedrock
+## Environment
+- GPU required (encoder inference), `torch`, `monai`, `pynrrd`, `scikit-learn`, `matplotlib`, `numpy`, `pandas`

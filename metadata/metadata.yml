@@ -1,11 +1,17 @@
 metadata_version: 1
-name: Claude Code + Bedrock Template
-description: Claude Code template using AWS Bedrock backend. No API keys needed -
-  uses Code Ocean managed IAM credentials. Perfect for hackathons and AI-assisted
-  development.
+name: "\U0001F9E0 Challenge 10: NeuroBase Foundation Model Evaluation"
+description: Benchmark NeuroBase 3D neuroanatomical foundation model on Allen brain
+  imaging data, comparing downstream task performance against conventional baselines
+  to evaluate practical utility, runtime efficiency, and labeling cost trade-offs
+  for neuroscience applications.
 tags:
-- template
-- claude-code
-- aws-bedrock
-- AI-assistant
-- hackathon
+- hackathon-challenge
+- foundation-models
+- neuroimaging
+- 3D-imaging
+- benchmark
+- evaluation
+- STPT
+- brain-atlas
+- cc_mode:cc_orchestration
+- cc_intent:iterative_analysis
