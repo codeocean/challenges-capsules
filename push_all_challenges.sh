@@ -9,7 +9,7 @@ export PATH="$(git --exec-path):$PATH"
 
 declare -a TARGETS=("$@")
 declare -a SUMMARY=()
-declare -A TARGET_MAP=()
+declare -a MATCHED_TARGETS=()
 
 if [[ ! -f "$MANIFEST_PATH" ]]; then
   echo "Missing manifest: $MANIFEST_PATH" >&2
@@ -51,7 +51,7 @@ should_process() {
   local target
   for target in "${TARGETS[@]}"; do
     if [[ "$target" == "$name" || "$target" == "$path" ]]; then
-      TARGET_MAP["$target"]=1
+      MATCHED_TARGETS+=("$target")
       return 0
     fi
   done
@@ -104,7 +104,15 @@ done < "$MANIFEST_PATH"
 
 if [[ ${#TARGETS[@]} -gt 0 ]]; then
   for target in "${TARGETS[@]}"; do
-    if [[ -z "${TARGET_MAP[$target]:-}" ]]; then
+    found=0
+    for matched in "${MATCHED_TARGETS[@]}"; do
+      if [[ "$matched" == "$target" ]]; then
+        found=1
+        break
+      fi
+    done
+
+    if [[ "$found" -eq 0 ]]; then
       echo "Unknown subtree target: $target" >&2
       exit 1
     fi
