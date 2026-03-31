@@ -1,0 +1,17 @@
+#!/usr/bin/env bash
+set -euo pipefail
+export PATH="/usr/local/bin:/usr/bin:/bin:$PATH"
+CLAUDE_CODE_VERSION="${CLAUDE_CODE_VERSION:-@anthropic-ai/claude-code}"; NPM_GLOBAL_PREFIX="${NPM_GLOBAL_PREFIX:-/usr/local}"
+has_cmd() { command -v "$1" >/dev/null 2>&1; }
+ensure_runtime_apt_prereqs() { local -a m=(); for b in runuser script curl gpg; do has_cmd "$b" || m+=("$b"); done; [[ ${#m[@]} -eq 0 ]] && return 0; export DEBIAN_FRONTEND=noninteractive; apt-get update -y && apt-get install -y --no-install-recommends apt-transport-https ca-certificates curl gnupg util-linux bsdextrautils; for b in runuser script curl gpg; do has_cmd "$b" || { echo "Missing $b" >&2; exit 2; }; done; }
+ensure_runtime_apt_prereqs
+if ! has_cmd claude; then has_cmd node || { curl -fsSL https://deb.nodesource.com/setup_20.x | bash - && apt-get install -y nodejs; }; npm install -g --prefix "${NPM_GLOBAL_PREFIX}" "${CLAUDE_CODE_VERSION}"; has_cmd claude || { echo "claude not found" >&2; exit 2; }; fi
+id appuser &>/dev/null || useradd -m -u 1000 -s /bin/bash appuser; HD="$(eval echo ~appuser)"; mkdir -p "$HD"; chown -R appuser:appuser "$HD"; mkdir -p /code /scratch /results; chown -R appuser:appuser /code /scratch /results || true
+runuser -u appuser -- sh -lc 'claude --version >/dev/null 2>&1' || { echo "claude not exec" >&2; exit 2; }
+cd /code; PROMPT="${*:-}"; [[ -z "${PROMPT}" ]] && { echo "Usage: /code/run '<prompt>'" >&2; exit 1; }
+trap 'mkdir -p /results/backup; command -v rsync >/dev/null 2>&1 && rsync -a --delete /code/ /results/backup/code/ || { rm -rf /results/backup/code; cp -a /code /results/backup/code; }' EXIT
+export CLAUDE_CODE_USE_BEDROCK="${CLAUDE_CODE_USE_BEDROCK:-1}" AWS_REGION="${AWS_REGION:-us-east-1}" DISABLE_PROMPT_CACHING="${DISABLE_PROMPT_CACHING:-1}"
+export CLAUDE_CODE_MAX_OUTPUT_TOKENS="${CLAUDE_CODE_MAX_OUTPUT_TOKENS:-100000}" MAX_THINKING_TOKENS="${MAX_THINKING_TOKENS:-10000}"
+OF="${OUTPUT_FORMAT:-text}"; rc() { runuser -u appuser -- script -q -e -c "claude -p $(printf %q "${PROMPT}") --verbose --output-format ${OF} --dangerously-skip-permissions" /dev/null; }
+set +e; rc; s=$?; set -e
+exit "$s"

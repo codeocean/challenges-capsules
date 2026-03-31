@@ -1,0 +1,44 @@
+{
+	"version": 1,
+	"base_image": "codeocean/mambaforge3:22.11.1-4-ubuntu22.04",
+	"post_install": true,
+	"options": {
+		"registry_host_arg": true,
+		"git_ask_pass": true,
+		"mount_secrets": true
+	},
+	"installers": {
+		"pip": {
+			"packages": [
+				{
+					"name": "biopython",
+					"version": "1.86"
+				},
+				{
+					"name": "boto3",
+					"version": "1.42.77"
+				},
+				{
+					"name": "pydantic",
+					"version": "2.12.5"
+				},
+				{
+					"name": "pydna",
+					"version": "5.5.8"
+				}
+			],
+			"options": {},
+			"pre_install_options": {}
+		}
+	},
+	"env_variables": [
+		{
+			"name": "CLAUDE_CODE_MAX_OUTPUT_TOKENS",
+			"value": "100000"
+		},
+		{
+			"name": "MAX_THINKING_TOKENS",
+			"value": "10000"
+		}
+	]
+}
