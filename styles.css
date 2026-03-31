@@ -125,6 +125,26 @@ ol {
   align-items: end;
 }
 
+.process-band {
+  max-width: var(--max-width);
+  margin: 0 auto;
+  padding: 0 1.4rem 1.25rem;
+}
+
+.process-card {
+  padding: 0.85rem;
+}
+
+.process-image {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 18px;
+  border: 1px solid var(--line);
+  background: #ffffff;
+  box-shadow: var(--shadow-soft);
+}
+
 .hero-brand {
   display: flex;
   align-items: center;
@@ -440,6 +460,41 @@ ol {
   display: grid;
   gap: 0.9rem;
   margin-bottom: 1rem;
+}
+
+.overview-foldable {
+  border: 1px solid var(--line);
+  border-radius: 20px;
+  background: var(--surface-strong);
+}
+
+.overview-summary {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 0.95rem 1rem;
+  font-weight: 500;
+  color: var(--text);
+  cursor: pointer;
+  list-style: none;
+}
+
+.overview-summary::-webkit-details-marker {
+  display: none;
+}
+
+.overview-summary-title {
+  color: var(--accent-ink);
+}
+
+.overview-summary-hint {
+  color: var(--muted);
+  font-size: 12px;
+}
+
+.overview-foldable-body {
+  padding: 0 1rem 1rem;
 }
 
 .search-field input {
@@ -1021,11 +1076,35 @@ ol {
   }
 
   .sidebar {
-    position: static;
-    grid-template-columns: repeat(3, minmax(0, 1fr));
-    max-height: none;
-    overflow: visible;
-    padding-right: 0;
+    display: none;
+  }
+}
+
+@media (max-width: 1024px) {
+  .hero,
+  .site-layout,
+  .footer,
+  .process-band {
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+
+  .surface-card,
+  .hero-card {
+    padding: 1.1rem;
+  }
+
+  .process-card {
+    padding: 0.7rem;
+  }
+
+  .capsule-table {
+    min-width: 780px;
+  }
+
+  .capsule-table th,
+  .capsule-table td {
+    padding: 0.8rem;
   }
 }
 
@@ -1044,12 +1123,22 @@ ol {
     flex-direction: column;
     align-items: start;
   }
+
+  .overview-summary {
+    flex-direction: column;
+    align-items: flex-start;
+  }
+
+  .capsule-table {
+    min-width: 700px;
+  }
 }
 
 @media (max-width: 640px) {
   .hero,
   .site-layout,
-  .footer {
+  .footer,
+  .process-band {
     padding-left: 1rem;
     padding-right: 1rem;
   }

@@ -62,6 +62,17 @@
       </div>
     </header>
 
+    <section class="process-band" aria-label="Aqua to capsule process">
+      <div class="surface-card process-card">
+        <img
+          class="process-image"
+          src="./Aqua-nautilex-process.png"
+          alt="Infographic showing the Aqua to capsule workflow for the Allen Institute Nautilex 2026 challenge submissions."
+          loading="lazy"
+        />
+      </div>
+    </section>
+
     <main class="site-layout">
       <aside class="sidebar">
         <div class="sidebar-panel stats-panel">
@@ -93,65 +104,74 @@
             <p class="section-note" id="results-note"></p>
           </div>
 
-          <div class="toolbar">
-            <label class="search-field">
-              <span class="visually-hidden">Search capsules</span>
-              <input
-                id="search-input"
-                type="search"
-                placeholder="Search by challenge, challenge, result artifact, data asset, or prompt"
-              />
-            </label>
+          <details class="overview-foldable" open>
+            <summary class="overview-summary">
+              <span class="overview-summary-title">Overview table and filters</span>
+              <span class="overview-summary-hint">Collapse or expand</span>
+            </summary>
 
-            <div class="button-row" id="status-filters" aria-label="Status filters"></div>
-            <div class="button-row" id="flag-filters" aria-label="Capability filters"></div>
-          </div>
+            <div class="overview-foldable-body">
+              <div class="toolbar">
+                <label class="search-field">
+                  <span class="visually-hidden">Search capsules</span>
+                  <input
+                    id="search-input"
+                    type="search"
+                    placeholder="Search by challenge, challenge, result artifact, data asset, or prompt"
+                  />
+                </label>
 
-          <div class="table-wrap">
-            <table class="capsule-table">
-              <thead>
-                <tr>
-                  <th scope="col" aria-sort="ascending">
-                    <button class="sort-button" type="button" data-sort-key="challenge">
-                      <span>Challenge</span>
-                      <span class="sort-indicator" aria-hidden="true"></span>
-                    </button>
-                  </th>
-                  <th scope="col" aria-sort="none">
-                    <button class="sort-button" type="button" data-sort-key="status">
-                      <span>Status</span>
-                      <span class="sort-indicator" aria-hidden="true"></span>
-                    </button>
-                  </th>
-                  <th scope="col" aria-sort="none">
-                    <button class="sort-button" type="button" data-sort-key="useCase">
-                      <span>challenge</span>
-                      <span class="sort-indicator" aria-hidden="true"></span>
-                    </button>
-                  </th>
-                  <th scope="col" aria-sort="none">
-                    <button class="sort-button" type="button" data-sort-key="usage">
-                      <span>How to run</span>
-                      <span class="sort-indicator" aria-hidden="true"></span>
-                    </button>
-                  </th>
-                  <th scope="col" aria-sort="none">
-                    <button class="sort-button" type="button" data-sort-key="result">
-                      <span>Key result</span>
-                      <span class="sort-indicator" aria-hidden="true"></span>
-                    </button>
-                  </th>
-                  <th scope="col" aria-sort="none">
-                    <button class="sort-button" type="button" data-sort-key="docs">
-                      <span>Docs and artifacts</span>
-                      <span class="sort-indicator" aria-hidden="true"></span>
-                    </button>
-                  </th>
-                </tr>
-              </thead>
-              <tbody id="overview-body"></tbody>
-            </table>
-          </div>
+                <div class="button-row" id="status-filters" aria-label="Status filters"></div>
+                <div class="button-row" id="flag-filters" aria-label="Capability filters"></div>
+              </div>
+
+              <div class="table-wrap">
+                <table class="capsule-table">
+                  <thead>
+                    <tr>
+                      <th scope="col" aria-sort="ascending">
+                        <button class="sort-button" type="button" data-sort-key="challenge">
+                          <span>Challenge</span>
+                          <span class="sort-indicator" aria-hidden="true"></span>
+                        </button>
+                      </th>
+                      <th scope="col" aria-sort="none">
+                        <button class="sort-button" type="button" data-sort-key="status">
+                          <span>Status</span>
+                          <span class="sort-indicator" aria-hidden="true"></span>
+                        </button>
+                      </th>
+                      <th scope="col" aria-sort="none">
+                        <button class="sort-button" type="button" data-sort-key="useCase">
+                          <span>challenge</span>
+                          <span class="sort-indicator" aria-hidden="true"></span>
+                        </button>
+                      </th>
+                      <th scope="col" aria-sort="none">
+                        <button class="sort-button" type="button" data-sort-key="usage">
+                          <span>How to run</span>
+                          <span class="sort-indicator" aria-hidden="true"></span>
+                        </button>
+                      </th>
+                      <th scope="col" aria-sort="none">
+                        <button class="sort-button" type="button" data-sort-key="result">
+                          <span>Key result</span>
+                          <span class="sort-indicator" aria-hidden="true"></span>
+                        </button>
+                      </th>
+                      <th scope="col" aria-sort="none">
+                        <button class="sort-button" type="button" data-sort-key="docs">
+                          <span>Docs and artifacts</span>
+                          <span class="sort-indicator" aria-hidden="true"></span>
+                        </button>
+                      </th>
+                    </tr>
+                  </thead>
+                  <tbody id="overview-body"></tbody>
+                </table>
+              </div>
+            </div>
+          </details>
         </section>
 
         <section class="story-intro">
