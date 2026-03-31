@@ -29,12 +29,13 @@
             <p class="brand-note">Usage, evidence, artifacts, and copy-ready prompts for the Allen challenge capsules.</p>
           </div>
         </div>
-        <h1 style="font-size:3.3rem;">Code Ocean Submission for the Allen Institute Nautilex 2026 Challenge</h1>
+        <h1 style="font-size: 3rem; max-width: none;">Code Ocean Submission for the Allen Institute Nautilex 2026 Challenge</h1>
         <p class="hero-intro">
-          The atlas now starts from operator questions: what the capsule is best for,
-          how to run it, what evidence the latest run produced, which result artifacts
-          to open first, and which prompt to copy into Aqua. The sections below then
-          expand into README, RESULTS, HOW TO IMPLEMENT, AQUA PROMPT, and review docs.
+          We provided Code Ocean's Aqua agent with the descriptions of the 15 Nautilex 2026 challenges,
+          and asked it to generate a working capsule for each of them.
+          This atlas summarizes the results, describing the interpretation of the challenge,
+          the way it was implemented, and the way it evaluated the solution. 
+          Each solution can be replicated and re-used as a Code Ocean capsule. 
         </p>
 
         <div class="hero-actions">
@@ -88,7 +89,6 @@
           <div class="section-heading">
             <div>
               <p class="section-kicker">Overview</p>
-              <h2>Scan by use case, run path, and proof</h2>
             </div>
             <p class="section-note" id="results-note"></p>
           </div>
@@ -99,7 +99,7 @@
               <input
                 id="search-input"
                 type="search"
-                placeholder="Search by challenge, use case, result artifact, data asset, or prompt"
+                placeholder="Search by challenge, challenge, result artifact, data asset, or prompt"
               />
             </label>
 
@@ -125,7 +125,7 @@
                   </th>
                   <th scope="col" aria-sort="none">
                     <button class="sort-button" type="button" data-sort-key="useCase">
-                      <span>Best for</span>
+                      <span>challenge</span>
                       <span class="sort-indicator" aria-hidden="true"></span>
                     </button>
                   </th>
@@ -159,7 +159,7 @@
             <p class="section-kicker">Capsule guide</p>
             <h2>Every capsule section now starts with usage and evidence</h2>
             <p>
-              Each capsule card below opens with the best-fit use case, run mode,
+              Each capsule card below opens with the best-fit challenge, run mode,
               result highlights, key artifacts, and the raw AQUA prompt link. The
               embedded docs underneath then expose README, RESULTS, HOW TO IMPLEMENT,
               AQUA PROMPT, and review content without leaving the atlas.
