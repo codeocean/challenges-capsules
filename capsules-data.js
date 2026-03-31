@@ -255,28 +255,40 @@ window.CAPSULES = [
     number: "10",
     title: "NeuroBase Foundation Model Evaluation",
     directory: "challenge_10_neurobase_foundation_model_evaluation",
-    status: "blocked",
-    statusLabel: "Blocked",
+    status: "completed",
+    statusLabel: "Completed",
     problem:
       "Benchmark a 3D neuroanatomical foundation model on Allen brain imaging volumes against random or baseline encoders.",
     capsuleSummary:
-      "The capsule is intended to embed brain patches, train region classifiers, and compare pretrained versus random representations, but the standalone runtime is blocked.",
+      "Standalone benchmark harness that downloads real Allen CCFv3 data, builds ontology-based region labels, compares classical, self-supervised, and random encoders, and writes a full evaluation packet.",
     solution: [
-      "The codebase is designed around a standard evaluation contract: load brain volume and annotation data, produce embeddings, train a lightweight classifier, and compare region-level metrics across encoders.",
-      "That is a good capsule pattern in theory because the run would produce compact tables and overlays, but the current environment and model-weight issues prevent the standalone workflow from completing cleanly."
+      "The pipeline now bootstraps itself from public Allen assets at runtime: annotation volume, average template intensity volume, and the structure ontology used to collapse fine labels into 12 anatomically meaningful regions.",
+      "It then extracts 3-D patches, trains LogisticRegression probes on three embedding families, and produces both compact metrics and a richer artifact set including reports, overlays, per-region comparisons, confusion matrix, and reusable embeddings."
     ],
-    usageMode: "Planned data-asset workflow",
+    usageMode: "Reproducible run with optional NeuroBase weights",
     usageSteps: [
-      "Attach brain_volume.nrrd, annotation.nrrd, neurobase_weights/, and region_mapping.json if you want to inspect the intended input contract.",
-      "Treat the current capsule as blocked in standalone Code Ocean based on the iteration-03 review.",
-      "Use the README and review summary to understand the design, but do not expect a reliable end-to-end run without environment repair."
+      "Click Reproducible Run. No required data asset is needed for the default benchmark path because the capsule downloads Allen CCFv3 inputs at runtime and caches them under /scratch/allen.",
+      "Inspect summary.json, dice_scores.csv, evaluation_report.md, opportunity_analysis.json, and the figure outputs to compare the three encoder baselines.",
+      "If real NeuroBase weights become available, attach /data/neurobase_weights/ with a .pt or .pth checkpoint and rerun to replace the self-supervised proxy encoder."
     ],
-    inputs: ["brain_volume.nrrd", "annotation.nrrd", "neurobase_weights/", "region_mapping.json"],
-    outputs: ["dice_scores.csv", "overlay images", "summary.json"],
-    runModes: ["Data asset", "Blocked runtime"],
-    flags: ["data-asset", "gpu", "blocked"],
+    inputs: [
+      "No required asset for the default baseline benchmark path",
+      "Optional: /data/neurobase_weights/*.pt or *.pth to replace the self-supervised proxy"
+    ],
+    outputs: [
+      "summary.json",
+      "dice_scores.csv",
+      "evaluation_report.md",
+      "opportunity_analysis.json",
+      "overlay images",
+      "dice_barplot.png",
+      "confusion_matrix.png",
+      "embeddings/*.npy"
+    ],
+    runModes: ["Reproducible Run", "Self-contained baseline", "Optional model asset"],
+    flags: ["self-contained"],
     notes:
-      "Review status is Blocked. One verified repo drift exists here: the review says there is no README, but the current clone does contain one.",
+      "Review status is Completed. The remaining limitation is scientific rather than operational: true NeuroBase weights are still unavailable, so the pretrained path uses a self-supervised proxy unless a checkpoint is attached.",
     readmePath: "./challenge_10_neurobase_foundation_model_evaluation/code/README.md",
     reviewPath: "./review-challanges-iteration-03/challenge-10-review.md"
   },

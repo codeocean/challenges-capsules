@@ -7,7 +7,6 @@ This index maps the cloned challenge capsules in this repository to the iteratio
 - This index covers the cloned capsules requested for verification: Challenges 02 through 16.
 - The review bundle and the cloned capsules are aligned by challenge number and topic.
 - Some review titles are shortened relative to the local capsule names, but they still refer to the same capsules.
-- One concrete drift exists: the iteration-03 review marks Challenge 10 as missing a `README`, but this clone now includes [`challenge_10_neurobase_foundation_model_evaluation/code/README.md`](challenge_10_neurobase_foundation_model_evaluation/code/README.md).
 
 ## Review Sources
 
@@ -26,7 +25,7 @@ This index maps the cloned challenge capsules in this repository to the iteratio
 | 07 | `challenge_07_engineering_automation` | [`README.md`](challenge_07_engineering_automation/code/README.md) | Completed | [`challenge-07-review.md`](review-challanges-iteration-03/challenge-07-review.md) - Bedrock-powered code-repair agent runs across 15 synthetic tasks with honest reporting and cost tracking. |
 | 08 | `challenge_08_query_bff` | [`README.md`](challenge_08_query_bff/code/README.md) | Completed | [`challenge-08-review.md`](review-challanges-iteration-03/challenge-08-review.md) - Natural-language filtering over real BioFileFinder metadata; strongest practical capsule in the review set. |
 | 09 | `challenge_09_bindcrafting` | [`README.md`](challenge_09_bindcrafting/code/README.md) | Partially completed | [`challenge-09-review.md`](review-challanges-iteration-03/challenge-09-review.md) - Binder analysis framework runs, but all candidates and scores are simulated and the GPU path is unused. |
-| 10 | `challenge_10_neurobase_foundation_model_evaluation` | [`README.md`](challenge_10_neurobase_foundation_model_evaluation/code/README.md) | Blocked | [`challenge-10-review.md`](review-challanges-iteration-03/challenge-10-review.md) - Standalone runtime remains broken by environment and model-weight issues. Review says no `README`; this clone now has one. |
+| 10 | `challenge_10_neurobase_foundation_model_evaluation` | [`README.md`](challenge_10_neurobase_foundation_model_evaluation/code/README.md) | Completed | [`challenge-10-review.md`](review-challanges-iteration-03/challenge-10-review.md) - Standalone benchmark now runs on runtime-downloaded Allen CCFv3 data, compares three encoders, and writes a full evaluation packet. |
 | 11 | `challenge_11_abc_atlas_literature_assistant` | [`README.md`](challenge_11_abc_atlas_literature_assistant/code/README.md) | Completed | [`challenge-11-review.md`](review-challanges-iteration-03/challenge-11-review.md) - Self-bootstrapping literature assistant retrieves real PubMed papers and verifies citations successfully. |
 | 12 | `challenge_12_brain_map_bkp_assistant` | [`README.md`](challenge_12_brain_map_bkp_assistant/code/README.md) | Completed | [`challenge-12-review.md`](review-challanges-iteration-03/challenge-12-review.md) - Grounded assistant reports 86.7% overall accuracy with adversarial failures that show honest limits. |
 | 13 | `challenge_13_croissant_pipeline` | [`README.md`](challenge_13_croissant_pipeline/code/README.md) | Completed | [`challenge-13-review.md`](review-challanges-iteration-03/challenge-13-review.md) - End-to-end Croissant packaging pipeline validates successfully on synthetic scRNA-seq data. |
@@ -38,4 +37,3 @@ This index maps the cloned challenge capsules in this repository to the iteratio
 
 - Challenge 08 review title is more descriptive than the local folder name, but it clearly maps to `challenge_08_query_bff`.
 - Challenges 10, 12, 15, and 16 use slightly different title formatting between the review docs and local `README`s.
-- The only content mismatch found during verification is Challenge 10's `README` presence in the clone versus `README = No` in the iteration-03 review summary.

@@ -21,9 +21,9 @@ Over **4 days** and **3 implementation / review iterations**, the work was drive
 
 The current repo snapshot covers **15 capsules** for **Challenges 02-16**.
 
-- **10 completed**
+- **11 completed**
 - **4 partially completed**
-- **1 blocked**
+- **0 blocked**
 
 The most important outcome is not just the code. It is the combination of:
 
@@ -53,7 +53,7 @@ The most important outcome is not just the code. It is the combination of:
 | 07 | Engineering Automation | Completed | [README](https://codeocean.github.io/challenges-capsules/docs/challenge-07-readme.html) | [Review](https://codeocean.github.io/challenges-capsules/docs/challenge-07-review.html) |
 | 08 | Query BFF | Completed | [README](https://codeocean.github.io/challenges-capsules/docs/challenge-08-readme.html) | [Review](https://codeocean.github.io/challenges-capsules/docs/challenge-08-review.html) |
 | 09 | BindCrafting | Partial | [README](https://codeocean.github.io/challenges-capsules/docs/challenge-09-readme.html) | [Review](https://codeocean.github.io/challenges-capsules/docs/challenge-09-review.html) |
-| 10 | NeuroBase Foundation Model Evaluation | Blocked | [README](https://codeocean.github.io/challenges-capsules/docs/challenge-10-readme.html) | [Review](https://codeocean.github.io/challenges-capsules/docs/challenge-10-review.html) |
+| 10 | NeuroBase Foundation Model Evaluation | Completed | [README](https://codeocean.github.io/challenges-capsules/docs/challenge-10-readme.html) | [Review](https://codeocean.github.io/challenges-capsules/docs/challenge-10-review.html) |
 | 11 | ABC Atlas Literature Assistant | Completed | [README](https://codeocean.github.io/challenges-capsules/docs/challenge-11-readme.html) | [Review](https://codeocean.github.io/challenges-capsules/docs/challenge-11-review.html) |
 | 12 | Brain Map + BKP Assistant | Completed | [README](https://codeocean.github.io/challenges-capsules/docs/challenge-12-readme.html) | [Review](https://codeocean.github.io/challenges-capsules/docs/challenge-12-review.html) |
 | 13 | Croissant Pipeline | Completed | [README](https://codeocean.github.io/challenges-capsules/docs/challenge-13-readme.html) | [Review](https://codeocean.github.io/challenges-capsules/docs/challenge-13-review.html) |
@@ -82,5 +82,5 @@ Then reopen [`index.html`](./index.html) locally or refresh the GitHub Pages sit
 ## Notes
 
 - The current cloned challenge set in this repo starts at **Challenge 02**.
-- The review status labels are intentionally honest: some capsules are strong demonstrations, some are incomplete, and one remains blocked.
+- The review status labels are intentionally honest: some capsules are strong demonstrations and some remain incomplete, but none are currently blocked.
 - The atlas and doc pages are static and can be opened directly in a browser over `file://`, with no local server required.

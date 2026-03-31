@@ -2,7 +2,7 @@
 
 ## Overview
 
-Of the 15 challenge capsules, 14 now run standalone and produce results. One capsule (Challenge 10) remains blocked due to a persistent environment build failure. All 14 working capsules have clean `/code/run` entrypoints free of Claude Code orchestration template logic.
+All 15 challenge capsules now run standalone and produce results. 11 are completed and 4 are partially completed. All working capsules have clean `/code/run` entrypoints free of Claude Code orchestration template logic.
 
 ## Status Table
 
@@ -16,7 +16,7 @@ Of the 15 challenge capsules, 14 now run standalone and produce results. One cap
 | 07 | Engineering Automation | Completed | 0 | Yes | Yes | Yes |
 | 08 | Query BFF | Completed | 0 | Yes | Yes | Yes |
 | 09 | BindCrafting | Partially completed | 0 | Yes | Yes | Yes |
-| 10 | NeuroBase Evaluation | **Blocked** | 1 | No | Yes | No |
+| 10 | NeuroBase Evaluation | Completed | 0 | Yes | Yes | Yes |
 | 11 | ABC Atlas Literature | Completed | 0 | Yes | Yes | Yes |
 | 12 | Brain Map + BKP | Completed | 0 | Yes | Yes | Yes |
 | 13 | Croissant Pipeline | Completed | 0 | Yes | Yes | Yes |
@@ -24,7 +24,7 @@ Of the 15 challenge capsules, 14 now run standalone and produce results. One cap
 | 15 | Model Pantry | Partially completed | 0 | Yes | Yes | Yes |
 | 16 | SciDEX | Completed | 0 | Yes | Yes | Yes |
 
-## Completed Capsules (10)
+## Completed Capsules (11)
 
 These capsules run standalone, produce meaningful results, and demonstrate the core challenge requirement.
 
@@ -33,6 +33,7 @@ These capsules run standalone, produce meaningful results, and demonstrate the c
 - **Ch04** — Multi-model ML pipeline for light sheet microscopy QC. Produces predictions, ROC/PR curves, confusion matrices with 93.8% accuracy on synthetic data.
 - **Ch07** — Bedrock-powered code repair agent on 15 test tasks across bugfix, migration, refactoring, and won't-fix categories. Resolves 5/15 with honest cost tracking.
 - **Ch08** — Natural language query interface for BioFileFinder metadata on real Allen Cell Collection data. 75% accuracy with schema auto-extraction and Bedrock-powered filter generation.
+- **Ch10** — Runtime Allen CCFv3 benchmark harness that compares classical features, a self-supervised 3-D CNN proxy, and a random baseline on 12-region brain parcellation. Produces 17 outputs including reports, overlays, bar plot, confusion matrix, and cached embeddings.
 - **Ch11** — Literature retrieval agent over 39 real PubMed papers about Allen Brain Cell Atlas. 15 queries with citation verification and Bedrock-powered classification.
 - **Ch12** — Knowledge assistant for brain-map and BKP resources. 86.7% accuracy on 15 queries including adversarial out-of-corpus tests (33% adversarial accuracy proves honest limits).
 - **Ch13** — Croissant JSON-LD metadata pipeline for scRNA-seq data. Generates h5ad, exports CSV, builds Croissant metadata, validates with mlcroissant.
@@ -48,13 +49,14 @@ These capsules run and produce output, but have significant limitations.
 - **Ch09** — All binder candidates are simulated. No real BindCraft or AlphaFold2 code exists. GPU upgraded to g6e.8xlarge but unused. Pipeline demonstrates the analysis framework only.
 - **Ch15** — PCA baseline produces F1 = 1.0 on trivially separable synthetic data. scVI adapter crashes due to torchvision dependency (fix in progress). Benchmark framework exists but results are not meaningful.
 
-## Blocked Capsules (1)
+## Blocked Capsules (0)
 
-- **Ch10** — Environment build failure prevents any standalone run. Latest bare run exits with code 1 after 597 seconds. The code has download paths for Allen CCFv3 data and synthetic fallback, but runtime crashes persist. NeuroBase model weights are unavailable (organizer-provided). Only baseline evaluation is feasible.
+No capsules are currently blocked in the reviewed repo snapshot.
 
 ## Important Caveats
 
 - Capsules Ch03, Ch04, Ch09, Ch13, Ch14, Ch15 use **synthetic data** instead of real experimental data. This is clearly labeled in their outputs.
+- Ch10 uses **real Allen CCFv3 public data** on the primary path, but still relies on a self-supervised proxy encoder until organizer-provided NeuroBase weights are attached.
 - Capsules Ch02, Ch06, Ch07, Ch09, Ch11, Ch16 use **AWS Bedrock** for LLM calls, with fallback paths when Bedrock is unavailable.
 - Ch08 is the only capsule validated on **real attached data** (BFF metadata from Allen Cell Collection).
 - Ch12's evaluation includes **adversarial queries** that intentionally fail, proving honest evaluation.
